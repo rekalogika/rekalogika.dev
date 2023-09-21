@@ -1,0 +1,69 @@
+@startuml file
+interface FileRepository {
+    +get(FilePointer): File
+    +tryGet(FilePointer): ?File
+    +clear(): void
+    +createFromString(FilePointer, string)
+    +createFromStream(FilePointer, resource|Stream)
+    +createFromLocalFile(FilePointer, string)
+    +delete(FilePointer): void
+    +copy(File|FilePointer, File|FilePointer): File
+    +move(File|FilePointer, File|FilePointer): File
+    +createTemporaryFile()
+}
+
+interface FilePointer {
+    filesystemIdentifier: string
+    key: string
+    +isEqualTo(File|FilePointer): bool
+    +isSameFilesystem(File|FilePointer): bool
+}
+
+FileRepository o--- File
+FilePointer --* File::pointer
+FilePointer -- File
+
+interface File {
+    +filesystemIdentifier: ?string
+    +key: string
+    +pointer: FilePointer
+    +isEqualTo(File|FilePointer): bool
+    +isSameFilesystem(File|FilePointer): bool
+    +name: FileName
+    +setName(string): void
+    +setContent(string): void
+    +setContentFromStream(resource|Stream): void
+    +content: string
+    +contentAsStream: Stream
+    +saveToLocalFile(string): SplFileInfo
+    +createLocalTemporaryFile(): SplFileInfo
+    +mediaType: MediaType
+    +setMediaType(string): void
+    +size: int
+    +lastModified: DateTime
+    +getDerivation(string): FilePointer
+    +get(string): mixed
+}
+
+File::name *-- FileName
+File::mediaType *-- FileType
+
+interface FileName {
+    +full: string|Translatable
+    +setFull(string): void
+    +base: string|Translatable
+    +setBase(string): void
+    +extension: string
+    +setExtension(string): void
+    +hasExtension(): bool
+}
+
+interface FileType {
+    +name: string
+    +type: string
+    +subType: string
+    +commonExtensions: array
+    +extension: ?string
+    +description: string|Translatable
+}
+@enduml
