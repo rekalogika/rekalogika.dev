@@ -18,6 +18,16 @@ jobs:
           node-version: 18
           cache: npm
 
+      - name: PlantUML light
+        uses: docker://plantuml/plantuml
+        with:
+          args: -tsvg -SbackgroundColor=transparent diagrams/*.wsd -o ../static/diagrams/light/
+
+      - name: PlantUML dark
+        uses: docker://plantuml/plantuml
+        with:
+          args: -tsvg -darkmode -SbackgroundColor=transparent diagrams/*.wsd -o ../static/diagrams/light/
+
       - name: Install dependencies
         run: npm ci
       - name: Build website
