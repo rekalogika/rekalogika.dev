@@ -1,0 +1,25 @@
+@startuml file-components
+
+skinparam componentStyle rectangle
+
+[file] --> [file-contracts]
+[file] --> [file-metadata-contracts]
+[file-association] --> [file-association-contracts]
+[file-association] --> [file-contracts]
+[file-bundle] --> [file]
+[file-bundle] --> [file-contracts]
+[file-bundle] ..> [file-image]
+[file-bundle] ..> [file-association]
+[file-bundle] ..> [file-server]
+[file-bundle] ..> [file-symfony-bridge]
+[file-derivation] --> [file-contracts]
+[file-image] --> [file-contracts]
+[file-image] --> [file-derivation]
+[file-oneup-uploader-bridge] --> [file-contracts]
+[file-oneup-uploader-bridge] --> [file]
+[file-server] --> [file-contracts]
+[file-server] --> [file-symfony-bridge]
+[file-symfony-bridge] --> [file]
+[file-symfony-bridge] --> [file-contracts]
+
+@enduml

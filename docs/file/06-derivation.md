@@ -55,11 +55,13 @@ not recommended to nest derivations too deep.
 
 :::
 
-## Filters
+## Filter Pattern
 
-Derivation is the building block of filters. A filter is a service that creates
-a derived file from a source file. A filter can be applied to a `FileInterface`
-and does the following:
+Derivation can be used as the building block of filters. A filter is a service
+that perform opportunistic creation and caching of a derived file from a source
+file.
+
+A filter can be applied to a `FileInterface` and does the following:
 
 1. Obtain the original file.
 2. Determine the derivation ID from the parameters provided by the caller. For
@@ -72,84 +74,9 @@ and does the following:
    3. If the derived file exists and older than the original file, create a
       derivation out of the original file, then overwrite the old derived file.
 
-Our `AbstractFileFilter` below can be used to create filters that automate
-the above process and streamline the creation of derived files.
+The caller can then use the filter to create a modified version of the original
+file without having to worry about the details.
 
-## Developing Filters Using `AbstractFileFilter`
-
-:::note Preparation
-
-You need to install the package `rekalogika/file-derivation` to use this feature:
-
-```bash
-composer require rekalogika/file-derivation
-```
-
-:::
-
-To create a filter class, you can extend `AbstractFileFilter`, create a method
-(or more) for the callers to specify the filtering parameters, and implement all
-the abstract methods.
-
-The following is an example filter class that creates a derived file by (rather
-uselessly) appending a text to the original content:
-
-```php
-use Rekalogika\Contracts\File\FileInterface;
-use Rekalogika\File\Derivation\Filter\AbstractFileFilter;
-use Rekalogika\File\TemporaryFile;
-
-class TextAppender extends AbstractFileFilter
-{
-    private string $text;
-
-    /**
-     * Your custom method that provides the parameters
-     */
-    public function appendText(string $text): self
-    {
-        assert(ctype_alpha($text)); // ensure alpha characters only
-        $this->text = $text;
-
-        return $this;
-    }
-
-    #[\Override]
-    protected function getDerivationId(): string
-    {
-        return 'append_' . $this->text;
-    }
-
-    #[\Override]
-    protected function process(): FileInterface
-    {
-        $originalContent = $this->getSourceFile()->getContent();
-
-        return new TemporaryFile::createFromString($originalContent . $this->text);
-    }
-}
-```
-
-If you are using autoconfiguration, then you are all set. Otherwise, you need
-to tag your class with `rekalogika.file.derivation.filter`:
-
-```yaml title=config/services.yaml
-services:
-    App\TextAppender:
-        tags:
-            - { name: 'rekalogika.file.derivation.filter' }
-```
-
-A caller will be able to use the above filter like the following:
-
-```php
-use Rekalogika\Contracts\File\FileInterface;
-
-/** @var TextAppender $textAppender */
-/** @var FileInterface $file */
-
-$derivedFile = $textAppender
-    ->take($file)
-    ->appendText('foo')
-    ->getResult();
-```
+We provide the package
+[`rekalogika/file-derivation`](../file-bundle/22-filter-development.md) to
+streamline the creation of filters within the Symfony framework.

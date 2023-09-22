@@ -1,10 +1,10 @@
 ---
-title: Associating Files with Entities
+title: Associating Files with Doctrine Entities
 ---
 
-This chapter describes how to create a file property in an entity that you can
-use to associate a file to an entity, including to store the result of a file
-upload.
+This chapter describes how to create a file property in a Doctrine entity that
+you can use to associate a file to an entity, including to store the result of a
+file upload.
 
 :::info Preparation
 

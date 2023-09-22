@@ -2,8 +2,8 @@
 title: Symfony Integration
 ---
 
-This chapter describes how to integrate this framework with typical Symfony
-components commonly used to work with files.
+This chapter describes how to integrate this framework with the typical Symfony
+components used to work with files.
 
 :::info Preparation
 

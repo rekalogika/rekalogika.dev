@@ -70,7 +70,7 @@ Because everyone knows about file uploads, we are going to use it as an
 example, even if you probably won't use this framework as a means for handling
 file uploads.
 
-:::note
+:::info
 
 Speaking about file uploads, we also provide [`rekalogika/file`](../file)
 framework that handles file uploads and much more. It also uses this library

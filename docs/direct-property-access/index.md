@@ -5,9 +5,8 @@ title: rekalogika/direct-property-access
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Simple and limited implementation of Symfony's `PropertyAccessorInterface` that
-reads and writes directly to the object's properties, bypassing getters and
-setters.
+Implementation of Symfony's `PropertyAccessorInterface` that reads and writes
+directly to the object's properties, bypassing getters and setters.
 
 Installation
 ------------
