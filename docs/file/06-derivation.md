@@ -1,15 +1,9 @@
 ---
-title: Creating Filters
+title: Derivation
 ---
 
-This chapter describes the concept of file derivation and how to create filters.
-
-:::note
-
-This chapter is intended for developers who want to create their own filters.
-End users who simply want to use the ready-made filters can skip this chapter.
-
-:::
+This chapter describes the concept of file derivation and the pipe & filters
+pattern applied to `FileInterface`.
 
 ## Derivation
 
@@ -50,12 +44,12 @@ entity/ffa87ef3fc5388bc8b666e2cec17d27cc493d0c1/image/e5/80/72/6d/31337.d/100px.
 
 :::caution
 
-Because each derivation step requires a roundtrip to the storage backend, it is
+Because each derivation step requires a round trip to the storage backend, it is
 not recommended to nest derivations too deep.
 
 :::
 
-## Filter Pattern
+## Pipes & Filters Pattern
 
 Derivation can be used as the building block of filters. A filter is a service
 that perform opportunistic creation and caching of a derived file from a source
@@ -69,10 +63,11 @@ A filter can be applied to a `FileInterface` and does the following:
    filter can use the derivation ID like 'thumbnail-square'.
 3. Call `FileInterface::getDerivation()` to get a pointer to the derived file.
 4. Call `FileRepository::get()` to get the derived file.
-   1. If the derived file does not exist, write the derived file to it.
+   1. If the derived file does not exist, produce the derived file, and write to
+      the pointer.
    2. If the derived file exists and newer than the original file, return it.
-   3. If the derived file exists and older than the original file, create a
-      derivation out of the original file, then overwrite the old derived file.
+   3. If the derived file exists and older than the original file, produce the
+      derived file, then overwrite the old derived file.
 
 The caller can then use the filter to create a modified version of the original
 file without having to worry about the details.

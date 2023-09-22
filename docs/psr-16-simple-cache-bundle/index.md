@@ -2,20 +2,44 @@
 title: rekalogika/psr-16-simple-cache-bundle
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 Enables PSR-16 Simple Cache services in Symfony projects. These were previously
 enabled in the older Symfony version but were removed in 4.3.
 
 Installation
 ------------
 
-Use Composer to install the package:
+Make sure Composer is installed globally, as explained in the
+[installation chapter](https://getcomposer.org/doc/00-intro.md)
+of the Composer documentation.
+
+<Tabs>
+<TabItem value="flex" label="With Symfony Flex">
+
+Open a command console, enter your project directory and execute:
+
+```bash
+composer require rekalogika/psr-16-simple-cache-bundle
+```
+</TabItem>
+
+<TabItem value="noflex" label="Without Symfony Flex">
+
+Step 1: Download the Bundle
+
+Open a command console, enter your project directory and execute the
+following command to download the latest stable version of this bundle:
 
 ```bash
 composer require rekalogika/psr-16-simple-cache-bundle
 ```
 
-Add the bundle to your `config/bundles.php`. With Symfony Flex, this should be
-done automatically.
+Step 2: Enable the Bundle
+
+Then, enable the bundle by adding it to the list of registered bundles
+in the `config/bundles.php` file of your project:
 
 ```php title=config/bundles.php
 return [
@@ -23,6 +47,8 @@ return [
     Rekalogika\Psr16SimpleCacheBundle\RekalogikaPsr16SimpleCacheBundle::class => ['all' => true],
 ];
 ```
+</TabItem>
+</Tabs>
 
 Usage
 -----

@@ -2,6 +2,9 @@
 title: rekalogika/reconstitutor
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This library provides a thin layer that sits above Doctrine events to help you
 reconstitute/hydrate your entities. It lets you augment Doctrine's hydration
 with your logic in a concise and expressive class.
@@ -21,8 +24,8 @@ cases exist:
   entities.
 
 These days we usually call the process *hydration*. *Reconstitution* is the term
-used by Eric Evans in *"Domain-Driven Design: Tackling Complexity in the Heart of
-Software"*.
+used by Eric Evans in the Blue Book: *"Domain-Driven Design: Tackling Complexity
+in the Heart of Software"*.
 
 Features
 --------
@@ -47,14 +50,35 @@ Features
 Installation
 ------------
 
-Use Composer to install the package:
+Make sure Composer is installed globally, as explained in the
+[installation chapter](https://getcomposer.org/doc/00-intro.md)
+of the Composer documentation.
+
+<Tabs>
+<TabItem value="flex" label="With Symfony Flex">
+
+Open a command console, enter your project directory and execute:
+
+```bash
+composer require rekalogika/reconstitutor
+```
+</TabItem>
+
+<TabItem value="noflex" label="Without Symfony Flex">
+
+Step 1: Download the Bundle
+
+Open a command console, enter your project directory and execute the
+following command to download the latest stable version of this bundle:
 
 ```bash
 composer require rekalogika/reconstitutor
 ```
 
-Add the bundle to your `config/bundles.php`. With Symfony Flex, this should be
-done automatically.
+Step 2: Enable the Bundle
+
+Then, enable the bundle by adding it to the list of registered bundles
+in the `config/bundles.php` file of your project:
 
 ```php title=config/bundles.php
 return [
@@ -62,6 +86,8 @@ return [
     Rekalogika\Reconstitutor\RekalogikaReconstitutorBundle::class => ['all' => true],
 ];
 ```
+</TabItem>
+</Tabs>
 
 Usage
 -----
@@ -73,7 +99,7 @@ file uploads.
 :::info
 
 Speaking about file uploads, we also provide [`rekalogika/file`](../file)
-framework that handles file uploads and much more. It also uses this library
+framework that handles file uploads and much more. It also utilizes this library
 behind the scenes.
 
 :::
@@ -113,9 +139,10 @@ class Order
 ```
 
 During the fetching of the object from the database, Doctrine will instantiate
-the object and hydrate `$id` and other properties that it manages. Then, it will
-be our reconstitutor's turn to handle the `$paymentReceipt` property. Similar
-things also happen when the object is persisted to the database, or removed.
+the object and hydrate `$id` and other properties that it manages. Afterwards,
+it will be our reconstitutor's turn to handle the `$paymentReceipt` property.
+Similar things also happen when the object is persisted to the database, or
+removed.
 
 ```php
 use Rekalogika\Reconstitutor\AbstractClassReconstitutor;

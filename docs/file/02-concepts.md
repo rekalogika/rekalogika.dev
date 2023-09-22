@@ -53,4 +53,3 @@ key can appear similar to a path, the main difference is that the filename is
 not part of the key, but part of the file's metadata. The key is similar to the
 primary key of a database table. You can change the 'name' field, but the ID
 usually stays the same.
-

@@ -6,9 +6,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import ThemedImage from '@theme/ThemedImage';
 
 High-level file abstraction library built on top of Flysystem. It lets you work
-with file objects in an object-oriented way. A file object represents a file in
-a Flysystem filesystem. It can be a local file or a file in a cloud storage, the
-library lets you work with them in the same way.
+with file objects in an object-oriented manner. A file object represents a file
+in a Flysystem filesystem. It can be a local file or a file in a cloud storage,
+the library lets you work with them in the same way.
 
 ## Features
 
@@ -51,8 +51,8 @@ The File framework consists of several components.
   the library.
 * **rekalogika/file-derivation**: Library for creating derived files.
 * **rekalogika/file-image**: Provides image resizing filter.
-* **rekalogika/file-metadata-contracts**: Contains interfaces describing
-  file metadata.
+* **rekalogika/file-metadata-contracts**: Contains additional interfaces
+  describing file metadata.
 * **rekalogika/file-oneup-uploader-bridge**: Adapter for OneupUploaderBundle.
 * **rekalogika/file-server**: Temporary URL server for files.
 * **rekalogika/file-symfony-bridge**: Adapter for Symfony HttpFoundation, Form, and
