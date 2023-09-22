@@ -12,7 +12,7 @@ package in a PHP project.
 
 If you are developing a Symfony application, you might want to install the
 bundle instead. See
-[`rekalogika/file-bundle`](../file-bundle/01-installation.md) for more
+[`rekalogika/file-bundle`](../file-bundle/02-installation.md) for more
 information.
 
 :::
