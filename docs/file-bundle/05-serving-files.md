@@ -50,7 +50,7 @@ composer require rekalogika/file-server
 ```
 
 If you are not using Symfony Flex, read the documentation of
-[`rekalogika/file-bundle`](/) and [`rekalogika/temporary-url-bundle`](/) to
+[`rekalogika/file-bundle`](../file-bundle/installation) and [`rekalogika/temporary-url-bundle`](../temporary-url-bundle) to
 learn how to register the required bundles.
 
 :::
@@ -89,5 +89,5 @@ the `image_resize` filter from the `rekalogika/file-image` package.
 ### More Information
 
 The `generateUrl()` method and the `temporary_url` Twig filter accept several
-options. Read the documentation of [`rekalogika/temporary-url-bundle`](/) to
+options. Read the documentation of [`rekalogika/temporary-url-bundle`](../temporary-url-bundle) to
 learn more.

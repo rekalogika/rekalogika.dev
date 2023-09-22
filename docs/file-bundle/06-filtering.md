@@ -62,5 +62,5 @@ In Twig templates, you can use the `image_resize` filter. For example:
 ```
 
 The example above will give us a temporary URL to a square-cropped image with a
-maximum width or height of 100 pixels out of the original image
+maximum width or height of 100 pixels from the original image
 `image_file`.

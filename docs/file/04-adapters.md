@@ -3,7 +3,7 @@ title: Adapters
 ---
 
 The library provides a `FileAdapter` class that can be used to adapt or convert
-a file object of another library to our `FileInterface`.
+a file object from another library to our `FileInterface`.
 
 ```php
 use Rekalogika\File\FileAdapter;

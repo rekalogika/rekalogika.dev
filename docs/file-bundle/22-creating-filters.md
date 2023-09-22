@@ -1,5 +1,5 @@
 ---
-title: Filter Development
+title: Creating Filters
 ---
 
 This chapter explains how to create your own file filters using

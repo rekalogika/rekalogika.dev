@@ -6,7 +6,13 @@ When using this framework, the user will primarily work with the
 `FileRepositoryInterface` and `FileInterface` objects.
 ## Working With a File Repository
 
-### Create a file from a string
+### Create a file
+
+:::caution
+
+These methods overwrite the existing file if it already exists.
+
+:::
 
 ```php
 use Rekalogika\Contracts\File\FileRepositoryInterface;
@@ -14,59 +20,25 @@ use Rekalogika\File\FilePointer;
 
 /** @var FileRepositoryInterface $fileRepository */
 
+// Create a file from a string
 $file = $fileRepository->createFromString(
     new FilePointer('default', 'key'),
     'Hello World!'
 );
-```
 
-:::warning
-
-Will overwrite the existing file if it already exists.
-
-:::
-
-### Create a file from a stream
-
-```php
-use Psr\Http\Message\StreamInterface;
-use Rekalogika\Contracts\File\FileRepositoryInterface;
-use Rekalogika\File\FilePointer;
-
-/** @var FileRepositoryInterface $fileRepository */
-/** @var resource|StreamInterface $stream */
-
+// Create a file from a stream (resource or PSR-7 StreamInterface)
 $file = $fileRepository->createFromStream(
     new FilePointer('default', 'key'),
     $stream
 );
-```
 
-:::warning
-
-Will overwrite the existing file if it already exists.
-
-:::
-
-### Create a file from a local file
-
-```php
-use Rekalogika\Contracts\File\FileRepositoryInterface;
-use Rekalogika\File\FilePointer;
-
-/** @var FileRepositoryInterface $fileRepository */
-
+// Create a file from a local file
 $file = $fileRepository->createFromLocalFile(
     new FilePointer('default', 'key'),
     '/tmp/foo.txt'
 );
+
 ```
-
-:::warning
-
-Will overwrite the existing file if it already exists.
-
-:::
 
 ### Get a file
 
@@ -87,7 +59,7 @@ try {
 // tryGet() will return null if the file is not found
 $file = $fileRepository->tryGet(new FilePointer('default', 'key'));
 
-// with a local file, you can also do it without using file repository:
+// With a local file, you can also do it without using file repository:
 try {
     $file = new File('/path/to/file');
 } catch (FileNotFoundException $e) {
@@ -144,8 +116,8 @@ $file = $fileRepository->createTemporaryFile();
 
 :::note
 
-A temporary file will be automatically deleted if the `$file` object
-is unset or falls out of scope.
+The temporary file is represented by special `TemporaryFile` that will be
+automatically deleted if it is unset or falls out of scope.
 
 :::
 
@@ -158,13 +130,14 @@ use Rekalogika\Contracts\File\FileInterface;
 
 /** @var FileInterface $file */
 
-// as a string
+// As a string
 $string = $file->getContent();
 
-// as a stream
+// As a stream
 $stream = $file->getContentAsStream();
 
-// the stream is an instance of StreamInterface, to get a resource, use detach()
+// getContentAsStream() returns a PSR-7 StreamInterface, to get a plain PHP
+// resource, call detach() on it
 $resource = $stream->detach();
 ```
 
@@ -175,10 +148,10 @@ use Rekalogika\Contracts\File\FileInterface;
 
 /** @var FileInterface $file */
 
-// from a string
+// From a string
 $file->setContent('Hello World!');
 
-// from a stream or resource
+// From a stream or resource
 $file->setContentFromStream($resource);
 ```
 
@@ -191,13 +164,13 @@ use Rekalogika\Contracts\File\FileInterface;
 
 $file->setName('my-photo.jpg');
 
-// if you omit the extension, the library will automatically choose the correct
+// If you omit the extension, the library will automatically choose the correct
 // extension based on the file's MIME type
 
 $file->setName('my-photo');
 $name = (string) $file->getName(); // my-photo.jpg
 
-// if you absolutely don't want an extension, you can set it directly to the
+// If you absolutely don't want an extension, you can set it directly to the
 // metadata
 
 $file->get(FileMetadataInterface::class)->setFileName('my-photo');
@@ -222,10 +195,10 @@ use Rekalogika\Contracts\File\FileInterface;
 
 /** @var FileInterface $file */
 
-// saves the file to /tmp/foo.txt
+// Saves the file to /tmp/foo.txt
 $localFile = $file->saveToLocalFile('/tmp/foo.txt'); 
 
-// saves the file to a temporary file
+// Saves the file to a temporary file
 $temporaryFile = $file->createLocalTemporaryFile();
 ```
 
@@ -236,7 +209,8 @@ use Rekalogika\Contracts\File\FileInterface;
 
 /** @var FileInterface $file */
 
-// usually not necessary as the framework will automatically detect media type
+// Setting the MIME type is usally not necessary as the framework will
+// automatically detect media type
 $file->setMediaType('image/jpeg'); // sets the media type to image/jpeg
 
 $mediaType = (string) $file->getType(); // image/jpeg
@@ -255,7 +229,7 @@ use Rekalogika\Contracts\File\FileInterface;
 
 /** @var FileInterface $file */
 
-// main metadata
+// Main metadata
 $size = $file->getSize(); // file size in bytes
 $lastModified = $file->getLastModified(); // last modified time
 ```
@@ -271,8 +245,8 @@ use Rekalogika\Contracts\File\Metadata\ImageMetadataInterface;
 $width = $file->get(ImageMetadataInterface::class)?->getWidth(); 
 $height = $file->get(ImageMetadataInterface::class)?->getHeight(); 
 
-// you can also do the following, useful when specifying FQCNs is unwieldy, like
-// in Twig templates
+// You can also use string identifiers, useful when specifying FQCNs is
+// unwieldy, like in Twig templates
 
 $width = $file->get('imageMetadata')?->getWidth(); 
 $height = $file->get('imageMetadata')?->getHeight(); 
@@ -309,13 +283,15 @@ use Rekalogika\Contracts\File\Metadata\HttpMetadataInterface;
 
 /** @var FileInterface $file */
 
-// each of the following will be saved automatically, and will require two
-// roundtrips to the storage backend
+// Each of the following will be flush automatically individually, and will
+// require two roundtrips to the storage backend
 $file->setMediaType('image/jpeg');
 $file->setName('foo.jpg');
 
-// needs a flush()
-$file->get(HttpMetadataInterface::class)?->setDisposition('attachment'); 
+// The following needs an explicit flush(). It will only require one roundtrip
+// to the storage backend.
+$file->get(FileMetadataInterface::class)?->setType('image/jpeg'); 
+$file->get(FileMetadataInterface::class)?->setName('foo.jpg'); 
 $file->flush();
 ```
 
