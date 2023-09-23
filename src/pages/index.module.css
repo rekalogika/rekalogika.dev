@@ -8,6 +8,9 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 996px) {
