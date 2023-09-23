@@ -4,7 +4,7 @@ title: Using File & FileRepository
 
 When using this framework, the user will primarily work with the
 `FileRepositoryInterface` and `FileInterface` objects.
-## Working With a File Repository
+## Working With the File Repository
 
 ### Create a file
 
@@ -211,15 +211,15 @@ use Rekalogika\Contracts\File\FileInterface;
 
 // Setting the MIME type is usally not necessary as the framework will
 // automatically detect media type
-$file->setMediaType('image/jpeg'); // sets the media type to image/jpeg
+$file->setType('image/jpeg'); // sets the media type to image/jpeg
 
-$mediaType = (string) $file->getType(); // image/jpeg
-$mediaType = $file->getType()->getName(); // image/jpeg
-$mediaType = $file->getType()->getType(); // image
-$mediaType = $file->getType()->getSubType(); // jpeg
-$mediaType = $file->getType()->getCommonExtensions(); // ['jpg', 'jpeg', 'jpe']
-$mediaType = $file->getType()->getExtension(); // jpg
-$mediaType = (string) $file->getType()->getDescription(); // JPEG image
+$type = (string) $file->getType(); // image/jpeg
+$type = $file->getType()->getName(); // image/jpeg
+$type = $file->getType()->getType(); // image
+$type = $file->getType()->getSubType(); // jpeg
+$type = $file->getType()->getCommonExtensions(); // ['jpg', 'jpeg', 'jpe']
+$type = $file->getType()->getExtension(); // jpg
+$type = (string) $file->getType()->getDescription(); // JPEG image
 ```
 
 ### File size & last modified time
@@ -285,7 +285,7 @@ use Rekalogika\Contracts\File\Metadata\HttpMetadataInterface;
 
 // Each of the following will be flush automatically individually, and will
 // require two roundtrips to the storage backend
-$file->setMediaType('image/jpeg');
+$file->setType('image/jpeg');
 $file->setName('foo.jpg');
 
 // The following needs an explicit flush(). It will only require one roundtrip

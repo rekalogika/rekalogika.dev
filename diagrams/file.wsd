@@ -2,6 +2,7 @@
 interface FileRepository {
     +get(FilePointer): File
     +tryGet(FilePointer): ?File
+    +getReference(FilePointer): File
     +clear(): void
     +createFromString(FilePointer, string)
     +createFromStream(FilePointer, resource|Stream)
@@ -37,8 +38,8 @@ interface File {
     +contentAsStream: Stream
     +saveToLocalFile(string): SplFileInfo
     +createLocalTemporaryFile(): SplFileInfo
-    +mediaType: MediaType
-    +setMediaType(string): void
+    +type: FileType
+    +setType(string): void
     +size: int
     +lastModified: DateTime
     +getDerivation(string): FilePointer
@@ -46,7 +47,7 @@ interface File {
 }
 
 File::name *-- FileName
-File::mediaType *-- FileType
+File::type *-- FileType
 
 interface FileName {
     +full: string|Translatable

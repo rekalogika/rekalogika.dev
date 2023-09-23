@@ -22,6 +22,8 @@ the library lets you work with them in the same way.
 * Remote façade pattern in accessing metadata, improves performance with remote
   filesystems. Two metadata queries require only one round trip.
 * Rich metadata support.
+* Option to use lazy-loading proxy for files.
+* Support for file derivations.
 * Separated contracts and implementation. Useful for enforcing architectural
   boundaries. Your domain models doesn't have to depend on the framework.
 ### Interoperability Features
