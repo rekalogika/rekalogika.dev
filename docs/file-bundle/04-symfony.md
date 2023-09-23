@@ -90,6 +90,14 @@ class SomeController
 }
 ```
 
+`FileResponse` accepts additional optional parameters:
+
+* `$status`: HTTP status code. Default: `200`.
+* `$headers`: Array of additional headers. Default: `[]`.
+* `$disposition`: Force the first parameter of the `Content-Disposition` header
+  to the specified value. It can be `attachment` or `inline`. The filename is
+  automatically taken from the metadata.
+
 ## Forms
 
 We provide a `FileType` that works with `FileInterface` objects. This is

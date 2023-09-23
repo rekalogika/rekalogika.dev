@@ -17,21 +17,23 @@ composer require rekalogika/file-association
 
 :::
 
-:::note
-
-This package is tightly integrated with Symfony & Doctrine. Anyone who wishes to
-try integrating this package manually or with another framework should read
-[Entity Association Internal Details](./entity-association-internal).
-
-:::
-
 ## Creating a File Property in an Entity
 
-To create a file property in an entity, you need to:
+To create a file property in an entity that will be managed by this framework,
+you need to:
 
 1. Create a property that accept a `FileInterface`.
-2. Add the attribute `#[WithFileAssociation]` to the entity class.
+2. Add the attribute `#[WithFileAssociation]` to the class.
 3. Add the attribute `#[AsFileAssociation]` to the property.
+
+:::caution
+
+The framework assumes that it can get the ID of the entity by calling the method
+`getId()`. If your entity uses a different mechanism, you need to implement
+`ObjectIdResolverInterface`. See the chapter [Creating Object ID
+Resolver](objectidresolver) for more information.
+
+:::
 
 ```php
 use Rekalogika\Contracts\File\FileInterface;
@@ -39,14 +41,17 @@ use Rekalogika\File\Association\Attribute\WithFileAssociation;
 use Rekalogika\File\Association\Attribute\AsFileAssociation;
 use Rekalogika\File\File;
 
+// highlight-next-line
 #[WithFileAssociation]
 class Product
 {
     /**
      * The file property must accept a FileInterface
      */
+    // highlight-start
     #[AsFileAssociation]
     private ?FileInterface $image = null;
+    // highlight-end
 
     /**
      * The framework needs the ID of the entity. By default, it will call getId()
@@ -87,66 +92,6 @@ class Product
         return $this;
     }
 }
-```
-
-## If Your Entity Does Not Use `getId()`
-
-Then you need to tell the framework how to get the ID of your entity. You need
-to create a class that implements `ObjectIdResolverInterface`.
-
-:::tip Protip
-
-You can have multiple implementations of `ObjectIdResolverInterface` in your
-application. The framework will use the first one that returns a value.
-
-:::
-
-### If it is simply a different method name
-
-If your entity simply uses a different method name, you can reuse the default
-implementation of `ObjectIdResolverInterface`:
-
-```yaml title=config/services.yaml
-services:
-    app.object_id_resolver:
-        class: 'Rekalogika\File\Association\ObjectIdResolver\DefaultObjectIdResolver'
-        args:
-            - 'getIdentifier' # put the method name here
-        tags:
-            - { name: 'rekalogika.file.association.object_id_resolver' }
-```
-
-:::note
-
-`DefaultObjectIdResolver` can handle return types of `string`, `int`, and
-`Stringable`.
-
-:::
-
-### If it is more complicated than that
-
-Then you need to create your own implementation of `ObjectIdResolverInterface`.
-
-```php
-use Rekalogika\Contracts\File\Association\ObjectIdResolverInterface;
-
-class MyObjectIdResolver implements ObjectIdResolverInterface
-{
-    public function getObjectId(object $object): string
-    {
-        // your implementation here
-    }
-}
-```
-
-If you are using autoconfiguration, then it is all set. If not, you need to
-register your class in the service container:
-
-```yaml title=config/services.yaml
-services:
-    App\MyObjectIdResolver:
-        tags:
-            - { name: 'rekalogika.file.association.object_id_resolver' }
 ```
 
 ## Working With Entities & Files

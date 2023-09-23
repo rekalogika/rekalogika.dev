@@ -11,9 +11,9 @@ with your logic in a concise and expressive class.
 
 After Doctrine hydrates an object from the database, this framework gives you
 the control to hydrate additional properties not handled by Doctrine, without
-having to deal with the peculiarities of Doctrine events and Unit of Work. Then,
-after Doctrine persists the changes to the database, it lets you do similarly
-with the properties.
+having to deal with the peculiarities of Doctrine events and Unit of Work.
+Similar things also happen when the object is persisted to the database, or
+removed.
 
 The most common case of this type of tasks is for handling file uploads, of
 which many specialized libraries have already been written. But plenty of other

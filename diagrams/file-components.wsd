@@ -21,5 +21,6 @@ skinparam componentStyle rectangle
 [file-server] --> [file-symfony-bridge]
 [file-symfony-bridge] --> [file]
 [file-symfony-bridge] --> [file-contracts]
+[file-symfony-bridge] --> [file-metadata-contracts]
 
 @enduml
