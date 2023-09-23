@@ -51,12 +51,6 @@ code {
 
 @media screen and (max-width: 576px) {
   .hero__title {
-    font-size: 1.5rem;
-  }
-}
-
-@media screen and ((min-width: 576px) and (max-width: 996px)) {
-  .hero__title {
-    font-size: 2.5rem;
+    font-size: calc(9vw);
   }
 }
