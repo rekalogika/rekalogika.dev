@@ -1,5 +1,5 @@
 ---
-title: Creating Object ID Resolver
+title: Creating an Object ID Resolver
 ---
 
 The framework assumes that the ID of your entity is returned by the method

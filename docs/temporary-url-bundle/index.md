@@ -149,3 +149,35 @@ temporary URL.
 ```
 
 The filter accepts the same options as the `generateUrl()` method above.
+
+## Dealing With Unserializable Resources
+
+If your resource is not serializable, you can create a resource transformer
+method that converts your resource into a serializable object.
+
+```php
+use Rekalogika\TemporaryUrl\Attribute\AsTemporaryUrlResourceTransformer;
+use Rekalogika\TemporaryUrl\Attribute\AsTemporaryUrlServer;
+use Symfony\Component\HttpFoundation\Response;
+
+class MyDataServer
+{
+    /**
+     * This method transforms the resource into a serializable object.
+     */
+    #[AsTemporaryUrlResourceTransformer]
+    public function transform(MyUnserializableData $data): MySerializableData
+    {
+        return new MySerializableData($data);
+    }
+
+   ./**
+      * This uses the transformed data and send it to the client.
+      */
+    #[AsTemporaryUrlServer]
+    public function respond(MySerializableData $data): Response
+    {
+        return new Response('My name is ' . $data->getName());
+    }
+}
+```

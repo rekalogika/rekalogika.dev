@@ -58,14 +58,16 @@ learn how to register the required bundles.
 ### PHP Usage
 
 Wire in the `TemporaryUrlGeneratorInterface` service, and use the
-`generateUrl()` method to generate a temporary URL for a file.
+`generateUrl()` method to generate a temporary URL to a file. It accepts either
+a `FileInterface` or a `FilePointerInterface`.
 
 ```php
 use Rekalogika\TemporaryUrl\TemporaryUrlGeneratorInterface;
 use Rekalogika\File\FileInterface;
+use Rekalogika\File\FilePointerInterface;
 
 /** @var TemporaryUrlGeneratorInterface $temporaryUrlGenerator */
-/** @var FileInterface $file */
+/** @var FileInterface|FilePointerInterface $file */
 
 $url = $temporaryUrlGenerator->generateUrl($file);
 ```
