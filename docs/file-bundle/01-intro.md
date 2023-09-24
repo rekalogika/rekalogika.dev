@@ -22,6 +22,6 @@ MIT
 
 ## Contributing
 
-This framework consists of multiple repositories splitted from a monorepo. Be
-sure to submit issues and pull request to the
+This framework consists of multiple repositories split from a monorepo. Be
+sure to submit issues and pull requests to the
 [rekalogika/file-src](https://github.com/rekalogika/file-src) monorepo.

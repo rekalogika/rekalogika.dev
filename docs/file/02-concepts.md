@@ -7,25 +7,25 @@ import ThemedImage from '@theme/ThemedImage';
 
 ## Terms
 
-* **FileRepository**: manages files in framework, implements
+* **FileRepository**: Manages files in the framework. Implements
   `FileRepositoryInterface`.
-* **File**: a file in a Flysystem filesystem, implements `FileInterface`. Each
-  file is identified by a filesystem identifier and a key. Null filesystem
+* **File**: A file in a Flysystem filesystem. Implements `FileInterface`. Each
+  file is identified by a filesystem identifier and a key. A null filesystem
   identifier denotes that the file is in the local filesystem.
-* **FilePointer**: a pointer to a file, implements `FilePointerInterface`. Like
+* **FilePointer**: A pointer to a file. Implements `FilePointerInterface`. Like
   a file, a file pointer has a filesystem identifier and a key, but nothing
   else.
-* **Filesystem**: a Flysystem filesystem, implements Flysystem's
-  `FilesystemOperator`. The caller should not use it directly, but use the
+* **Filesystem**: A Flysystem filesystem. Implements Flysystem's
+  `FilesystemOperator`. The caller should not use it directly but use the
   `FileRepository` instead.
-* **Local filesystem**: a special Flysystem filesystem initialized by the
-  framework that points to unscoped local filesystem, using '/' as its root
+* **Local filesystem**: A special Flysystem filesystem initialized by the
+  framework that points to an unscoped local filesystem, using '/' as its root
   location.
 
 :::info
 
-A Flysystem filesystem using `LocalFilesystemAdapter` that is setup by
-the user is not considered a local filesystem in this document.
+A Flysystem filesystem using `LocalFilesystemAdapter` that is set up by the user
+is not considered a local filesystem in this document.
 
 :::
 
@@ -33,7 +33,8 @@ the user is not considered a local filesystem in this document.
 
 :::note
 
-'Interface' in the names are stripped for brevity. Simple getters are represented by properties.
+'Interface' in the names are stripped for brevity. Simple getters are
+represented by properties.
 
 :::
 

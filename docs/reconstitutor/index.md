@@ -15,7 +15,7 @@ having to deal with the peculiarities of Doctrine events and Unit of Work.
 Similar things also happen when the object is persisted to the database, or
 removed.
 
-The most common case of this type of tasks is for handling file uploads, of
+The most common case of this type of task is for handling file uploads, of
 which many specialized libraries have already been written. But plenty of other
 cases exist:
 
@@ -57,7 +57,7 @@ of the Composer documentation.
 <Tabs>
 <TabItem value="flex" label="With Symfony Flex">
 
-Open a command console, enter your project directory and execute:
+Open a command console, enter your project directory, and execute:
 
 ```bash
 composer require rekalogika/reconstitutor
@@ -68,7 +68,7 @@ composer require rekalogika/reconstitutor
 
 Step 1: Download the Bundle
 
-Open a command console, enter your project directory and execute the
+Open a command console, enter your project directory, and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
@@ -139,8 +139,8 @@ class Order
 ```
 
 During the fetching of the object from the database, Doctrine will instantiate
-the object and hydrate `$id` and other properties that it manages. Afterwards,
-it will be our reconstitutor's turn to handle the `$paymentReceipt` property.
+the object and hydrate `$id` and other properties that it manages. Afterward, it
+will be our reconstitutor's turn to handle the `$paymentReceipt` property.
 Similar things also happen when the object is persisted to the database, or
 removed.
 

@@ -6,7 +6,7 @@ This chapter describes how file metadata is handled by this library.
 
 ## Primary Metadata
 
-Firstly, `FileInterface` has several methods that returns or sets what can be
+Firstly, `FileInterface` has several methods that return and set what can be
 considered metadata of the file:
 
 ```php
@@ -36,9 +36,9 @@ file.
 These are the metadata objects that are currently implemented:
 
 * `RawMetadataInterface`: Represents the raw metadata object. It is a simple
-  key-value object. The value can be a string, integer, boolean or null.
+  key-value object. The value can be a string, integer, boolean, or null.
 * `FileMetadataInterface`: Represents the metadata that every file has: name,
-  type, size and last modified time.
+  type, size, and last modified time.
 * `HttpMetadataInterface`: Represents metadata used in HTTP responses. It is 
   used when streaming the file to the client over HTTP.
 * `ImageMetadataInterface`: Contains metadata specific to images, including
@@ -111,25 +111,25 @@ destination file.
 
 ## Low-Level Metadata Handling
 
-In a non local filesystem, the library stores a file's metadata in a [sidecar
+In a non-local filesystem, the library stores a file's metadata in a [sidecar
 file](https://en.wikipedia.org/wiki/Sidecar_file) in the JSON format. If the
 file key is `foo/bar.txt`, the metadata file key will be
 `foo/bar.txt.metadata`.
 
 Rationale:
 
-* Supports all filesystem.
-* Uniform way of handling metadata with all filesystem.
+* Supports all filesystems.
+* Uniform way of handling metadata with all filesystems.
 * Simpler administration. i.e. when copying between different filesystems.
 * Implements coarse-grained [remote façade pattern](https://martinfowler.com/eaaCatalog/remoteFacade.html) to improve performance with remote filesystems.
 
-With the local filesystem, the library provides the same interface as above, but
+With the local filesystem, the library provides the same interface as above but
 does not save the metadata to a sidecar file. Instead, the metadata is
 determined from the file and stored in an in-memory cache. Any changes to the
-metadata are not persisted and only valid in the current request, but will be
+metadata are not persisted and are only valid in the current request but will be
 considered if the caller copies or moves the file to a non-local filesystem.
 
 The caller is expected to treat files in the local filesystem as transient
-objects, and expected to copy or move the files to a non-local filesystem if
-they wish to store the file.
+objects and expected to copy or move the files to a non-local filesystem if they
+wish to store the file.
 

@@ -35,8 +35,8 @@ class SomeTest extends TestCase
 
 :::note
 
-Stub dispatcher doesn't do anything. If you want to test the dispatching, you
-need to get the real dispatcher from the container.
+The stub dispatcher doesn't do anything. If you want to test the dispatching,
+you need to get the real dispatcher from the container.
 
 :::
 

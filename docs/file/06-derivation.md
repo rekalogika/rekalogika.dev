@@ -2,13 +2,13 @@
 title: Derivation
 ---
 
-This chapter describes the concept of file derivation and the pipe & filters
+This chapter describes the concept of file derivation and the pipe & filter
 pattern applied to `FileInterface`.
 
 ## Derivation
 
 `FileInterface` supports what we call 'derivation'. A file can have one or more
-derivation of itself. For example, an image file can have a thumbnail, medium,
+derivations of itself. For example, an image file can have a thumbnail, medium,
 and large derivation. A derived file can also be derived further. For example, a
 thumbnail can be in the original aspect ratio, or square-cropped.
 
@@ -52,7 +52,7 @@ not recommended to nest derivations too deep.
 ## Pipes & Filters Pattern
 
 Derivation can be used as the building block of filters. A filter is a service
-that perform opportunistic creation and caching of a derived file from a source
+that performs opportunistic creation and caching of a derived file from a source
 file.
 
 A filter can be applied to a `FileInterface` and does the following:
@@ -65,9 +65,9 @@ A filter can be applied to a `FileInterface` and does the following:
 4. Call `FileRepository::get()` to get the derived file.
    1. If the derived file does not exist, produce the derived file, and write to
       the pointer.
-   2. If the derived file exists and newer than the original file, return it.
-   3. If the derived file exists and older than the original file, produce the
-      derived file, then overwrite the old derived file.
+   2. If the derived file exists and is newer than the original file, return it.
+   3. If the derived file exists and is older than the original file, produce
+      the derived file, then overwrite the old derived file.
 
 The caller can then use the filter to create a modified version of the original
 file without having to worry about the details.

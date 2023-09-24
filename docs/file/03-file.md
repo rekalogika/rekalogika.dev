@@ -116,7 +116,7 @@ $file = $fileRepository->createTemporaryFile();
 
 :::note
 
-The temporary file is represented by special `TemporaryFile` that will be
+The temporary file is represented by a special `TemporaryFile` that will be
 automatically deleted if it is unset or falls out of scope.
 
 :::

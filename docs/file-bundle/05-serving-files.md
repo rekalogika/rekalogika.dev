@@ -2,7 +2,7 @@
 title: Serving Files
 ---
 
-This chapter describes how to serve files to client web browser.
+This chapter describes how to serve files to the client web browser.
 
 ## Streaming Files in a Symfony Controller
 
@@ -17,7 +17,7 @@ composer require rekalogika/file-symfony-bridge
 
 :::
 
-To send a file to client web browser, you can use `FileResponse`:
+To send a file to the web browser, you can use `FileResponse`:
 
 ```php
 use Rekalogika\File\Bridge\Symfony\HttpFoundation\FileResponse;
@@ -39,7 +39,7 @@ class SomeController
 ## Generate a Temporary URL to a File
 
 Rather than creating a controller action to serve a file for every possible
-situations, it is more convenient to generate a temporary URL to a file.
+situation, it is more convenient to generate a temporary URL to a file.
 
 :::info Preparation
 

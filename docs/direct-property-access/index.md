@@ -18,7 +18,7 @@ of the Composer documentation.
 <Tabs>
 <TabItem value="flex" label="With Symfony Flex">
 
-Open a command console, enter your project directory and execute:
+Open a command console, enter your project directory, and execute:
 
 ```bash
 composer require rekalogika/direct-property-access
@@ -29,7 +29,7 @@ composer require rekalogika/direct-property-access
 
 Step 1: Download the Bundle
 
-Open a command console, enter your project directory and execute the
+Open a command console, enter your project directory, and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
@@ -51,7 +51,7 @@ return [
 
 <TabItem value="nonsymfony" label="Non-Symfony Projects">
 
-Open a command console, enter your project directory and execute:
+Open a command console, enter your project directory, and execute:
 
 ```bash
 composer require rekalogika/direct-property-access

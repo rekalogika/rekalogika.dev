@@ -44,7 +44,7 @@ composer require rekalogika/domain-event
 
 Step 1: Download the Bundle
 
-Open a command console, enter your project directory and execute the
+Open a command console, enter your project directory, and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
@@ -84,6 +84,6 @@ MIT
 
 ## Contributing
 
-This framework consists of multiple repositories splitted from a monorepo. Be
-sure to submit issues and pull request to the
+This framework consists of multiple repositories split from a monorepo. Be
+sure to submit issues and pull requests to the
 [`rekalogika/domain-event-src`](https://github.com/rekalogika/domain-event-src) monorepo.

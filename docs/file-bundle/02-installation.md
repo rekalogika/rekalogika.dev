@@ -24,7 +24,7 @@ of the Composer documentation.
 <Tabs>
 <TabItem value="flex" label="With Symfony Flex">
 
-Open a command console, enter your project directory and execute:
+Open a command console, enter your project directory, and execute:
 
 ```bash
 composer require rekalogika/file-bundle
@@ -35,7 +35,7 @@ composer require rekalogika/file-bundle
 
 Step 1: Download the Bundle
 
-Open a command console, enter your project directory and execute the
+Open a command console, enter your project directory, and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash

@@ -155,7 +155,7 @@ be considered identical by `DomainEventManager` and won't be dispatched twice.
 
 This is useful if your entity is working with a million of related objects. By
 implementing `EquatableDomainEventInterface`, you can have your `ObjectChanged`
-event dispatched only once, and occupies only a single spot in the memory,
+event dispatched only once and occupy only a single spot in the memory,
 instead of a million times.
 
 ```php
@@ -195,8 +195,8 @@ class Post implements DomainEventEmitterInterface
 
 :::note
 
-Equatable domain events only applies to pre-flush and post-flush events.
-Immediate domain events are dispatched immediately, and there is no chance for
-the equatable check to take place.
+Equatable domain events only apply to pre-flush and post-flush events. Immediate
+domain events are dispatched immediately, and there is no chance for the
+equatable check to take place.
 
 :::

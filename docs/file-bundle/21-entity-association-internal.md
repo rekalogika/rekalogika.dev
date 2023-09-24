@@ -5,7 +5,7 @@ title: File Association Internal Details
 ## Where The Files Are Stored
 
 `FileLocationResolverInterface` decides where to store the file. It takes the
-entity instance and the name of the property holding the file, and outputs a
+entity instance and the name of the property holding the file and outputs a
 `FilePointer` describing where the file in that property will be stored. The
 default implementation `DefaultFileLocationResolver` stores files into the
 filesystem with the identifier 'default' and the key similar to the following:
@@ -20,13 +20,13 @@ entity/ffa87ef3fc5388bc8b666e2cec17d27cc493d0c1/image/e5/80/72/6d/31337
 * B: SHA-1 hash of the entity's fully-qualified class name.
 * C: Property name.
 * D: Hashed directories of the entity's ID. The ID is hashed using SHA-1, then
-  splitted by 2 characters each. Then, the first four of them are taken to form
+  split by 2 characters each. Then, the first four of them are taken to form
   the directory structure.
 * E: The entity ID.
 
 This default should be sufficient in most cases, for all entities, and all
 filesystems. It masks internal details (entity class names). It does not pile
-too many files in one directory (some filesystems struggle with huge amount of
+too many files in one directory (some filesystems struggle with a huge amount of
 files in a directory). The ordering is chosen to make it easier for manual
 administration tasks.
 
@@ -52,7 +52,7 @@ services:
 ## About File Names
 
 Like modern key-value cloud storage services, this framework uses the concept of
-'keys', not 'paths'. The file name is not part of the key, but stored in the
+'keys', not 'paths'. The file name is not part of the key but is stored in the
 metadata, along with other properties of the file. The original file name is
 never taken into consideration when determining where to store the file.
 
@@ -76,7 +76,7 @@ entity.
 ## How It Works
 
 The storage key of the file is deterministic. It is determined only by the
-object's class name, the object's ID and the name of the property containing the
+object's class name, the object's ID, and the name of the property containing the
 file. As long as those don't change, the key will remain the same.
 
 When persisting an entity, the framework will calculate the destination storage
@@ -96,7 +96,7 @@ rekalogika/reconstitutor ➡️ `InterfaceReconstitutor` & `AttributeReconstitut
 ➡️ `FileAssociationManager` ➡️ `FileRepository` (from rekalogika/file).
 
 `InterfaceReconstitutor` & `AttributeReconstitutor` are the entry points of this
-package. They execute methods of `FileAssociationManager` which work with the
+package. They execute methods of `FileAssociationManager` which works with the
 entities and `FileRepository` to manage the association between the entities and
 files.
 

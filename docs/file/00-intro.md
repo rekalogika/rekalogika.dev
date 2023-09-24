@@ -19,13 +19,13 @@ the library lets you work with them in the same way.
 * Caches and stores metadata in a sidecar file. Uniform metadata support across
   all filesystems.
 * Uses the repository pattern for files.
-* Remote façade pattern in accessing metadata, improves performance with remote
+* Remote façade pattern in accessing metadata. Improves performance with remote
   filesystems. Two metadata queries require only one round trip.
 * Rich metadata support.
 * Option to use lazy-loading proxy for files.
 * Support for file derivations.
 * Separated contracts and implementation. Useful for enforcing architectural
-  boundaries. Your domain models doesn't have to depend on the framework.
+  boundaries. Your domain models don't have to depend on the framework.
 ### Interoperability Features
 
 * Adapters for Symfony HttpFoundation, Form, and Validator.
@@ -66,6 +66,6 @@ MIT
 
 ## Contributing
 
-This framework consists of multiple repositories splitted from a monorepo. Be
-sure to submit issues and pull request to the
+This framework consists of multiple repositories split from a monorepo. Be
+sure to submit issues and pull requests to the
 [rekalogika/file-src](https://github.com/rekalogika/file-src) monorepo.

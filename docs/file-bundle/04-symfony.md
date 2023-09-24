@@ -20,10 +20,10 @@ composer require rekalogika/file-symfony-bridge
 
 * Adapters to convert HttpFoundation `File` objects to a `FileInterface` and
   vice versa, with special handling for `UploadedFile`.
-* `FileResponse` for streaming a `FileInterface` to client web browser.
+* `FileResponse` for streaming a `FileInterface` to the client web browser.
 * `FileType` form that works with `FileInterface` objects.
 * A form transformer `FileTransformer` that you can add to an existing Symfony
-  `FileType` fields so that it gives us a `FileInterface` instead of an
+  `FileType` fields so that it gives us a `FileInterface` instead of a
   `UploadedFile` object.
 * A form extension `FileTypeExtension` that you can optionally register to
   automatically convert all the existing Symfony `FileType` so they all give us

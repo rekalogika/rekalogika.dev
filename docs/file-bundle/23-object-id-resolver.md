@@ -16,7 +16,7 @@ application. The framework will use the first one that returns a value.
 :::info
 
 If you have a custom implementation of `ObjectIdResolverInterface`, the default
-implementation is still active, but has a lower priority than your custom
+implementation is still active but has a lower priority than your custom
 implementation.
 
 :::

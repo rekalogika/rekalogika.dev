@@ -27,13 +27,13 @@ class Post
 ```
 
 Therefore, you can reliably store the ID in your event objects, instead of the
-object itself. Using the ID in the events mean your events can be realiably
+object itself. Using the ID in the events means your events can be reliably
 serialized, and you can pass them anywhere without alteration.
 
 ## Choosing Dispatching Strategy
 
-If you want to something similar that you are used to do with application
-events, you probably want post-flush strategy.
+If you want to do something similar to what you are used to doing with
+application events, you probably want the post-flush strategy.
 
 Use post-flush for things that should occur only if the change is successful,
 like notifications, etc.
