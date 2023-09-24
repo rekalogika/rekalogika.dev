@@ -19,6 +19,10 @@ png: $(LIGHTPNG) $(DARKPNG)
 start:
 	npx docusaurus start
 
+.PHONY: build
+build:
+	npx docusaurus build
+
 .PHONY: clean
 clean:
 	npx docusaurus clear
