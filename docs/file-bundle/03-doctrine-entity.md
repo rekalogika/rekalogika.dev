@@ -31,7 +31,7 @@ you need to:
 The framework assumes that it can get the ID of the entity by calling the method
 `getId()`. If your entity uses a different mechanism, you need to implement
 `ObjectIdResolverInterface`. See the chapter [Creating Object ID
-Resolver](objectidresolver) for more information.
+Resolver](object-id-resolver) for more information.
 
 :::
 
