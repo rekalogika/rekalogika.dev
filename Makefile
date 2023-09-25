@@ -7,7 +7,10 @@ DARKSVG=$(patsubst diagrams/%.wsd, static/diagrams/dark/%.svg, $(WSD))
 LIGHTPNG=$(patsubst diagrams/%.wsd, static/diagrams/light/%.png, $(WSD))
 DARKPNG=$(patsubst diagrams/%.wsd, static/diagrams/dark/%.png, $(WSD))
 
-all: svg
+all: svg static/img/social.png
+
+static/img/social.png: src/images/social.svg
+	inkscape -o $@ -w 1200 -h 600 $<
 
 .PHONY: svg
 svg: $(LIGHTSVG) $(DARKSVG)

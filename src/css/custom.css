@@ -4,8 +4,7 @@
  * work well for content-centric websites.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=JetBrains+Mono:ital,wght@0,500;0,800;1,500;1,800&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
+ @import url('https://fonts.googleapis.com/css2?family=Jaldi:wght@700&family=JetBrains+Mono:ital,wght@0,500;0,800;1,500;1,800&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* You can override the default Infima variables here. */
 :root {
@@ -21,10 +20,11 @@
 
   --ifm-font-family-base: 'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --ifm-font-family-monospace: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --ifm-heading-font-family: 'Inclusive Sans', 'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --ifm-heading-font-family: 'Jaldi', 'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  
   --ifm-font-size-base: 1rem;
   --ifm-code-font-size: 88%;
-  /* --ifm-heading-font-weight: 400; */
+  --ifm-heading-font-weight: 600;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -45,6 +45,20 @@ code {
 
 .markdown h1:first-child {
   --ifm-h1-font-size: 2.4rem;
+}
+
+.hero {
+  background: #e95940ff;
+}
+
+.navbar__brand {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: var(--ifm-heading-font-weight);
+}
+
+.hero__title {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: var(--ifm-heading-font-weight);
 }
 
 .hero__subtitle {
