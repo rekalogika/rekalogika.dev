@@ -1,5 +1,6 @@
 ---
 title: Usage
+description: Explains how to use the reconstitutor library.
 ---
 
 Because everyone knows about file uploads, we are going to use it as an
@@ -13,7 +14,7 @@ and so much more. It also utilizes this library behind the scenes.
 
 :::
 
-## Class Reconstitutor
+## Reconstitution of a Class
 
 This will apply to objects that are instances of a specific class, subclasses
 of a specific class, or implement a specific interface.
@@ -51,6 +52,12 @@ class Order
     }
 }
 ```
+
+:::note
+
+In the above class, Doctrine related attributes are omitted for brevity.
+
+:::
 
 During the fetching of the object from the database, Doctrine will instantiate
 the object and hydrate `$id` and other properties that it manages. Afterward, it
@@ -125,10 +132,67 @@ final class OrderReconstitutor extends AbstractClassReconstitutor
 }
 ```
 
-Reconstitutor Abstract Class
-----------------------------
+## Reconstitution of Classes With a Specific PHP Attribute
 
-The example above uses `AbstractClassReconstitutor` where our target object is
-matched using the class provided by `getClass()`. There is also
-`AbstractAttributeReconstitutor` that operates on objects that have a specific
-PHP attribute.
+Alternatively, you can also target classes with a specific PHP attribute. The
+following modifies above example to use an attribute for targeting.
+
+The entity class:
+
+```php
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Uid\UuidV7;
+
+// highlight-next-line
+#[MyAttribute]
+class Order
+{
+    // ...
+}
+```
+
+And the reconstitutor class:
+
+```php
+use Rekalogika\Reconstitutor\AbstractAttributeReconstitutor;
+use Symfony\Component\HttpFoundation\File\File;
+
+final class OrderReconstitutor extends AbstractAttributeReconstitutor
+{
+    /**
+     * If the object has this attribute, then we are going to handle it.
+     */
+    // highlight-start
+    public static function getAttributeClass(): string
+    {
+        return MyAttribute::class;
+    }
+    // highlight-end
+
+    public function onSave(object $order): void
+    {
+        // ...
+    }
+
+    public function onLoad(object $order): void
+    {
+        // ...
+    }
+
+    public function onRemove(object $order): void
+    {
+        // ...
+    }
+}
+```
+
+## `get()` and `set()` Helpers
+
+In reconstitution, you should get and set the object's properties directly,
+bypassing the getters and setters, just like Doctrine does. To help you with
+that, the abstract classes provide the `get()` and `set()` helpers.
+
+These are just forwarders to our custom implementation of the familiar Symfony
+PropertyAccess (see [rekalogika/direct-property-access](/direct-property-access)
+for more information). Therefore, you can catch the same exceptions as you would
+when using the original Symfony PropertyAccess.
