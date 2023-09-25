@@ -11,9 +11,9 @@ variable. This installation happens on several opportunities:
 * During the initialization of `ManagerRegistry`.
 * During the initialization of an `EntityManagerInterface`.
 
-When any of these don't occur, there is no opportunity to install the event
-dispatcher. This usually happens only in isolated unit tests. To fix the
-problem, you can install a stub event dispatcher manually like the following.
+If none of these occurs, there is no opportunity to install the event dispatcher.
+This usually happens only in isolated unit tests. To fix the problem, you can
+install a stub event dispatcher manually like this.
 
 ```php
 use PHPUnit\Framework\TestCase;
