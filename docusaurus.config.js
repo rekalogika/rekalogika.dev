@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Rekalogika.DEV',
-  // tagline: 'Dinosaurs are cool',
+  tagline: 'Open Source Libraries for PHP, Symfony, and more.',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -23,7 +23,7 @@ const config = {
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -85,6 +85,11 @@ const config = {
           {
             href: 'https://github.com/rekalogika',
             label: 'GitHub',
+            position: 'right',
+          },
+          {
+            href: 'https://packagist.org/packages/rekalogika/',
+            label: 'Packagist',
             position: 'right',
           },
         ],

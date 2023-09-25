@@ -13,7 +13,7 @@ function HomepageHeader() {
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
-        {/* <p className="hero__subtitle">{siteConfig.tagline}</p> */}
+        <p className="hero__subtitle">{siteConfig.tagline}</p>
       </div>
     </header>
   );
@@ -22,7 +22,7 @@ function HomepageHeader() {
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout>
+    <Layout description="{siteConfig.tagLine}">
       <HomepageHeader />
       <main>
         <Features />

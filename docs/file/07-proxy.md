@@ -38,7 +38,7 @@ use Rekalogika\Contracts\File\FileInterface;
 $realFile = FileProxy::getFile($file);
 ```
 
-:::note
+:::tip Protip
 
 You can pass any `FileInterface` to `FileProxy::getFile()`. If the file is not
 a proxy, it will be returned as is.
