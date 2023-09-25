@@ -173,7 +173,7 @@ $name = (string) $file->getName(); // my-photo.jpg
 // If you absolutely don't want an extension, you can set it directly to the
 // metadata
 
-$file->get(FileMetadataInterface::class)->setFileName('my-photo');
+$file->get(FileMetadataInterface::class)->setName('my-photo');
 $file->flush();
 
 // getName() returns FileNameInterface that provides several convenient methods
