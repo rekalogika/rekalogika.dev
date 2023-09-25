@@ -23,6 +23,10 @@ start:
 build:
 	npx docusaurus build
 
+.PHONY: serve
+serve:
+	npx docusaurus serve
+
 .PHONY: clean
 clean:
 	npx docusaurus clear
