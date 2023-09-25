@@ -88,6 +88,18 @@ the `image_resize` filter from the `rekalogika/file-image` package.
 <img src="{{ my_image|image_resize(200)|temporary_url }}" />
 ```
 
+:::info
+
+The `image_resize` filter requires the `rekalogika/file-image` package:
+
+```bash
+composer require rekalogika/file-image
+```
+
+Read more in the [Filtering](filtering) section.
+
+:::
+
 ### More Information
 
 The `generateUrl()` method and the `temporary_url` Twig filter accept several
