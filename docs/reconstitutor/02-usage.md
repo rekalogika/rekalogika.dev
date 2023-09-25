@@ -189,10 +189,10 @@ final class OrderReconstitutor extends AbstractAttributeReconstitutor
 ## `get()` and `set()` Helpers
 
 In reconstitution, you should get and set the object's properties directly,
-bypassing the getters and setters, just like Doctrine does. To help you with
-that, the abstract classes provide the `get()` and `set()` helpers.
+bypassing the getters and setters, just like what Doctrine does. To help you
+with that, the abstract classes provide the `get()` and `set()` helpers.
 
 These are just forwarders to our custom implementation of the familiar Symfony
-PropertyAccess (see [rekalogika/direct-property-access](/direct-property-access)
+PropertyAccess (see [rekalogika/direct-property-access](../direct-property-access)
 for more information). Therefore, you can catch the same exceptions as you would
 when using the original Symfony PropertyAccess.
