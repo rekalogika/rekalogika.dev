@@ -8,8 +8,23 @@ import TabItem from '@theme/TabItem';
 Implementation of Symfony's `PropertyAccessorInterface` that reads and writes
 directly to the object's properties, bypassing getters and setters.
 
-Installation
-------------
+## Synopsis
+
+```php
+use Rekalogika\DirectPropertyAccess\DirectPropertyAccessor;
+
+class Person
+{
+    private string $name = 'Jane';
+}
+
+$propertyAccessor = new DirectPropertyAccessor();
+
+$name = $propertyAccessor->getValue($person, 'name'); // Jane
+$propertyAccessor->setValue($person, 'name', 'John');
+```
+
+## Installation
 
 Make sure Composer is installed globally, as explained in the
 [installation chapter](https://getcomposer.org/doc/00-intro.md)
@@ -59,8 +74,7 @@ composer require rekalogika/direct-property-access
 </TabItem>
 </Tabs>
 
-Usage
------
+## Usage
 
 In Symfony projects, you can autowire `DirectPropertyAccessor`. In other
 projects, you can simply instantiate it.
@@ -71,16 +85,23 @@ for more information on how to use it. The difference is that
 `DirectPropertyAccessor` does not call any of the object's methods, but reads
 and writes directly to the object's properties, even if they are private.
 
-Caveats
--------
+## Caveats
 
 Currently does not support arrays and paths beyond one level deep.
 
-Credits
--------
+## Credits
 
 This project took inspiration from the following projects.
 
 * [Symfony Property Access](https://github.com/symfony/property-access)
 * [kwn/reflection-property-access](https://github.com/kwn/reflection-property-access)
 * [nelmio/alice](https://github.com/nelmio/alice/blob/master/src/PropertyAccess/ReflectionPropertyAccessor.php)
+
+## License
+
+MIT
+
+## Contributing
+
+Issues and pull requests should be filed in the GitHub repository
+[rekalogika/direct-property-access](https://github.com/rekalogika/direct-property-access).
