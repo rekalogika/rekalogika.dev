@@ -13,7 +13,7 @@ packages within a Symfony application.
 * DX improvement, less micro-management of entity-file relations.
 * Reads and writes directly into the file properties, even if private. You are
   free to have business logic in the getters and setters.
-* Doesn't require you to update another property of the entity (`lastUpdated`)
+* Doesn't require you to update another property of the entity (`lastUpdated`?)
   just to make sure the correct Doctrine events will be fired.
 
 ## License

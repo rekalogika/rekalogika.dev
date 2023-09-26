@@ -70,15 +70,13 @@ class SomeService
 }
 ```
 
-Rationale
----------
+## Rationale
 
 We are using PSR-16 mostly as an expiring key-value storage. While PSR-6 and
 Symfony's CacheInterface are more powerful and easier to use for caching things,
 we don't feel their interfaces are suitable for key-value storage.
 
-Credits
--------
+## Credits
 
 This package is just a service definition. The actual implementation is done by
 the Symfony project; they just don't make the service available by default.

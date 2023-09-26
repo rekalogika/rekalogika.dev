@@ -153,7 +153,7 @@ The filter accepts the same options as the `generateUrl()` method above.
 ## Dealing With Unserializable Resources
 
 If your resource is not serializable, you can create a resource transformer
-method that converts your resource into a serializable object.
+method that converts your resource into an intermediate serializable object.
 
 ```php
 use Rekalogika\TemporaryUrl\Attribute\AsTemporaryUrlResourceTransformer;
@@ -181,3 +181,7 @@ class MyDataServer
     }
 }
 ```
+
+Using the above example, you will be able to generate a temporary URL to
+`MyUnserializableData`. The framework will automatically transform
+`MyUnserializableData` to `MySerializableData` behind the scenes.
