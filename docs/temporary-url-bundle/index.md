@@ -185,3 +185,12 @@ class MyDataServer
 Using the above example, you will be able to generate a temporary URL to
 `MyUnserializableData`. The framework will automatically transform
 `MyUnserializableData` to `MySerializableData` behind the scenes.
+
+## License
+
+MIT
+
+## Contributing
+
+Issues and pull requests should be filed in the GitHub repository
+[rekalogika/temporary-url-bundle](https://github.com/rekalogika/temporary-url-bundle).

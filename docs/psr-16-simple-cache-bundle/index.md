@@ -83,3 +83,12 @@ the Symfony project; they just don't make the service available by default.
 
 * [Adapters For Interoperability between PSR-6 and PSR-16 Cache](https://symfony.com/doc/current/components/cache/psr6_psr16_adapters.html)
 * [Service definition by Tobion](https://github.com/symfony/symfony/issues/28918#issuecomment-433489302)
+
+## License
+
+MIT
+
+## Contributing
+
+Issues and pull requests should be filed in the GitHub repository
+[rekalogika/psr-16-simple-cache-bundle](https://github.com/rekalogika/psr-16-simple-cache-bundle).
