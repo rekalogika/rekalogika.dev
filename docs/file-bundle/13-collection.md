@@ -175,3 +175,8 @@ foreach ($product->getImages() as $image) {
     $description = $image->getType()->getDescription(); // "JPEG image", etc.
 }
 ```
+
+## Indexing and Querying by File Properties
+
+`AbstractFile` uses `EmbeddedMetadata` under the hood. Read more about it in the
+[Replicating Metadata in Entities](replicating-metadata-in-entities) section.

@@ -11,8 +11,8 @@ packages within a Symfony application.
 * Requires only a single property in the entity for each associated file.
 * File properties are file properties. It is not required to store any of the
   file's properties in the entity associated with the file.
-* Option to replicate the file metadata in the entity, without changing how you
-  work with files.
+* Having said that, there is an option to replicate the file metadata in the
+  entity, and without changing how you work with files.
 * Abstract class to ease implementing one-entity-to-many-files relations.
 * Reads and writes directly into the file properties, even if private. You are
   free to have business logic in the getters and setters.

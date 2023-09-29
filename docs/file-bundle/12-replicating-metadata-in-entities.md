@@ -138,3 +138,18 @@ metadata, you need to call `flush()` on the entity manager to save the metadata
 to the database.
 
 :::
+
+## Using The Metadata Fields for Querying and Indexing
+
+`EmbeddedMetadata` is a [Doctrine embeddable](https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/embeddables.html) that contains the following fields:
+
+* `name`: The file name.
+* `size`: The file size in bytes.
+* `type`: The file MIME type.
+* `modificationTime`: The file modification time.
+* `width`: The width if the file is an image.
+* `height`: The height if the file is an image.
+* `other`: Other metadata that is not covered by the above fields.
+
+You can use these fields (other than the `other`) to query and index the files
+in your database.
