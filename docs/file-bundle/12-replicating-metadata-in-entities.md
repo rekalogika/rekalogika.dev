@@ -23,7 +23,7 @@ to have the file's metadata stored in the entity. For example:
   their metadata.
 
 Using the method described in this chapter, you will be able to accomplish that
-by replicating the files' metadata in your entities and does not require you
+by replicating the files' metadata in your entities and it does not require you
 to change the way you work with files.
 
 ## Execution
