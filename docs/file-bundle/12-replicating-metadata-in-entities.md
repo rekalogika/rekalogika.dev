@@ -6,7 +6,7 @@ This chapter describes how to replicate file metadata in your entities.
 
 :::note
 
-This feature is still untested.
+This feature is only nominally tested.
 
 :::
 
