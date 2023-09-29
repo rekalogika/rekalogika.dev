@@ -7,7 +7,7 @@ relation between a Doctrine entity and several files.
 
 :::note
 
-This feature is only nominally tested.
+This feature is currently only nominally tested.
 
 :::
 

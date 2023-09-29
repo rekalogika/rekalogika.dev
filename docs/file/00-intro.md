@@ -48,11 +48,13 @@ The File framework consists of several components.
   metadata support.
 * **rekalogika/file-bundle**: Integrates the library with Symfony.
 * **rekalogika/file-association**: Provides support for associating files with
-  Doctrine entities.
+* **rekalogika/file-association-entity**: Utilities for handling files inside
+  domain entities.
 * **rekalogika/file-contracts**: Contains the interfaces and contracts used by
   the library.
 * **rekalogika/file-derivation**: Library for creating derived files.
 * **rekalogika/file-image**: Provides image resizing filter.
+* **rekalogika/file-metadata**: Classes that represent file metadata.
 * **rekalogika/file-metadata-contracts**: Contains additional interfaces
   describing file metadata.
 * **rekalogika/file-oneup-uploader-bridge**: Adapter for OneupUploaderBundle.

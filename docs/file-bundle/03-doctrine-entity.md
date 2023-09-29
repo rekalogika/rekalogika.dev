@@ -55,8 +55,8 @@ class Product
 
     /**
      * The framework needs the ID of the entity. By default, it will call getId()
-     * of the object to get the ID. If your entity doesn't use getId(), read
-     * the next section.
+     * of the object to get the ID. If your entity doesn't use getId(), you need
+     * to create your implementation of ObjectIdResolverInterface.
      */
     public function getId(): string
     {
