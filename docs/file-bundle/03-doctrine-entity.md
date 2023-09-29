@@ -22,7 +22,7 @@ composer require rekalogika/file-association
 To create a file property in an entity that will be managed by this framework,
 you need to:
 
-1. Create a property that accepts a `FileInterface``.
+1. Create a property that accepts a `FileInterface`.
 2. Add the attribute `#[WithFileAssociation]` to the class.
 3. Add the attribute `#[AsFileAssociation]` to the property.
 
@@ -30,7 +30,7 @@ you need to:
 
 The framework assumes that it can get the ID of the entity by calling the method
 `getId()`. If your entity uses a different mechanism, you need to implement
-`ObjectIdResolverInterface`. See the chapter [Creating Object ID
+`ObjectIdResolverInterface`. See the chapter [Object ID
 Resolver](object-id-resolver) for more information.
 
 :::

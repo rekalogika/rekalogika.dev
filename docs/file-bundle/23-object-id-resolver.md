@@ -1,10 +1,14 @@
 ---
-title: Creating an Object ID Resolver
+title: Object ID Resolver
 ---
 
-The framework assumes that the ID of your entity is returned by the method
-`getId()`. If your entity uses a different mechanism, you need to create an
-implementation of `ObjectIdResolverInterface`.
+An object ID resolver takes an object and returns its ID. The framework uses an
+object ID resolver as one of the parameters used to determine where to store the
+file.
+
+The default object ID resolver assumes that the ID of your entity is returned by
+the method `getId()`. If your entity uses a different mechanism, you need to
+create your own implementation of `ObjectIdResolverInterface`.
 
 :::tip Protip
 

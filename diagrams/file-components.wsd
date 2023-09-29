@@ -4,6 +4,7 @@ skinparam componentStyle rectangle
 
 [file] --> [file-contracts]
 [file] --> [file-metadata-contracts]
+[file] --> [file-metadata]
 [file-association] --> [file-association-contracts]
 [file-association] --> [file-contracts]
 [file-bundle] --> [file]
@@ -22,5 +23,8 @@ skinparam componentStyle rectangle
 [file-symfony-bridge] --> [file]
 [file-symfony-bridge] --> [file-contracts]
 [file-symfony-bridge] --> [file-metadata-contracts]
+[file-association-entity] --> [file-contracts]
+[file-association-entity] --> [file-metadata]
+[file-metadata] --> [file-metadata-contracts]
 
 @enduml
