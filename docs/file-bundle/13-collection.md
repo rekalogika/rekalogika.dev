@@ -1,5 +1,5 @@
 ---
-title: Implementing Collection of Files
+title: Implementing a Collection of Files
 ---
 
 This chapter describes how to implement a collection of files, or one-to-many
@@ -171,6 +171,7 @@ $product
     ->addImage($image3);
 
 foreach ($product->getImages() as $image) {
-    echo $image->getName();
+    $name = $image->getName(); // product_image_1.jpg, etc.
+    $description = $image->getType()->getDescription(); // "JPEG image", etc.
 }
 ```

@@ -16,8 +16,9 @@ This framework gives you the convenience of requiring only a single property to
 associate a file with an entity. However, there are cases where it can be useful
 to have the file's metadata stored in the entity. For example:
 
-* To optimize performance together with our lazy-loading feature, especially
-  when you are dealing with a lot of entities and/or files.
+* To optimize performance together with our [lazy-loading
+  feature](lazy-loading), especially when you are dealing with a lot of entities
+  and/or files.
 * You need to use the database to index, search, or sort the files based on
   their metadata.
 
