@@ -2,6 +2,9 @@
 title: Implementing a Collection of Files
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This chapter describes how to implement a collection of files, or one-to-many
 relation between a Doctrine entity and several files.
 
@@ -13,11 +16,12 @@ This feature is currently only nominally tested.
 
 ## Summary
 
-This is what we do to implement one-to-many relation between an entity and
+This is what we do to implement a one-to-many relation between an entity and
 several files:
 
 1. Create a new entity that will represent a file. For convenience, we provide
-   `AbstractFile` that your file entity can extend.
+   `AbstractFile` or `FileTrait` that your entity can extend or use.
+
 2. Create a one-to-many relation from an entity to the entity in #1.
    
 :::info Preparation
@@ -35,6 +39,13 @@ composer require rekalogika/file-association-entity
 
 In the following example, we will be creating an entity `Product` that will
 have multiple `Image`s.
+
+You will need your `Product` entity to extend `AbstractFile`. Alternatively, if
+your entity needs to extend another entity, you can use the trait `FileTrait`
+instead.
+
+<Tabs>
+<TabItem value="abstract" label="By Extending AbstractFile">
 
 Create the `Image` entity by extending `AbstractFile`. The following are the
 relevant parts.
@@ -67,6 +78,69 @@ class Image extends AbstractFile
     // ...
 }
 ```
+
+</TabItem>
+
+<TabItem value="trait" label="By Using FileTrait">
+
+Create the `Image` entity by using the `FileTrait`. The following are the
+relevant parts.
+
+```php
+use Doctrine\ORM\Mapping as ORM;
+use Rekalogika\Domain\File\Association\Entity\AbstractFile;
+use Rekalogika\Contracts\File\FileInterface;
+
+#[ORM\Entity]
+class Image implements FileInterface
+{
+    use FileTrait;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Product $product = null;
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): static
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+}
+```
+
+If you don't use attributes to configure your Doctrine mappings, you will need
+to add the following configuration to the Doctrine's mapping configuration.
+
+<Tabs>
+
+<TabItem value="xml" label="XML">
+
+```xml
+<doctrine-mapping>
+    <!-- ... -->
+    <entity name="Image">
+        <!-- ... -->
+        <embedded
+             name="metadata"
+             class="Rekalogika\Domain\File\Association\Entity\EmbeddedMetadata" />
+    </entity>
+    <!-- ... -->
+</doctrine-mapping>
+```
+
+</TabItem>
+
+</Tabs>
+
+
+</TabItem>
+</Tabs>
 
 ## The `one-to-many` Side
 
@@ -154,8 +228,8 @@ class Product
 
 ## Using The Relation
 
-An `AbstractEntity` implements `FileInterface`. Therefore, with the example
-above, you can treat the `Image` entity as a file.
+By following the guide above, your `Image` entity is a `FileInterface`.
+Therefore, with the example above, you can treat the `Image` entity as a file.
 
 ```php
 use Rekalogika\File\File;
