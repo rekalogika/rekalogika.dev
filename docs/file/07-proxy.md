@@ -24,6 +24,13 @@ proxy to the real thing. It behaves the same way as a real `FileInterface`
 object, except that it will throw `FileNotFoundException` if the file is not
 found when you are trying to use it.
 
+:::info
+
+If the file is already in the cache of the `FileRepositoryInterface`, then the
+real file will be returned instead of a proxy.
+
+:::
+
 ## Getting The Real File from a Proxy
 
 To get the real file from a proxy, you can call the static method
@@ -31,6 +38,7 @@ To get the real file from a proxy, you can call the static method
 
 ```php
 use Rekalogika\Contracts\File\FileInterface;
+use Rekalogika\Contracts\File\FileProxy;
 
 /** @var FileInterface $file */
 

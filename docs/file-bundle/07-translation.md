@@ -6,7 +6,7 @@ This chapter explains localization support in the framework.
 
 ## Translatable Strings
 
-Currently the framework supports localization in a few places:
+The framework supports localization in several places, including:
 
 * File names. For displaying 'Untitled' in the UI if the file name is null.
 * File type description. For displaying 'Unknown file type' if the file type is

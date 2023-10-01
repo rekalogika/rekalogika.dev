@@ -25,6 +25,8 @@ skinparam componentStyle rectangle
 [file-symfony-bridge] --> [file-metadata-contracts]
 [file-association-entity] --> [file-contracts]
 [file-association-entity] --> [file-metadata]
+[file-association-entity] --> [file-null]
 [file-metadata] --> [file-metadata-contracts]
+[file-null] --> [file-contracts]
 
 @enduml
