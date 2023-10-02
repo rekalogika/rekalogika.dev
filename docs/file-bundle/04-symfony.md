@@ -1,5 +1,5 @@
 ---
-title: Symfony Integration
+title: Integration With Symfony Components
 ---
 
 This chapter describes how to integrate this framework with the typical Symfony
@@ -68,7 +68,7 @@ use Rekalogika\Contracts\File\FileInterface;
 $httpFoundationFile = ToHttpFoundationFileAdapter::adapt($file);
 ```
 
-## Streaming a FileInterface
+## Streaming a `FileInterface`
 
 To stream a `FileInterface` to the client's web browser, you can use
 `FileResponse`.

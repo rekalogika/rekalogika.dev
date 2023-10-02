@@ -41,7 +41,7 @@ composer require rekalogika/file-association-entity
 
 In short, you need to:
 
-1. Add a property with `EmbeddedMetadata` type. This is a Doctrine embeddable
+1. Add a property with `EmbeddedMetadata` type. This is a [Doctrine embeddable](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/embeddables.html)
    that implements `RawMetadataInterface` we will be using to store the file's
    metadata.
 2. Modify the getter of the file property so that it returns a decorated
@@ -128,8 +128,8 @@ class Product
 
 After the change, calling the setter will still give you a `FileInterface` that
 you can use like before. But behind the scenes, any reads to the metadata will
-be done from the data stored in the entity. On the other hand, writes to
-metadata are saved to both the file and the entity.
+be done from the data stored in the entity. And any writes to the metadata are
+saved to both the file and the entity.
 
 :::info
 
@@ -141,15 +141,56 @@ to the database.
 
 ## Using The Metadata Fields for Querying and Indexing
 
-`EmbeddedMetadata` is a [Doctrine embeddable](https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/embeddables.html) that contains the following fields:
+`EmbeddedMetadata` is a [Doctrine embeddable](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/embeddables.html) that contains the following fields:
 
 * `name`: The file name.
 * `size`: The file size in bytes.
 * `type`: The file MIME type.
 * `modificationTime`: The file modification time.
-* `width`: The width if the file is an image.
-* `height`: The height if the file is an image.
+* `width`: The width, if the file is an image.
+* `height`: The height, if the file is an image.
 * `other`: Other metadata that is not covered by the above fields.
 
 You can use these fields (other than the `other`) to query and index the files
 in your database.
+
+## Mandatory File Properties
+
+If your file property does not accept a null value, you need to modify the
+setter like the following.
+
+```php
+use Doctrine\ORM\Mapping\Entity;
+use Rekalogika\Contracts\File\FileInterface;
+use Rekalogika\Domain\File\Association\Entity\FileDecorator;
+use Rekalogika\Domain\File\Null\NullFile;
+use Rekalogika\File\Association\Attribute\WithFileAssociation;
+use Rekalogika\File\Association\Attribute\AsFileAssociation;
+
+#[Entity]
+#[WithFileAssociation]
+class Product
+{
+    // highlight-start
+    // $image is not nullable
+    #[AsFileAssociation]
+    private FileInterface $image;
+    // highlight-end
+
+    // ...
+
+    public function setImage(FileInterface $image): self
+    {
+        // highlight-start
+        // make sure the image is not unset, otherwise the next line won't work
+        $this->image = new NullFile();
+
+        // setFileMandatory is identical to setFile, except it does not accept
+        // null value and works with properties that does not accept null
+        FileDecorator::setFileMandatory($file, $this->file, $this->fileMetadata);
+        // highlight-end
+
+        return $this;
+    }
+}
+```

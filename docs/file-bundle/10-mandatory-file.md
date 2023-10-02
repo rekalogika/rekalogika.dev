@@ -34,9 +34,10 @@ situation is considered an error and will be logged as such. The administrator
 or the developer is expected to fix the problem.
 
 The `MissingFile` object is an implementation of the [null object
-pattern](https://martinfowler.com/eaaCatalog/specialCase.html). It should not
-cause a fatal error, unless the caller is trying to operate on it that would
-cause a permanent effect, like saving it to an entity.
+pattern](https://martinfowler.com/eaaCatalog/specialCase.html). It appears to
+your application like a normal file, and should not cause a fatal error; unless
+you are trying to operate on it that would cause a permanent effect, like saving
+it to an entity.
 
 `MissingFile` is also an `Exception`, but is not thrown by the framework. You
 can treat it as a regular exception, including getting the stack trace from it.

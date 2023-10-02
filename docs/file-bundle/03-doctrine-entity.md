@@ -1,5 +1,5 @@
 ---
-title: Associating Files with Doctrine Entities
+title: Associating Files to Doctrine Entities
 ---
 
 This chapter describes how to create a file property in a Doctrine entity that
@@ -94,94 +94,24 @@ class Product
 }
 ```
 
-## Working With Entities & Files
+## Mandatory File
 
-You can work with the entities and associated files as usual, and they will work
-the way you expect them to work.
-
-### Creating an entity, associating it with a file, & persisting it
+If your business logic necessitates that the file is mandatory to an entity, you
+can omit the `?` in the property type hint:
 
 ```php
-use Doctrine\ORM\EntityManagerInterface;
-use Rekalogika\File\File;
+use Rekalogika\Contracts\File\FileInterface;
+use Rekalogika\File\Association\Attribute\WithFileAssociation;
+use Rekalogika\File\Association\Attribute\AsFileAssociation;
 
-/** @var EntityManagerInterface $entityManager */
-
-$product = new Product();
-$image = new File('/tmp/image.png');
-$product->setImage($image);
-
-$entityManager->persist($product);
-$entityManager->flush();
+#[WithFileAssociation]
+class Product
+{
+    #[AsFileAssociation]
+    // highlight-start
+    private FileInterface $image = null;
+    // highlight-end
+}
 ```
 
-:::note
-
-The framework will copy the file to the storage location, and leave the original
-file alone. It is the responsibility of the caller to delete the original if it
-wishes to do so.
-
-If the file arrived from a file upload, PHP will delete the file automatically
-when the request ends.
-
-:::
-
-### Replacing an associated file
-
-```php
-use Doctrine\ORM\EntityManagerInterface;
-use Rekalogika\File\File;
-
-/** @var EntityManagerInterface $entityManager */
-/** @var Product $product */
-
-$newImage = new File('/tmp/newImage.png')
-$product->setImage($newImage);
-$entityManager->flush();
-```
-
-### Updating the metadata of an associated file
-
-```php
-use Doctrine\ORM\EntityManagerInterface;
-
-/** @var Product $product */
-
-$product->getImage()?->setName('newImage.png');
-```
-
-:::note
-
-Files are not Doctrine entities. File modifications are carried out
-immediately, independent of Doctrine's `flush()`.
-
-:::
-
-### Removing an associated file
-
-```php
-use Doctrine\ORM\EntityManagerInterface;
-
-/** @var EntityManagerInterface $entityManager */
-/** @var Product $product */
-
-$product->setImage(null);
-$entityManager->flush();
-```
-
-### Removing the entity will also remove the associated file
-
-```php
-use Doctrine\ORM\EntityManagerInterface;
-
-/** @var EntityManagerInterface $entityManager */
-/** @var Product $product */
-
-$entityManager->remove($product);
-$entityManager->flush();
-```
-
-## Symfony Integration (or How To Upload Files)
-
-For integrations with various Symfony Components, including HttpFoundation,
-Form, and Validator, please read the chapter [Symfony Integration](symfony).
+Read more about mandatory files in the chapter [Mandatory File](mandatory-file).
