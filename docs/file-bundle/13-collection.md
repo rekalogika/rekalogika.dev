@@ -90,8 +90,10 @@ relevant parts.
 use Doctrine\ORM\Mapping as ORM;
 use Rekalogika\Domain\File\Association\Entity\AbstractFile;
 use Rekalogika\Contracts\File\FileInterface;
+use Rekalogika\File\Association\Attribute\WithFileAssociation;
 
 #[ORM\Entity]
+#[WithFileAssociation]
 class Image implements FileInterface
 {
     use FileTrait;

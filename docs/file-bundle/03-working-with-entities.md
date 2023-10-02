@@ -1,5 +1,5 @@
 ---
-title: Working With Entities
+title: Working With Entities & Files
 ---
 
 You can work with the entities and associated files as usual, and they will work
