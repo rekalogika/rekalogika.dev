@@ -26,15 +26,6 @@ you need to:
 2. Add the attribute `#[WithFileAssociation]` to the class.
 3. Add the attribute `#[AsFileAssociation]` to the property.
 
-:::caution
-
-The framework assumes that it can get the ID of the entity by calling the method
-`getId()`. If your entity uses a different mechanism, you need to implement
-`ObjectIdResolverInterface`. See the chapter [Object ID
-Resolver](object-id-resolver) for more information.
-
-:::
-
 ```php
 use Rekalogika\Contracts\File\FileInterface;
 use Rekalogika\File\Association\Attribute\WithFileAssociation;
@@ -52,16 +43,6 @@ class Product
     #[AsFileAssociation]
     private ?FileInterface $image = null;
     // highlight-end
-
-    /**
-     * The framework needs the ID of the entity. By default, it will call getId()
-     * of the object to get the ID. If your entity doesn't use getId(), you need
-     * to create your implementation of ObjectIdResolverInterface.
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
 
     //
     // The rest of this class is inconsequential to the framework
