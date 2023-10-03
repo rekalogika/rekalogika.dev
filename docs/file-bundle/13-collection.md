@@ -212,9 +212,11 @@ class Product
 
     public function addImage(Image|FileInterface $image): static
     {
+        // highlight-start
         if (!$image instanceof Image) {
             $image = new Image($image);
         }
+        // highlight-end
 
         if (!$this->images->contains($image)) {
             $this->images->add($image);
