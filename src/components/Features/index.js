@@ -46,6 +46,18 @@ const FeatureList = [
     ),
   },
   {
+    title: 'rekalogika/doctrine-collections-decorator',
+    link: 'doctrine-collections-decorator',
+    tags: ['doctrine'],
+    description: (
+      <>
+        Lets you easily create decorator classes to modify the behaviors of Doctrine
+Collection objects, including the collection objects used by Doctrine ORM in
+your entities.
+      </>
+    ),
+  },
+  {
     title: 'rekalogika/temporary-url-bundle',
     link: 'temporary-url-bundle',
     tags: ['symfony'],
