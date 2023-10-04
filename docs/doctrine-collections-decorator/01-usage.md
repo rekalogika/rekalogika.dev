@@ -26,8 +26,8 @@ The available abstract classes are:
 
 If you intend to use it with your entities, you probably want
 `AbstractCollectionDecorator`. Or, you can use
-`AbstractSelectableCollectionDecorator` if you need to use the `matching()`
-method provided by the `Selectable` interface.
+`AbstractSelectableCollectionDecorator` if you want the `matching()` method
+provided by the `Selectable` interface.
 
 :::
 

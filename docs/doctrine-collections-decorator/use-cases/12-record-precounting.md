@@ -12,9 +12,11 @@ One way to optimize this is to do a precounting and store the count in a
 separate column. This way, you can get the count of related entities without
 having to do a very expensive `COUNT()` query every single time.
 
-But it would also mean you need to change the way you get the count. To solve
-this problem, you can decorate the collection object to fetch the count from
-the field storing the pre-counted value.
+However, it would also mean you need to change the way you get the count. To
+solve this problem, you can decorate the collection object to fetch the count
+from the field storing the pre-counted value.
+
+## The Decorator Class
 
 ```php
 use Doctrine\Common\Collections\Collection;
@@ -30,31 +32,38 @@ class BookCollection extends AbstractCollectionDecorator
      */
     public function __construct(
         private Collection $collection,
+        // highlight-next-line
         private int &$count   // pass by reference
     ) {
     }
 
+    #[\Override]
     protected function getWrapped(): Collection
     {
         return $this->collection;
     }
 
+    // highlight-start
+    #[\Override]
     public function count(): int
     {
         return $this->count();
     }
+    // highlight-end
 
     /**
      * Calculates the count and stores it in the `$count` property.
      */
+    // highlight-start
     public function preCount(): void
     {
         $this->count = $this->getWrapped()->count();
     }
+    // highlight-end
 }
 ```
 
-Then, on the one-to-many side, you can do something like this:
+## Usage in the `one-to-many` Side
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
@@ -70,8 +79,10 @@ class BookShelf
     #[ORM\OneToMany(targetEntity: Book::class)]
     private Collection $books;
 
+    // highlight-start
     #[ORM\Column()]
     private int $booksCount = 0;
+    // highlight-end
 
     public function __construct()
     {
@@ -80,21 +91,25 @@ class BookShelf
 
     public function getBooks(): BookCollection
     {
+        // highlight-next-line
         return new BookCollection($this->books, $this->booksCount);
     }
 }
 ```
 
-To get the count, you can do the same way as before the optimization, and it
-will give you the pre-counted result instantly:
+## The Caller Side
+
+To get the count, you can do it the same way as before. But instead of asking
+the database to do that, this time it will give you the value from the
+pre-counted result instantly:
 
 ```php
-$bookShelf->getBooks()->count();
+$count = $bookShelf->getBooks()->count();
 // or:
-count($bookShelf->getBooks());
+$count = count($bookShelf->getBooks());
 ```
 
-When it is time to update the count, you can do this:
+When it is time to refresh the pre-counted value, you can do this:
 
 ```php
 /** @var EntityManagerInterface $entityManager */

@@ -1,15 +1,20 @@
 ---
-title: Abstraction
+title: Selectable Abstraction
 ---
 
 Doctrine ORM uses collection objects that also implement the `Selectable`
 interface. It gives us the `matching()` method that allows us to filter the
-collection using a criteria object. It is very useful and convenient, but also
-an abstraction leak: the caller needs to know the internal structure of the
-member entity class.
+collection using a criteria object. It is very powerful and convenient, but also
+an abstraction leak. To use it, the caller needs to know the internal structure
+of the member entity class. Without restraint, the knowledge about the internal
+details of a popular class will be spread all over your codebase, and updating
+the class can potentially become a nightmare.
 
-We can decorate the collection object to keep the `Selectable` interface inside
-and expose more useful, higher-level methods that the caller can use.
+To solve the problem, we can decorate the collection object to keep the
+`Selectable` interface private and expose more concise, higher-level methods
+that the caller can use.
+
+## The Decorator Class
 
 ```php
 use Doctrine\Common\Collections\Collection;
@@ -29,24 +34,27 @@ class BookCollection extends AbstractCollectionDecorator
     {
     }
 
+    #[\Override]
     protected function getWrapped(): Collection&Selectable
     {
         return $this->collection;
     }
 
+    // highlight-start
     public function findByAuthor(string $author): self
     {
-        $result = $this->matching(
-            Criteria::create()
-                ->where(Criteria::expr()->eq('author', $author))
-        );
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('author', $author));
+
+        $result = $this->getWrapped()->matching($criteria);
 
         return new self($result);
     }
+    // highlight-end
 }
 ```
 
-The one-to-many side:
+## Usage in the `one-to-many` Side
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
@@ -62,9 +70,6 @@ class BookShelf
     #[ORM\OneToMany(targetEntity: Book::class)]
     private Collection $books;
 
-    #[ORM\Column()]
-    private int $booksCount = 0;
-
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -72,10 +77,13 @@ class BookShelf
 
     public function getBooks(): BookCollection
     {
-        return new BookCollection($this->books, $this->booksCount);
+        // highlight-next-line
+        return new BookCollection($this->books);
     }
 }
 ```
+
+## The Caller Side
 
 Then the caller will be able to do something like this:
 

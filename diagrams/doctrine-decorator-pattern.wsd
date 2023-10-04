@@ -1,0 +1,23 @@
+@startuml doctrine-decorator-pattern
+
+' https://www.doctrine-project.org/projects/doctrine-orm/en/current/cookbook/decorator-pattern.html
+
+abstract Component <<Entity>> {
+    +id: int
+    +name: string
+}
+
+class ConcreteComponent <<Entity>> extends Component {
+}
+
+abstract Decorator <<MappedSuperclass>> extends Component {
+    #decorates: Component
+}
+
+class ConcreteDecorator <<Entity>> extends Decorator {
+    +special: string
+}
+
+Decorator::decorates o-- Component
+
+@enduml

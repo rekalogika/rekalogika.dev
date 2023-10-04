@@ -1,0 +1,42 @@
+@startuml decorating-members
+
+package "doctrine/collections" {
+    interface Collection<T> {
+    }
+}
+
+package "rekalogika/doctrine-collections-decorator" {
+    abstract AbstractCollectionDecorator {
+    }
+}
+
+Collection <|.. AbstractCollectionDecorator
+
+package "app" {
+    interface BusinessContractInterface {
+    }
+
+    class BusinessContract <<Entity>> implements BusinessContractInterface {
+    }
+
+    class BusinessContractDecorator implements BusinessContractInterface {
+        - wrapped: BusinessContractInterface
+    }
+
+    BusinessContractDecorator::wrapped o-- BusinessContractInterface
+
+    interface CollectionOfBusinessContracts as "Collection" {
+    }
+
+    class BusinessContractCollectionDecorator {
+        - wrapped: Collection
+    }
+
+    CollectionOfBusinessContracts -o BusinessContractCollectionDecorator::wrapped
+    BusinessContractInterface "M" -o CollectionOfBusinessContracts
+}
+
+AbstractCollectionDecorator <|-- BusinessContractCollectionDecorator
+Collection <|-- CollectionOfBusinessContracts : <<bind>>\nBusinessContractInterface
+
+@enduml
