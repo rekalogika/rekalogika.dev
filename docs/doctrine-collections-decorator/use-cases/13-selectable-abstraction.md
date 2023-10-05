@@ -37,6 +37,10 @@ class BookCollection extends AbstractCollectionDecorator
     #[\Override]
     protected function getWrapped(): Collection&Selectable
     {
+        if (!$this->collection instanceof Selectable) {
+            throw new \RuntimeException('The wrapped collection must implement the Selectable interface.');
+        }
+
         return $this->collection;
     }
 
