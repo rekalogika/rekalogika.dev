@@ -4,12 +4,6 @@ title: Replicating Metadata in Entities
 
 This chapter describes how to replicate file metadata in your entities.
 
-:::note
-
-This feature is currently only nominally tested.
-
-:::
-
 ## Objective
 
 This framework gives you the convenience of requiring only a single property to

@@ -6,13 +6,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 This chapter describes how to implement a collection of files, or one-to-many
-relation between a Doctrine entity and several files.
-
-:::note
-
-This feature is currently only nominally tested.
-
-:::
+relation between a Doctrine entity and several files.:::
 
 ## Summary
 
