@@ -28,19 +28,18 @@ use Rekalogika\Collections\Decorator\AbstractCollectionDecorator;
 class BookCollection extends AbstractCollectionDecorator
 {
     /**
-     * @param Collection<array-key,Book> $collection
+     * @param Collection<array-key,Book>&Selectable $collection
      */
     public function __construct(private Collection $collection)
     {
+        if (!$collection instanceof Selectable) {
+            throw new \RuntimeException('The wrapped collection must implement the Selectable interface.');
+        }
     }
 
     #[\Override]
     protected function getWrapped(): Collection&Selectable
     {
-        if (!$this->collection instanceof Selectable) {
-            throw new \RuntimeException('The wrapped collection must implement the Selectable interface.');
-        }
-
         return $this->collection;
     }
 
