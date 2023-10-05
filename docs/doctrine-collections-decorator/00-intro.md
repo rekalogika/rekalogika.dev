@@ -6,6 +6,13 @@ Lets you easily create decorator classes to modify the behaviors of Doctrine
 Collection objects, including the collection objects used by Doctrine ORM in
 your entities.
 
+## Motivation
+
+Custom collection classes won't come to Doctrine ORM anytime soon. Therefore,
+the only way to modify the behavior of a Doctrine collection is to use
+decorators. However, creating a Collection decorator by hand is a tedious
+process.
+
 ## Installation
 
 Make sure Composer is installed globally, as explained in the
