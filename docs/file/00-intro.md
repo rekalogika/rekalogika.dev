@@ -56,11 +56,11 @@ The File framework consists of several components.
 * **rekalogika/file-image**: Provides image resizing filter.
 * **rekalogika/file-metadata**: Classes that represent file metadata.
 * **rekalogika/file-metadata-contracts**: Contains additional interfaces
-  describing file metadata.
+* **rekalogika/file-null**: Implementation of the null object pattern.
 * **rekalogika/file-oneup-uploader-bridge**: Adapter for OneupUploaderBundle.
 * **rekalogika/file-server**: Temporary URL server for files.
 * **rekalogika/file-symfony-bridge**: Adapter for Symfony HttpFoundation, Form, and
-  Validator.
+* **rekalogika/file-zip**: Streams files as a ZIP file to the client.
 
 ## License
 

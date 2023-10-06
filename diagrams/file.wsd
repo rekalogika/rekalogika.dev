@@ -13,12 +13,21 @@ interface FileRepository {
     +createTemporaryFile()
 }
 
+interface DirectoryInterface {
+    +name: FileName
+}
+
 interface FilePointer {
     filesystemIdentifier: string
     key: string
     +isEqualTo(File|FilePointer): bool
     +isSameFilesystem(File|FilePointer): bool
 }
+
+DirectoryInterface o-- FilePointer
+DirectoryInterface o-- File
+DirectoryInterface o-- DirectoryInterface
+DirectoryInterface::name *-- FileName
 
 FileRepository o--- File
 FilePointer --* File::pointer

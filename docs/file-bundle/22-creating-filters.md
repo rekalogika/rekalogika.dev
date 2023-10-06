@@ -5,7 +5,7 @@ title: Creating Filters
 This chapter explains how to create your own file filters using
 `AbstractFileFilter`.
 
-:::note Preparation
+:::info Preparation
 
 You need to install the package `rekalogika/file-derivation` to use this
 feature:

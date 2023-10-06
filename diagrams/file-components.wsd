@@ -28,5 +28,7 @@ skinparam componentStyle rectangle
 [file-association-entity] --> [file-null]
 [file-metadata] --> [file-metadata-contracts]
 [file-null] --> [file-contracts]
+[file-zip] --> [file-contracts]
+[file-zip] --> [file-metadata]
 
 @enduml

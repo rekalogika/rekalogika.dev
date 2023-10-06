@@ -6,7 +6,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 This chapter describes how to implement a collection of files, or one-to-many
-relation between a Doctrine entity and several files.:::
+relation between a Doctrine entity and several files.
 
 ## Summary
 
@@ -194,7 +194,9 @@ class Product
 }
 ```
 
-Optionally, for convenience, you can also modify the adder `addImage` above so
+## (Optional) Accepting `FileInterface` in the Adder
+
+For convenience, you might also want to modify the adder `addImage` above so
 that it also accepts an instance of `FileInterface`:
 
 ```php
@@ -223,6 +225,51 @@ class Product
     // ...
 }
 ```
+
+## (Optional) Decorate the Collection Using `FileCollection`
+
+In the getter, you can also return a `FileCollection` wrapping the original
+collection, and change the type hint. Then, the caller will be able to know that
+the Collection contains files and also an instance of `DirectoryInterface`.
+
+```php
+use Rekalogika\Domain\File\Association\Entity\FileCollection;
+
+class Product
+{
+    // ...
+
+    /**
+     * @return FileCollection<int,Image>
+     */
+    public function getImages(): FileCollection
+    {
+        return new FileCollection(
+            $this->images,
+            sprintf('product %s images', $this->getName())
+        );
+    }
+
+    // ...
+}
+```
+
+:::info
+
+The second argument of `FileCollection` is the name of the file collection,
+and will be used for the directory name, ZIP file name, etc.
+
+Read the chapter [Stream a ZIP File](zip-streaming) if you need to download
+an entire collection as a ZIP file.
+
+:::
+
+:::tip Protip
+
+There is also `ReadableFileCollection`, which is the read-only flavor of
+`FileCollection`.
+
+:::
 
 ## Using The Relation
 

@@ -18,7 +18,7 @@ Currently, there is only one filter available, `ImageResizer`.
 
 ## `ImageResizer`
 
-:::note Preparation
+:::info Preparation
 
 You need to install the package `rekalogika/file-image` to use this feature:
 

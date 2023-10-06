@@ -15,6 +15,7 @@ import ThemedImage from '@theme/ThemedImage';
 * **FilePointer**: A pointer to a file. Implements `FilePointerInterface`. Like
   a file, a file pointer has a filesystem identifier and a key, but nothing
   else.
+* **Directory**: Contains files, file pointers, and other directories.
 * **Filesystem**: A Flysystem filesystem. Implements Flysystem's
   `FilesystemOperator`. The caller should not use it directly but use the
   `FileRepository` instead.
