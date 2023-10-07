@@ -6,11 +6,11 @@ package "doctrine/collections" {
 }
 
 package "rekalogika/doctrine-collections-decorator" {
-    abstract AbstractCollectionDecorator {
+    abstract CollectionDecorator {
     }
 }
 
-Collection <|.. AbstractCollectionDecorator
+Collection <|.. CollectionDecorator
 
 package "app" {
     interface BusinessContractInterface {
@@ -36,7 +36,7 @@ package "app" {
     BusinessContractInterface "M" -o CollectionOfBusinessContracts
 }
 
-AbstractCollectionDecorator <|-- BusinessContractCollectionDecorator
-Collection <|-- CollectionOfBusinessContracts : <<bind>>\nBusinessContractInterface
+CollectionDecorator <|-- BusinessContractCollectionDecorator
+Collection <|-- CollectionOfBusinessContracts : <<bind>>\lBusinessContractInterface
 
 @enduml

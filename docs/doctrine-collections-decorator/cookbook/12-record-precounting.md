@@ -20,27 +20,22 @@ from the field storing the pre-counted value.
 
 ```php
 use Doctrine\Common\Collections\Collection;
-use Rekalogika\Collections\Decorator\AbstractCollectionDecorator;
+use Rekalogika\Collections\Decorator\Decorator\CollectionDecorator;
 
 /**
- * @extends AbstractCollectionDecorator<array-key,Book>
+ * @extends CollectionDecorator<array-key,Book>
  */
-class BookCollection extends AbstractCollectionDecorator
+class BookCollection extends CollectionDecorator
 {
     /**
      * @param Collection<array-key,Book> $collection
      */
     public function __construct(
-        private Collection $collection,
+        Collection $collection,
         // highlight-next-line
         private int &$count   // pass by reference
     ) {
-    }
-
-    #[\Override]
-    protected function getWrapped(): Collection
-    {
-        return $this->collection;
+        parent::__construct($collection);
     }
 
     // highlight-start

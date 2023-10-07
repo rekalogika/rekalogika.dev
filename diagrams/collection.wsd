@@ -1,0 +1,96 @@
+@startuml collection
+
+skinparam packageStyle rectangle
+
+package php {
+    interface ArrayAccess as "ArrayAccess *" {
+        +offsetExists($offset)
+        +offsetGet($offset)
+        +offsetSet($offset, $value)
+        +offsetUnset($offset)
+    }
+
+    interface Countable as "Countable *" {
+        +count()
+    }
+
+    interface IteratorAggregate as "IteratorAggregate *" {
+        +getIterator()
+    }
+}
+
+package "doctrine/collections" {
+    interface ReadableCollection as "ReadableCollection *" {
+        +contains($element)
+        +isEmpty()
+        +containsKey($key)
+        +get($key)
+        +getKeys()
+        +getValues()
+        +toArray()
+        +first()
+        +last()
+        +key()
+        +current()
+        +next()
+        +slice($offset, $length)
+        +exists(Closure)
+        +filter(Closure)
+        +map(Closure)
+        +partition(Closure)
+        +forAll(Closure)
+        +indexOf($element)
+        +findFirst(Closure)
+        +reduce(Closure, $initial = null)
+    }
+
+    Countable <|-- ReadableCollection
+    IteratorAggregate <|-- ReadableCollection
+
+    interface Collection as "Collection *" {
+        +add($element)
+        +clear()
+        +remove($key)
+        +removeElement($element)
+        +set($key, $value)
+        +map(Closure)
+        +filter(Closure)
+        +partition(Closure)
+    }
+
+    ArrayAccess <|--- Collection
+
+    ReadableCollection <|- Collection
+
+    interface Selectable as "Selectable *" {
+        +matching(Criteria)
+    }
+
+    class ArrayCollection {
+    }
+
+    abstract AbstractLazyCollection {
+    }
+
+    Collection <|... ArrayCollection
+    Selectable <|... ArrayCollection
+
+    Collection <|... AbstractLazyCollection
+}
+
+package "doctrine/orm" {
+    class LazyCriteriaCollection {
+    }
+
+    class PersistentCollection {
+    }
+
+
+    AbstractLazyCollection <|--- PersistentCollection
+    Selectable <|... PersistentCollection
+
+    AbstractLazyCollection <|--- LazyCriteriaCollection
+    Selectable <|... LazyCriteriaCollection
+}
+
+@enduml

@@ -20,7 +20,7 @@ that the caller can use.
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Collections\Decorator\AbstractCollectionDecorator;
+use Rekalogika\Collections\Decorator\AbstractDecorator\AbstractCollectionDecorator;
 
 /**
  * @extends AbstractCollectionDecorator<array-key,Book>
@@ -28,7 +28,7 @@ use Rekalogika\Collections\Decorator\AbstractCollectionDecorator;
 class BookCollection extends AbstractCollectionDecorator
 {
     /**
-     * @param Collection<array-key,Book>&Selectable $collection
+     * @param Collection<array-key,Book>&Selectable<array-key,Book> $collection
      */
     public function __construct(private Collection $collection)
     {
@@ -37,6 +37,9 @@ class BookCollection extends AbstractCollectionDecorator
         }
     }
 
+    /**
+     * @return Collection<array-key,Book>&Selectable<array-key,Book>
+     */
     #[\Override]
     protected function getWrapped(): Collection&Selectable
     {

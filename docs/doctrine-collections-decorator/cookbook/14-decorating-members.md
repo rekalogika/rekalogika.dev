@@ -45,26 +45,13 @@ class BusinessContractDecorator implements BusinessContractInterface {
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
-use Rekalogika\Collections\Decorator\AbstractCollectionDecorator;
+use Rekalogika\Collections\Decorator\Decorator\CollectionDecorator;
 
 /**
- * @extends AbstractCollectionDecorator<array-key,BusinessContractInterface>
+ * @extends CollectionDecorator<array-key,BusinessContractInterface>
  */
-class BusinessContractCollectionDecorator extends AbstractCollectionDecorator
+class BusinessContractCollectionDecorator extends CollectionDecorator
 {
-    /**
-     * @param Collection<array-key,BusinessContractInterface> $wrapped
-     */
-    public function __construct(private Collection $wrapped)
-    {
-    }
-
-    #[\Override]
-    protected function getWrapped(): Collection&Selectable
-    {
-        return $this->wrapped;
-    }
-
     #[\Override]
     public function get(string|int $key): BusinessContractInterface
     {
@@ -81,7 +68,7 @@ class BusinessContractCollectionDecorator extends AbstractCollectionDecorator
         }
     }
 
-    // We should override the other methods that returns
+    // We should override all the other methods that returns
     // BusinessContractInterface, but for conciseness, we skip them here.
 }
 ```

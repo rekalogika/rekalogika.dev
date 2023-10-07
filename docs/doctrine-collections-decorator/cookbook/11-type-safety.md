@@ -16,24 +16,14 @@ objectives of people asking to have a custom Doctrine collection.
 ## The Decorator Class
 
 ```php
+use Doctrine\Common\Collections\Collection;
+use Rekalogika\Collections\Decorator\Decorator\CollectionDecorator;
+
 /**
- * @extends AbstractCollectionDecorator<array-key,Book>
+ * @extends CollectionDecorator<array-key,Book>
  */
-class Books extends AbstractCollectionDecorator
+class Books extends CollectionDecorator
 {
-    /**
-     * @param Collection<array-key,Book> $wrapped
-     */
-    public function __construct(private Collection $wrapped)
-    {
-    }
-
-    #[\Override]
-    protected function getWrapped(): Collection
-    {
-        return $this->wrapped;
-    }
-
     // highlight-start
     private static function assert(mixed $book): Book
     {

@@ -33,4 +33,4 @@ MIT
 
 This framework consists of multiple repositories split from a monorepo. Be
 sure to submit issues and pull requests to the
-[`rekalogika/domain-event-src`](https://github.com/rekalogika/domain-event-src) monorepo.
+[`rekalogika/doctrine-collections-decorator`](https://github.com/rekalogika/doctrine-collections-decorator) monorepo.
