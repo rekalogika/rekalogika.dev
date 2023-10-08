@@ -17,31 +17,23 @@ CI and be deployed to production. But in production, everything immediately
 grinds to a halt because it tries to load a million records into memory.
 
 A solution to prevent this problem is to decorate the collection to throw an
-exception if a non-safe method is called.
+exception if an unsafe method is called.
 
 The list of safe methods is listed in the documentation of [Extra Lazy
 Association](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/extra-lazy-associations.html).
 They are: `contains()`, `containsKey()`, `count()`, `get()`, `slice()`, `add()`,
-and `offsetSet()`.
+and `offsetSet()` if the first argument is null. We also add `matching()` to
+that list.
 
 ## The Decorator Class
 
-This package already comes with ready-made decorators for this purpose. For
-completeness, like every other of our classes, they come with four flavors
-depending on the type of collection you are decorating:
-
-* `ExtraLazyCollection`
-* `ExtraLazyReadableCollection`
-* `ExtraLazySelectableCollection`
-* `ExtraLazySelectableReadableCollection`
-
-But you probably want to use `ExtraLazyCollection` most of the time.
+This package already comes with `ExtraLazyCollection` for this purpose.
 
 :::info
 
-While these decorators only allow safe methods, they still implement
-`Collection` (or the other interfaces) so that they can still be used in places
-where the original collection is expected, like `PagerFanta`.
+While `ExtraLazyCollection` only allows safe methods, they still implement the
+full `Collection` interface so that they can still be used in places where the
+original collection is expected, like `PagerFanta`.
 
 :::
 
@@ -58,9 +50,8 @@ class BookShelf
     // our bookshelf has a million of books...
     #[ORM\OneToMany(
         targetEntity: Book::class,
-        fetch: 'EXTRA_LAZY', // needs this, or it will not work
-        // also needs this, or containsKey() & get() will trigger the loading:
-        indexBy: 'id', 
+        fetch: 'EXTRA_LAZY', // needs this, or the safe methods become unsafe
+        indexBy: 'id', // needs this, or containsKey() & get() become unsafe
     )]
     private Collection $books;
 

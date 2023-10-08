@@ -2,18 +2,29 @@
 title: Lazy Chained Matching
 ---
 
-If you call `matching()` on a `PersistentCollection`, it will return an
-`ArrayCollection`. So if you call `matching()` again on the result, it will do
-the processing in memory.
-
-With `EXTRA_LAZY`, the first `matching()` will return a
-`LazyCriteriaCollection`. The second `matching()` will return an
-`ArrayCollection`. Subsequent `matching()` be done in memory.
+If you call `matching()` on a `Collection` it will be processed immediately and
+it will return you the result. Except when you use `EXTRA_LAZY` fetch mode, then
+it will return a `LazyCriteriaCollection`. But any subsequent `matching()` call
+on the result will still be processed immediately.
 
 We can decorate the collection so that chained-`matching()` will be done lazily,
 and all the criteria in the chain of `matching()` will be merged. The actual
 `matching()` query will be delayed until the caller calls a method that requires
 the result.
+
+```php
+/** @var Collection<array-key,mixed> $collection */
+
+$result = $collection->matching()->matching()->matching();
+
+foreach ($result as $item) {
+    // ...
+} 
+```
+
+With the standard behavior, the above code will do the processing three times
+(twice with `EXTRA_LAZY`). With our decorator, it will only be done once when
+the `foreach` is called.
 
 ## The Decorator Class
 

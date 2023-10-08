@@ -1,12 +1,14 @@
 @startuml decorating-members
 
+skinparam packageStyle rectangle
+
 package "doctrine/collections" {
     interface Collection<T> {
     }
 }
 
 package "rekalogika/doctrine-collections-decorator" {
-    abstract CollectionDecorator {
+    class CollectionDecorator {
     }
 }
 
@@ -23,7 +25,7 @@ package "app" {
         - wrapped: BusinessContractInterface
     }
 
-    BusinessContractDecorator::wrapped o-- BusinessContractInterface
+    BusinessContractDecorator o-- BusinessContractInterface
 
     interface CollectionOfBusinessContracts as "Collection" {
     }
