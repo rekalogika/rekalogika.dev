@@ -167,5 +167,7 @@ In Twig templates, you can easily generate URLs to a ZIP file by using the
 `temporary_url` filter with a `DirectoryInterface` as the input.
 
 ```twig
-<a href="{{ product.images|temporary_url }}">Download Product Images</a>
+<a href="{{ product.images|temporary_url }}" {{ temporary_url_autoexpire() }}>
+    Download Product Images
+</a>
 ```

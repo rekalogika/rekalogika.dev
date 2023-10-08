@@ -78,7 +78,9 @@ In Twig templates, you can use the `temporary_url` filter to generate a
 temporary URL to a file.
 
 ```twig
-<a href="{{ file|temporary_url }}">Click here to download</a>
+<a href="{{ file|temporary_url }}" {{ temporary_url_autoexpire() }}>
+    Click here to download
+</a>
 ```
 
 With images, a convenient pattern is to chain the `temporary_url` filter with

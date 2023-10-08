@@ -21,6 +21,7 @@ of the Composer documentation.
 Open a command console, enter your project directory, and execute:
 
 ```bash
+composer config extra.symfony.allow-contrib true
 composer require rekalogika/temporary-url-bundle
 ```
 </TabItem>
@@ -141,11 +142,14 @@ The `TemporaryUrlGeneratorInterface::generateUrl()` offers additional options:
 ## In Twig Templates
 
 In a Twig template, you can use the filter `temporary_url` to generate a
-temporary URL.
+temporary URL. Use the function `temporary_url_autoexpire` on links to make them
+unclickable after the URL expires.
 
 ```twig
 {# my_data here is a resource object #}
-<a href="{{ my_data|temporary_url }}">Click here to download my data</a>
+<a href="{{ my_data|temporary_url }}" {{ temporary_url_autoexpire() }}>
+    Click here to download my data
+</a>
 ```
 
 The filter accepts the same options as the `generateUrl()` method above.
