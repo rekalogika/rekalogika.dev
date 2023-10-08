@@ -32,8 +32,8 @@ This package already comes with `ExtraLazyCollection` for this purpose.
 :::info
 
 While `ExtraLazyCollection` only allows safe methods, they still implement the
-full `Collection` interface so that they can still be used in places where the
-original collection is expected, like `PagerFanta`.
+`Collection` interface so that they can still be used in places where a
+`Collection` is expected, like PagerFanta's `CollectionAdapter`.
 
 :::
 
