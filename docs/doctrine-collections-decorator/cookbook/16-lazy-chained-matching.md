@@ -7,7 +7,7 @@ If you call `matching()` on a `PersistentCollection`, it will return an
 the processing in memory.
 
 With `EXTRA_LAZY`, the first `matching()` will return a
-`LazyCriteriaCollection`. The second `matching`()` will return an
+`LazyCriteriaCollection`. The second `matching()` will return an
 `ArrayCollection`. Subsequent `matching()` be done in memory.
 
 We can decorate the collection so that chained-`matching()` will be done lazily,

@@ -13,8 +13,8 @@ All of our classes come in four flavors:
 * Those that implement `Collection` and `Selectable`
 * Those that implement `ReadableCollection` and `Selectable`
 
-Most people probably want to use one of the high-level decorator classes as a
-base. These will simply forward all method calls to the wrapped collection:
+Most people probably want to extend one of the high-level decorator classes.
+These will simply forward all method calls to the wrapped collection.
 
 * `CollectionDecorator`
 * `ReadableCollectionDecorator`
