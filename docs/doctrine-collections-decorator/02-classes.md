@@ -4,6 +4,15 @@ title: Decorator Classes and Traits
 
 This chapter will describe all the available classes and traits in this package.
 
+## Ready-to-use Decorator Classes
+
+The package ships with ready-to-use decorator classes for common use cases:
+
+* `ExtraLazyCollection`: [Prevent collection loading](cookbook/extra-lazy-load-prevention) in extra-lazy associations.
+* `LazyMatchingCollection`: [Chained matching](cookbook/lazy-chained-matching)
+  optimization, if you need to call `matching()` on the result of another
+  `matching()`.
+
 ## Decorator Classes
 
 All of our classes come in four flavors:

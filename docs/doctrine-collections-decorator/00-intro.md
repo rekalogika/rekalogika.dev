@@ -13,6 +13,11 @@ the only way to modify the behavior of a Doctrine collection is to use
 decorators. However, creating a Collection decorator by hand is a tedious
 process.
 
+## Features
+
+* Easily create your decorator classes by extending one of the abstract classes.
+* Several ready-made decorators for common use cases.
+
 ## Installation
 
 Make sure Composer is installed globally, as explained in the

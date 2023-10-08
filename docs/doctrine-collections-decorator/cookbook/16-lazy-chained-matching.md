@@ -54,10 +54,11 @@ class BookShelf
      */
     public function getBooks(): Collection&Selectable
     {
+        // highlight-next-line
         return new LazyMatchingCollection($this->books);
     }
 
-    public function getScienceBook(): Collection
+    public function getScienceBooks(): Collection
     {
         return $this->getBooks()->matching(
             Criteria::create()
@@ -65,7 +66,7 @@ class BookShelf
         );
     }
 
-    public function getOldScienceBook(): Collection
+    public function getOldScienceBooks(): Collection
     {
         return $this->getScienceBook()->matching(
             Criteria::create()
@@ -89,5 +90,4 @@ foreach ($oldScienceBook as $book) {
 }
 ```
 
-Nothing will be loaded from the database until the `foreach`. We can also safely
-use the result in something like `PagerFanta`.
+Nothing will be loaded from the database until the `foreach`.
