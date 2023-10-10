@@ -118,9 +118,9 @@ The list of available options can be found in the [FilePond
 properties](https://pqina.nl/filepond/docs/api/instance/properties/)
 documentation.
 
-You need to convert from camelCase to kebab-case, and prefix the
-property name with `data-`. For example, the property `allowReplace` becomes
-`data-allow-replace`.
+To specify the option, you need to convert from camelCase to kebab-case, and
+prefix the property name with `data-`. For example, the property `allowReplace`
+becomes `data-allow-replace`.
 
 We also use several plugins, that add additional options. You can read the
 [documentation of each plugin](https://pqina.nl/filepond/docs/api/plugins/) to
