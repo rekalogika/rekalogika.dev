@@ -8,7 +8,7 @@ your entities implement `FileAssociationInterface`.
 :::note
 
 We recommend using attributes instead of implementing the interface as
-described in [Associating Files with Doctrine Entities](./03-doctrine-entity.md).
+described in [Associating Files with Doctrine Entities](../03-doctrine-entity.md).
 
 :::
 
