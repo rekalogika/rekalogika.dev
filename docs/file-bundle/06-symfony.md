@@ -100,6 +100,13 @@ class SomeController
 
 ## Forms
 
+:::tip Protip
+
+You might want to use our `FilePondType` form type instead. See the chapter
+[File Upload With FilePond](./file-upload-filepond) for more information.
+
+:::
+
 We provide a `FileType` that works with `FileInterface` objects. This is
 basically the same as Symfony's `FileType` with a transformer built-in:
 

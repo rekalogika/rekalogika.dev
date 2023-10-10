@@ -5,7 +5,7 @@ title: Installation & Configuration
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Installation within a Symfony application.
+This chapter describes how to install and configure the bundle.
 
 :::info
 
