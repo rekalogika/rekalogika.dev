@@ -27,6 +27,7 @@ packages within a Symfony application.
   null object if it is not found in the storage backend.
 * Lazy loading for files.
 * ZIP download of multiple files.
+* Full-featured FilePond-based file upload form.
 
 ## License
 

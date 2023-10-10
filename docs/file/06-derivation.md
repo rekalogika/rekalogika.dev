@@ -73,5 +73,5 @@ The caller can then use the filter to create a modified version of the original
 file without having to worry about the details.
 
 We provide the package
-[`rekalogika/file-derivation`](../file-bundle/22-creating-filters.md) to
+[`rekalogika/file-derivation`](../file-bundle/advanced/creating-filters) to
 streamline the creation of filters within the Symfony framework.
