@@ -91,14 +91,14 @@ class MyFormType extends AbstractType
                 'attr' => [
                     'accept' => 'image/png, image/jpeg'
                 ],
-                'remove_on_null' => true,
+                'allow_delete' => true,
             ])
         ;
     }
 }
 ```
 
-If `remove_on_null` is true, then if the user removes the file before submitting
+If `allow_delete` is true, then if the user removes the file before submitting
 the form, the field will be set to null as well
 
 ## Specifying Options
