@@ -30,5 +30,11 @@ skinparam componentStyle rectangle
 [file-null] --> [file-contracts]
 [file-zip] --> [file-contracts]
 [file-zip] --> [file-metadata]
+[file-filepond] --> [file]
+[file-filepond] --> [file-bundle]
+[file-filepond] --> [file-contracts]
+[file-filepond] --> [file-image]
+[file-filepond] --> [file-server]
+[file-filepond] --> [file-symfony-bridge]
 
 @enduml

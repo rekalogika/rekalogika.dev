@@ -206,6 +206,7 @@ class Product
 {
     // ...
 
+    // highlight-next-line
     public function addImage(Image|FileInterface $image): static
     {
         // highlight-start

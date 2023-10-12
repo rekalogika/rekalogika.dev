@@ -53,6 +53,7 @@ The File framework consists of several components.
 * **rekalogika/file-contracts**: Contains the interfaces and contracts used by
   the library.
 * **rekalogika/file-derivation**: Library for creating derived files.
+* **rekalogika/file-filepond**: Form for uploading files utilizing the FilePond Javascript library.
 * **rekalogika/file-image**: Provides image resizing filter.
 * **rekalogika/file-metadata**: Classes that represent file metadata.
 * **rekalogika/file-metadata-contracts**: Contains additional interfaces
