@@ -2,29 +2,44 @@
 title: Lazy Chained Matching
 ---
 
-If you call `matching()` on a `Collection` it will be processed immediately and
-it will return you the result. Except when you use `EXTRA_LAZY` fetch mode, then
-it will return a `LazyCriteriaCollection`. But any subsequent `matching()` call
-on the result will still be processed immediately.
+If you call `matching()` on a `PersistentCollection`, it will immediately query
+the database and return the result, even if you won't use the result. If you
+call `matching()` again on the result, it will be processed from the in-memory
+`ArrayCollection`, not from the database.
 
-We can decorate the collection so that chained-`matching()` will be done lazily,
-and all the criteria in the chain of `matching()` will be merged. The actual
-`matching()` query will be delayed until the caller calls a method that requires
-the result.
+:::note
+
+With `EXTRA_LAZY` fetch mode, `PersistentCollection` will return a
+`LazyCriteriaCollection`. But subsequent `matching()` call on the result
+will still be processed immediately.
+
+:::
+
+We can decorate the collection so that chained-`matching()` will be done lazily.
+The database query will only be done when the caller asks for the result.
+Calling `matching()` will only merge the supplied criteria to the existing
+criteria.
+
+With the standard behavior, the following code will do the processing three
+times (twice with `EXTRA_LAZY`). With our decorator, it will only be done once
+when `foreach` is called.
 
 ```php
 /** @var Collection<array-key,mixed> $collection */
+/** @var Criteria $criteria1 */
+/** @var Criteria $criteria2 */
+/** @var Criteria $criteria3 */
 
-$result = $collection->matching()->matching()->matching();
+$result = $collection
+    ->matching($criteria1)
+    ->matching($criteria2)
+    ->matching($criteria3);
 
 foreach ($result as $item) {
     // ...
 } 
 ```
 
-With the standard behavior, the above code will do the processing three times
-(twice with `EXTRA_LAZY`). With our decorator, it will only be done once when
-the `foreach` is called.
 
 ## The Decorator Class
 
@@ -90,4 +105,5 @@ foreach ($oldScienceBook as $book) {
 }
 ```
 
-Nothing will be loaded from the database until the `foreach`.
+With this example, there will be only two database queries, one due to
+`$entityManager->find()`, and one due to the `foreach` call.
