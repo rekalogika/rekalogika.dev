@@ -31,9 +31,9 @@ This package already comes with `ExtraLazyCollection` for this purpose.
 
 :::info
 
-While `ExtraLazyCollection` only allows safe methods, they still implement the
-`Collection` interface so that they can still be used in places where a
-`Collection` is expected, like PagerFanta's `CollectionAdapter`.
+While `ExtraLazyCollection` only allows the safe methods, they still implement
+the `Collection` interface so that the object can still be used in places where
+a `Collection` is expected.
 
 :::
 
