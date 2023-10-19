@@ -101,6 +101,6 @@ MIT
 
 ## Contributing
 
-This framework consists of multiple repositories split from a monorepo. Be
-sure to submit issues and pull requests to the
-[`rekalogika/print-src`](https://github.com/rekalogika/print-src) monorepo.
+The `rekalogika/gotenberg-pdf-bundle` repository is a read-only repo split from
+the main repo. Issues and pull requests should be submitted to the
+[rekalogika/print-src](https://github.com/rekalogika/print-src) monorepo.
