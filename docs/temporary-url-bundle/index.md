@@ -65,8 +65,48 @@ You may change the prefix if you like.
 
 :::
 
+Step 4: Add the Stimulus controller in the configuration
+
+```json title=assets/controllers.json
+{
+    "controllers": {
+        "@rekalogika/temporary-url-bundle": {
+            "autoexpire": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": []
+            }
+        }
+    }
+}
+```
+
 </TabItem>
 </Tabs>
+
+If you're using WebpackEncore, install your assets and restart Encore (not
+needed if you're using AssetMapper):
+
+<Tabs>
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn install --force
+yarn watch
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm install --force
+npm run watch
+```
+
+</TabItem>
+</Tabs>
+
 
 ## Creating a Resource Class
 
