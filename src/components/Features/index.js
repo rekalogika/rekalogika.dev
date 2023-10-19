@@ -26,6 +26,16 @@ const FeatureList = [
     ),
   },
   {
+    title: 'rekalogika/gotenberg-pdf-bundle',
+    link: 'gotenberg-pdf-bundle',
+    tags: ['symfony'],
+    description: (
+      <>
+        Symfony Bundle for generating PDF using Gotenberg.
+      </>
+    ),
+  },
+  {
     title: 'rekalogika/domain-event',
     link: 'domain-event',
     tags: ['symfony', 'doctrine'],
