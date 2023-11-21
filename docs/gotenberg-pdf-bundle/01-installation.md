@@ -78,4 +78,4 @@ class AppController extends AbstractController
 }
 ```
 
-Then open your browser and go to <http://localhost:8000/pdf>.
+Then open your browser and go to [localhost:8000/pdf](http://localhost:8000/pdf).
