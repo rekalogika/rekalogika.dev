@@ -90,7 +90,7 @@ class Product
 {
     #[AsFileAssociation]
     // highlight-start
-    private FileInterface $image = null;
+    private FileInterface $image;
     // highlight-end
 }
 ```
