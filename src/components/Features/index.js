@@ -5,6 +5,16 @@ import Link from '@docusaurus/Link';
 
 const FeatureList = [
   {
+    title: 'rekalogika/mapper',
+    link: 'mapper',
+    tags: ['symfony', 'php'],
+    description: (
+      <>
+        An object mapper for PHP and Symfony. Maps an object to another object. Primarily used for transforming an entity to a DTO and vice versa.
+      </>
+    ),
+  },
+  {
     title: 'rekalogika/file',
     link: 'file',
     tags: ['php'],
