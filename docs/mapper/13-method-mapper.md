@@ -44,6 +44,7 @@ You can have your DTO implement the `MapFromObjectInterface` and create the
 namespace App\Dto;
 
 use Brick\Money\Money;
+use Rekalogika\Mapper\Context\Context;
 use Rekalogika\Mapper\MethodMapper\MapFromObjectInterface;
 use Rekalogika\Mapper\MethodMapper\SubMapperInterface;
 
@@ -56,7 +57,7 @@ final class MoneyDto implements MapFromObjectInterface
     public static function mapFromObject(
         object $source,
         SubMapperInterface $mapper,
-        array $context = []
+        Context $context
     ): static {
         if (!$source instanceof Money) {
             throw new \InvalidArgumentException('Source must be instance of ' . Money::class);
@@ -72,9 +73,9 @@ final class MoneyDto implements MapFromObjectInterface
 ```
 
 Then, the next time you are mapping from the `Money` object to the `MoneyDto`
-object, the mapper will call the `mapFromObject()` method. The mapping will be
-done even if your `Money` object is deeply buried within the object you are
-mapping from.
+object, the mapper will call the `mapFromObject()` method to get the resulting
+`MoneyDto`. The mapping will be done even if your `Money` object is deeply
+buried within the object you are mapping from.
 
 ## Mapping to Another Object
 
@@ -85,6 +86,7 @@ You can also get the reverse of the above by implement the
 namespace App\Dto;
 
 use Brick\Money\Money;
+use Rekalogika\Mapper\Context\Context;
 use Rekalogika\Mapper\MethodMapper\MapToObjectInterface;
 use Rekalogika\Mapper\MethodMapper\SubMapperInterface;
 
@@ -97,7 +99,7 @@ final class MoneyDto implements MapToObjectInterface
     public function mapToObject(
         object|string $target,
         SubMapperInterface $mapper,
-        array $context = []
+        Context $context
     ): object {
         return Money::of($this->amount, $this->currency);
     }

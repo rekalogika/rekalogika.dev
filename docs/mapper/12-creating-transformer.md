@@ -2,7 +2,7 @@
 title: Creating a Custom Transformer
 ---
 
-This chapter describes how to create a custom transformer.
+Extend the mapper by creating your own transformer.
 
 ## Creating the Transformer
 
@@ -38,6 +38,7 @@ You can create the transformer as follows:
 namespace App\Mapper;
 
 use Brick\Money\Money;
+use Rekalogika\Mapper\Context\Context;
 use Rekalogika\Mapper\Contracts\TransformerInterface;
 use Rekalogika\Mapper\Contracts\TypeMapping;
 use Rekalogika\Mapper\Exception\InvalidArgumentException;
@@ -84,9 +85,9 @@ class MoneyToMoneyDtoTransformer implements TransformerInterface
     public function transform(
         mixed $source,
         mixed $target,
-        Type $sourceType,
+        ?Type $sourceType,
         ?Type $targetType,
-        array $context
+        Context $context
     ): mixed {
         if (
             $source instanceof Money
@@ -150,3 +151,73 @@ Also, you can verify the existense of the transformer in the mapping table:
 ```bash
 php bin/console rekalogika:mapper:mapping
 ```
+
+## Delegating Mapping to the Main Transformer
+
+Your transformer does not need to do everything. You can delegate the mapping of
+properties or other objects back to the main transformer. To accomplish this,
+your transformer needs to implement `MainTransformerAwareInterface`, and we
+also provide a `MainTransformerAwareTrait` to help you with that:
+
+```php title="src/Mapper/MyObjectToMyDtoTransformer.php"
+namespace App\Mapper;
+
+use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\Contracts\MainTransformerAwareInterface;
+use Rekalogika\Mapper\Contracts\MainTransformerInterface;
+use Rekalogika\Mapper\Contracts\TransformerInterface;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
+
+class MyObjectToMyDtoTransformer implements
+    TransformerInterface,
+    // highlight-next-line
+    MainTransformerAwareInterface
+{
+    // highlight-next-line
+    use MainTransformerAwareTrait;
+
+    public function __construct(
+        // highlight-start
+        // need this to identify target property types
+        private PropertyTypeExtractorInterface $propertyTypeExtractor,
+        // highlight-end
+    ){
+    }
+
+    public function transform(
+        mixed $source,
+        mixed $target,
+        ?Type $sourceType,
+        ?Type $targetType,
+        Context $context
+    ): mixed {
+        // ...
+
+        // highlight-start
+        // identify the target property types
+        $targetPropertyTypes = $this->propertyTypeExtractor
+            ->getTypes($target, 'someProperty');
+
+        // the delegation to the main transformer
+        $result = $this->getMainTransformer()->transform(
+            source: $source->getSomeProperty(),
+            target: null, // unless there is already an existing value in
+                          // the target object
+            targetTypes: $targetPropertyTypes,
+            context: $context
+        );
+
+        // saves the result to the target object
+        $target->someProperty = $result;
+        // highlight-end
+
+        // ...
+
+        return $target;
+    }
+
+    // ...
+}
+```
+
+## Caching and Circular References Detection
