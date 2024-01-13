@@ -41,8 +41,6 @@ use Brick\Money\Money;
 use Rekalogika\Mapper\Context\Context;
 use Rekalogika\Mapper\Contracts\TransformerInterface;
 use Rekalogika\Mapper\Contracts\TypeMapping;
-use Rekalogika\Mapper\Exception\InvalidArgumentException;
-use Rekalogika\Mapper\Tests\Fixtures\Money\MoneyDto;
 use Rekalogika\Mapper\Util\TypeCheck;
 use Rekalogika\Mapper\Util\TypeFactory;
 use Symfony\Component\PropertyInfo\Type;
@@ -221,3 +219,99 @@ class MyObjectToMyDtoTransformer implements
 ```
 
 ## Caching and Circular References Detection
+
+If you delegate the mapping of the property of your object, your transformer
+should add the resulting object to the cache right after instantiation, but
+before mapping its properties. This is done to prevent infinite recursion when
+there is a circular reference in the source object.
+
+```php title="src/Mapper/MyObjectToMyDtoTransformer.php"
+namespace App\Mapper;
+
+use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\Contracts\MainTransformerAwareInterface;
+use Rekalogika\Mapper\Contracts\MainTransformerInterface;
+use Rekalogika\Mapper\Contracts\TransformerInterface;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
+
+class MyObjectToMyDtoTransformer implements
+    TransformerInterface,
+{
+    public function transform(
+        mixed $source,
+        mixed $target,
+        ?Type $sourceType,
+        ?Type $targetType,
+        Context $context
+    ): mixed {
+        // ...
+
+        // instantiate the target object
+        $target = new MyDto();
+
+        // highlight-start
+        // add it to the cache
+        $context->get(ObjectCache::class)
+            ->saveTarget($source, $targetType, $target);
+        // highlight-end
+
+        // delegate the work of mapping the property to the main transformer
+        $target->property = $this->getMainTransformer()->transform(
+            source: $source->getProperty(),
+            target: $target->property,
+            targetTypes: $this->propertyTypeExtractor
+                ->getTypes($target, 'property');
+            context: $context
+        );
+
+        return $target;
+    }
+
+    // ...
+}
+```
+
+## Attribute Matching
+
+You can also match classes using attributes in your transformers, in addition
+to using class names. The prerequisite is that your attribute needs to implement
+`MapperAttributeInterface`.
+
+```php title="src/Attribute/MyAttribute.php"
+use Rekalogika\Mapper\Attribute\MapperAttributeInterface;
+
+#[\Attribute(\Attribute::TARGET_CLASS)]
+class SomeAttribute implements MapperAttributeInterface
+{
+}
+```
+
+Then you can use it as if it is the object's class name in your
+`getSupportedTransformation()`.
+
+```php title="src/Mapper/MyObjectToMyDtoTransformer.php"
+use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\Contracts\TransformerInterface;
+use Rekalogika\Mapper\Contracts\TypeMapping;
+use Rekalogika\Mapper\Util\TypeCheck;
+use Rekalogika\Mapper\Util\TypeFactory;
+use Symfony\Component\PropertyInfo\Type;
+
+class MyObjectToMyDtoTransformer implements TransformerInterface
+{
+    // ...
+
+    public function getSupportedTransformation(): iterable
+    {
+        yield new TypeMapping(
+            TypeFactory::objectOfClass(SomeAttribute::class),
+            TypeFactory::objectOfClass(SomeDto::class)
+        );
+    }
+
+    // ...
+}
+```
+
+When using attributes, the `$sourceType` and `$targetType` parameters in the
+`transform()` method will refer to the type of the attribute, not the object.

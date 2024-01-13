@@ -37,6 +37,8 @@ $mapper->map($book, $bookDto);
 * Constructor initialization.
 * Handles nested objects.
 * Handles recursion and circular references.
+* Inheritance support. Maps to abstract classes and interfaces using an
+  inheritance map attribute.
 * Reads the type from PHP type declaration and PHPDoc annotations, including
   the type of the nested objects.
 * Handles `array`, `ArrayAccess` and `Traversable` objects, and the mapping
@@ -55,7 +57,6 @@ $mapper->map($book, $bookDto);
 
 ## Future Features
 
-* Mapping to interfaces and abstract classes.
 * Option to map to or from different property name? (seems to be a popular
   feature, but I prefer the native OOP way of doing it)
 * Option to read & write to private properties?
