@@ -393,3 +393,10 @@ class MyObjectToMyDtoTransformer implements
     // ...
 }
 ```
+
+## Property Path
+
+`MainInterface::transform()` has an optional `$path` parameter. If your
+transformer defers the mapping of a property to the main transformer, you should
+pass the property name to this parameter. It will be used for tracing and for
+generating a meaningful exception message if the mapping fails.
