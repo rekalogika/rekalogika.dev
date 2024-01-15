@@ -53,6 +53,7 @@ $mapper->map($book, $bookDto);
 * Easy to extend by creating new transformers, or decorating the existing ones.
 * Match classes using attributes in your transformers, in addition to using
   class names.
+* Helpful error messages.
 * Console commands for debugging.
 
 ## Future Features

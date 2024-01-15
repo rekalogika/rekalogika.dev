@@ -144,7 +144,7 @@ command:
 php bin/console debug:container --tag=rekalogika.mapper.transformer
 ```
 
-Also, you can verify the existense of the transformer in the mapping table:
+Also, you can verify the existence of the transformer in the mapping table:
 
 ```bash
 php bin/console rekalogika:mapper:mapping
@@ -217,6 +217,49 @@ class MyObjectToMyDtoTransformer implements
     // ...
 }
 ```
+
+## Variant Target Matching
+
+By default, the target in the mapping is invariant. This means that the target
+must be the same as the target specified in the mapping. For example, the
+mapping below is invariant. It will only process the source if the target is
+a `MoneyDto` object, but not any of its subclasses.
+
+To get a variant matching, set the third parameter of `TypeMapping` to `true`.
+
+```php
+use Brick\Money\Money;
+use Rekalogika\Mapper\Contracts\TransformerInterface;
+use Rekalogika\Mapper\Contracts\TypeMapping;
+use Rekalogika\Mapper\Util\TypeFactory;
+
+class MoneyToMoneyDtoTransformer implements TransformerInterface
+{
+    // ...
+
+    public function getSupportedTransformation(): iterable
+    {
+
+        yield new TypeMapping(
+            TypeFactory::objectOfClass(Money::class),
+            TypeFactory::objectOfClass(MoneyDto::class),
+            // highlight-next-line
+            true
+        );
+    }
+
+    // ...
+}
+```
+
+In the example above, if the target is type-hinted to a subclass of `MoneyDto`,
+the transformer will still be considered.
+
+:::info
+
+The source is always variant.
+
+:::
 
 ## Caching and Circular References Detection
 
@@ -315,3 +358,37 @@ class MyObjectToMyDtoTransformer implements TransformerInterface
 
 When using attributes, the `$sourceType` and `$targetType` parameters in the
 `transform()` method will refer to the type of the attribute, not the object.
+
+## Refusal to Transform
+
+If the transformer throws `RefuseToHandleException`, the `MainTransformer` will
+pass the mapping to the next transformer in the priority chain.
+
+```php title="src/Mapper/MyObjectToMyDtoTransformer.php"
+namespace App\Mapper;
+
+use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\Contracts\TransformerInterface;
+
+class MyObjectToMyDtoTransformer implements
+    TransformerInterface,
+{
+    public function transform(
+        mixed $source,
+        mixed $target,
+        ?Type $sourceType,
+        ?Type $targetType,
+        Context $context
+    ): mixed {
+        if ($source instanceof MyObject) {
+            // highlight-next-line
+            throw new RefuseToHandleException();
+        }
+
+        // ...
+
+    }
+
+    // ...
+}
+```
