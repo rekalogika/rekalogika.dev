@@ -222,8 +222,9 @@ class MyObjectToMyDtoTransformer implements
 
 By default, the target in the mapping is invariant. This means that the target
 must be the same as the target specified in the mapping. For example, the
-mapping below is invariant. It will only process the source if the target is
-a `MoneyDto` object, but not any of its subclasses.
+mapping `MoneyToMoneyDtoTransformer` above is invariant. It will only process
+the source if the target is type-hinted `MoneyDto`, but not any of its
+subclasses.
 
 To get a variant matching, set the third parameter of `TypeMapping` to `true`.
 
@@ -294,7 +295,7 @@ class MyObjectToMyDtoTransformer implements
 
         // highlight-start
         // add it to the cache
-        $context->get(ObjectCache::class)
+        $context(ObjectCache::class)
             ->saveTarget($source, $targetType, $target);
         // highlight-end
 
