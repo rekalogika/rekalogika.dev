@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.1.0">
 <title data-rh="true">Rationale, or Why Create Another Mapper? | Rekalogika.DEV</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://rekalogika.dev/img/social.png"><meta data-rh="true" name="twitter:image" content="https://rekalogika.dev/img/social.png"><meta data-rh="true" property="og:url" content="https://rekalogika.dev/mapper/rationale"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Rationale, or Why Create Another Mapper? | Rekalogika.DEV"><meta data-rh="true" name="description" content="We developed a project that during its planning phase we determined that it"><meta data-rh="true" property="og:description" content="We developed a project that during its planning phase we determined that it"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://rekalogika.dev/mapper/rationale"><link data-rh="true" rel="alternate" href="https://rekalogika.dev/mapper/rationale" hreflang="en"><link data-rh="true" rel="alternate" href="https://rekalogika.dev/mapper/rationale" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.ef4f99c9.css">
-<script src="/assets/js/runtime~main.f2d56b69.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.df7aada7.js" defer="defer"></script>
 <script src="/assets/js/main.292fd572.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -23,32 +23,31 @@ the principles of encapsulation. However, this was not a blocker as it supports
 a custom property accessor, and it was possible to resolve this issue by
 creating an adapter that uses Symfony PropertyAccess component.</p>
 <p>With AutoMapper-Plus, users are expected to create a mapping configuration for
-each mapping pair. It has an automatic creation of mappings, but it seems to
-only work for simple mapping. Also, all of our entities and DTOs are typed, but
-we need to create a mapping for every non-trivial pair, despite the type
-information is already there in the involved classes. Custom mapper is
-available, but it does not let us access the main mapper. If a mapping pair uses
-a custom mapper, we are responsible for mapping everything, including the nested
-objects ourselves because the option to delegate to the main mapper is not
-available. There was another case that was simply not possible to accomplish, I
-don&#x27;t remember what it was, but it forced us to switch to another mapper
-overnight.</p>
+each mapping pair. It has an automatic creation of mappings for simple mapping.
+All of our entities and DTOs are typed, but we need to create a mapping for
+every non-trivial pair, despite the type information is already there in the
+involved classes. Custom mapper is available, but it does not let us access the
+main mapper. If a mapping pair uses a custom mapper, we are responsible for
+mapping everything, including nested objects, because the option to delegate to
+the main mapper is not available. There was another case that was simply not
+possible to accomplish, I don&#x27;t remember what it was, but it forced us to switch
+to another mapper overnight.</p>
 <p>Our next mapper was <a href="https://github.com/jolicode/automapper" target="_blank" rel="noopener noreferrer">Jolicode
 Automapper</a>, formerly known as <a href="https://github.com/janephp/automapper" target="_blank" rel="noopener noreferrer">Jane
 Automapper</a>. It behaved as expected,
 there were no big surprises, and there was very little to complain about its
-behavior. It should also be very fast, as it compiles its mapping code to PHP
-files. The problem was error handling. When an error occurred in the compiled
-mappers, it was usually a <code>TypeError</code>. It was difficult to debug, and even more
-difficult to resolve the problem, addressing the problem requires the skill of
-working with AST. We found that the problems were usually deployment errors
-(usually forgetting to clear the cache), some edge cases (easy to work around),
-or bugs in the mapper. It was rare to get an error, but when it happened, it was
+behavior. It is very fast as it compiles its mapping code to PHP files. The
+problem was error handling. When an error occurred in the compiled mappers, it
+was usually a <code>TypeError</code>. It was difficult to debug, and even more difficult to
+resolve the problem. Addressing the problem requires the skill of working with
+AST. We found that the problems were usually deployment errors (usually
+forgetting to clear the cache), some edge cases (easy to work around), or bugs
+in the mapper. It was rare to get an error, but when it happened, it was
 difficult and time-consuming to resolve. We did contribute some fixes back to
 the project.</p>
 <p>The second problem was that the mapper was difficult to extend. Adding a new
-transformer requires the skill of working with AST, and there was no option to
-do a mapping using plain old PHP code that you write yourself. We hit a brick
+transformer requires the knowledge of working with AST, and there was no option
+to do a mapping using plain old PHP code that you write yourself. We hit a brick
 wall when a new requirement surfaced that requires the mapper to target an
 abstract class, a feature that was not supported by the mapper. We figured it
 would be easier for us to spend a week creating our own mapper from scratch
