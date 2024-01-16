@@ -400,3 +400,77 @@ class MyObjectToMyDtoTransformer implements
 transformer defers the mapping of a property to the main transformer, you should
 pass the property name to this parameter. It will be used for tracing and for
 generating a meaningful exception message if the mapping fails.
+
+```php title="src/Mapper/MyObjectToMyDtoTransformer.php"
+namespace App\Mapper;
+
+use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\Contracts\TransformerInterface;
+
+class MyObjectToMyDtoTransformer implements
+    TransformerInterface,
+{
+    public function transform(
+        mixed $source,
+        mixed $target,
+        ?Type $sourceType,
+        ?Type $targetType,
+        Context $context
+    ): mixed {
+        // ...
+
+        // delegate the work of mapping the property to the main transformer
+        $target->someProperty = $this->getMainTransformer()->transform(
+            source: $source->getProperty(),
+            target: $target->someProperty,
+            targetTypes: $this->propertyTypeExtractor
+                ->getTypes($target, 'someProperty');
+            context: $context,
+            // highlight-next-line
+            path: 'someProperty'
+        );
+
+        return $target;
+    }
+
+    // ...
+}
+```
+
+If your target object is an array-like object, you should use the `[n]`
+notation:
+
+```php title="src/Mapper/MyObjectToMyDtoTransformer.php"
+namespace App\Mapper;
+
+use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\Contracts\TransformerInterface;
+
+class MyObjectToMyDtoTransformer implements
+    TransformerInterface,
+{
+    public function transform(
+        mixed $source,
+        mixed $target,
+        ?Type $sourceType,
+        ?Type $targetType,
+        Context $context
+    ): mixed {
+        // ...
+
+        // delegate the work of mapping the array key to the main transformer
+        $target[$key] = $this->getMainTransformer()->transform(
+            source: $source[$key],
+            target: $target[$key],
+            targetTypes: $targetTypes,
+            context: $context,
+            // highlight-next-line
+            path: sprintf('[%s]', $key)
+        );
+
+        return $target;
+    }
+
+    // ...
+}
+```
