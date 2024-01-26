@@ -50,8 +50,3 @@ The library uses the Symfony Property Info component to list the properties of
 the source and target variables, and to query their types. This library uses
 the `Type` objects returned by the Symfony Property Info component as the
 means of describing the types of the source and target variables.
-
-### Symfony Property Access
-
-The library uses the Symfony Property Access component to read from and write to
-the source and target variables.

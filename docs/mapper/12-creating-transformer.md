@@ -6,8 +6,8 @@ Extend the mapper by creating your own transformer.
 
 ## Creating the Transformer
 
-Suppose you are using the `brick/money` library to represent money in your
-application, and you need to map the `Money` object to the following DTO:
+Suppose you are using the `brick/money` library to represent a monetary value in
+your application, and you need to map the `Money` object to the following DTO:
 
 ```php title="src/Dto/MoneyDto.php"
 namespace App\Dto;
@@ -127,13 +127,13 @@ services:
 
 :::info
 
-The default priority is `0`. The higher the priority, the mapping provided by
-the transformer will be taken into consideration earlier.
+The default priority is `0`. The higher the priority, the mapping supplied by
+the transformer will be considered earlier.
 
 :::
 
 If you are using autoconfiguration, you can use the `#[AsTaggedItem]` attribute
-to set its property.
+to set its priority.
 
 ## Verifying
 
@@ -154,8 +154,8 @@ php bin/console rekalogika:mapper:mapping
 
 Your transformer does not need to do everything. You can delegate the mapping of
 properties or other objects back to the main transformer. To accomplish this,
-your transformer needs to implement `MainTransformerAwareInterface`, and we
-also provide a `MainTransformerAwareTrait` to help you with that:
+your transformer needs to implement `MainTransformerAwareInterface`. We also
+provide `MainTransformerAwareTrait` to help you with that:
 
 ```php title="src/Mapper/MyObjectToMyDtoTransformer.php"
 namespace App\Mapper;

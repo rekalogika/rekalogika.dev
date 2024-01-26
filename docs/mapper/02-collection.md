@@ -6,22 +6,74 @@ This chapter describes how to map arrays and array-like objects.
 
 ## Basic Usage
 
-To map between arrays or array-like objects, you need to type-hint the array
-on the target side. For example:
+Suppose you have these entities:
 
 ```php
-class ObjectWithArrayPropertyDto
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
+class Post
 {
     /**
-     * @var ?array<int,ObjectWithScalarPropertiesDto>
+     * @var Collection<int,Comment>
      */
-    public ?array $property = null;
+    private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection<int,Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+}
+
+class Comment
+{
+    private string $text;
+
+    public function __construct(string $text)
+    {
+        $this->text = $text;
+    }
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
 }
 ```
 
-In the above case, if the source has an array-like `$property`, the mapper will
-map it to the target's `$property` array, and map the source member to the
-object `ObjectWithScalarPropertiesDto`.
+To map those entities to the corresponding DTOs, you can simply create the DTOs
+like the following. Notice the type-hint of the `$comments` property:
+
+```php
+class PostDto
+{
+    /**
+     * @var ?array<int,CommentDto>
+     */
+    public ?array $comments = null;
+}
+
+class CommentDto
+{
+    public string $text;
+}
+```
+
+Then, you can map between the two objects:
+
+```php
+/** @var MapperInterface $mapper */
+
+$postDto = $mapper->map($post, PostDto::class);
+```
 
 :::info
 
@@ -30,9 +82,9 @@ array as-is.
 
 :::
 
-Supported types of the target side are:
+Supported types of the target side:
 
-* Normal arrays
+* Normal array
 * `ArrayAccess`
 * `ArrayObject`
 * Doctrine `Collection`
@@ -48,18 +100,20 @@ property is type-hinted with `Traversable`, the mapper will map to a `Generator`
 object.
 
 ```php
-class ObjectWithArrayPropertyDto
+class PostDto
 {
     /**
-     * @var ?\Traversable<int,ObjectWithScalarPropertiesDto>
+     * @var ?\Traversable<int,CommentDto>
      */
-    public ?\Traversable $property = null;
+    public ?\Traversable $comments = null;
 }
 ```
 
 This way, you are getting lazy-loading if the source supports lazy loading (like
 Doctrine `PersistentCollection`), the source will not be hydrated unless the
-consumer uses the mapped property on the target side.
+consumer uses the mapped property on the target side. This might be useful like
+if you are using the DTOs in a view, where you don't always need to use the
+property.
 
 Furthermore, you are also getting stream mapping using `Generator`, which can
 save a lot of memory if your source is large.

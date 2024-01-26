@@ -2,8 +2,12 @@
 title: Overriding Transformer
 ---
 
-If you need to override the transformer picked by the mapper, you can do so by
-creating a custom transformer like this:
+If the mapper chooses the wrong transformer for the job, you can override it by
+decorating the correct transformer and adding it to the mapping table.
+
+Suppose you have a `YourObject` class and a `YourObjectDto` class, but the
+mapper does not use the desired transformer for the job. You can fix it by
+decorating the correct transformer like this:
     
 ```php
 use Rekalogika\Mapper\Transformer\AbstractTransformerDecorator;
@@ -28,6 +32,6 @@ class OverrideTransformer extends AbstractTransformerDecorator
 }
 ```
 
-With the above example, if the source is `YourObject` and the target is
+With the above example, when the source is `YourObject` and the target is
 `YourObjectDto`, the mapper will now choose `ObjectToObjectTransformer` instead
 of choosing from the rest of the mapping table.
