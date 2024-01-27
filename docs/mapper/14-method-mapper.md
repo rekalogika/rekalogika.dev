@@ -4,7 +4,7 @@ title: Manual Mapping using a Class Method
 
 This chapter describes how to map using a class method.
 
-This feature an alternative to creating a transformer. It is useful if your
+This feature is an alternative to creating a transformer. It is useful if your
 class requires a custom logic to map the data. You can make your DTO implement
 the `MapToObjectInterface` or `MapFromObjectInterface` and create the required
 methods.

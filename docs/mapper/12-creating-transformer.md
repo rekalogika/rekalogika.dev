@@ -221,10 +221,10 @@ class MyObjectToMyDtoTransformer implements
 ## Variant Target Matching
 
 By default, the target in the mapping is invariant. This means that the target
-must be the same as the target specified in the mapping. For example, the
-mapping `MoneyToMoneyDtoTransformer` above is invariant. It will only process
-the source if the target is type-hinted `MoneyDto`, but not any of its
-subclasses.
+type must exactly be the same as the target specified in the mapping. For
+example, the mapping `MoneyToMoneyDtoTransformer` above is invariant. It will
+only do the mapping if the target is type-hinted exactly `MoneyDto`, but not any
+of its subclasses.
 
 To get a variant matching, set the third parameter of `TypeMapping` to `true`.
 
@@ -253,8 +253,9 @@ class MoneyToMoneyDtoTransformer implements TransformerInterface
 }
 ```
 
-In the example above, if the target is type-hinted to a subclass of `MoneyDto`,
-the transformer will still be considered.
+Suppose you have a `UsdMoneyDto` object that extends `MoneyDto`, using the
+example above, the mapping will apply if the target is type-hinted as
+`MoneyDto` or `UsdMoneyDto`.
 
 :::info
 

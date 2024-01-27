@@ -1,9 +1,18 @@
 ---
-title: Overriding Transformer
+title: Overriding a Mapping Table Entry
 ---
 
-If the mapper chooses the wrong transformer for the job, you can override it by
-decorating the correct transformer and adding it to the mapping table.
+If the mapper chooses the wrong transformer for a specific source and target
+type pair, you can override it by decorating the correct transformer and adding
+it to the mapping table.
+
+:::note
+
+Note that in this case, we don't decorate the transformer to replace the
+original transformer in the dependency injection container. Instead, we add
+a new transformer by decorating the original transformer.
+
+:::
 
 Suppose you have a `YourObject` class and a `YourObjectDto` class, but the
 mapper does not use the desired transformer for the job. You can fix it by
