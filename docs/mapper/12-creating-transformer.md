@@ -182,7 +182,8 @@ class MyObjectToMyDtoTransformer implements
     ): mixed {
         // ...
 
-        // the delegation to the main transformer
+        // delegating the task of transforming 'someProperty' to the main
+        // transformer
         // highlight-start
         $target->someProperty = $this->getMainTransformer()->transform(
             source: $source->getSomeProperty(),
