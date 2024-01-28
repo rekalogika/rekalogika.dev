@@ -164,7 +164,6 @@ use Rekalogika\Mapper\Context\Context;
 use Rekalogika\Mapper\Contracts\MainTransformerAwareInterface;
 use Rekalogika\Mapper\Contracts\MainTransformerInterface;
 use Rekalogika\Mapper\Contracts\TransformerInterface;
-use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 
 class MyObjectToMyDtoTransformer implements
     TransformerInterface,
@@ -173,14 +172,6 @@ class MyObjectToMyDtoTransformer implements
 {
     // highlight-next-line
     use MainTransformerAwareTrait;
-
-    public function __construct(
-        // highlight-start
-        // need this to identify target property types
-        private PropertyTypeExtractorInterface $propertyTypeExtractor,
-        // highlight-end
-    ){
-    }
 
     public function transform(
         mixed $source,
@@ -191,22 +182,14 @@ class MyObjectToMyDtoTransformer implements
     ): mixed {
         // ...
 
-        // highlight-start
-        // identify the target property types
-        $targetPropertyTypes = $this->propertyTypeExtractor
-            ->getTypes($target, 'someProperty');
-
         // the delegation to the main transformer
-        $result = $this->getMainTransformer()->transform(
+        // highlight-start
+        $target->someProperty = $this->getMainTransformer()->transform(
             source: $source->getSomeProperty(),
-            target: null, // unless there is already an existing value in
-                          // the target object
-            targetTypes: $targetPropertyTypes,
+            target: $target->someProperty, // current value of the target
+            targetTypes: [TypeFactory::objectOfClass(SomeDto::class)]
             context: $context
         );
-
-        // saves the result to the target object
-        $target->someProperty = $result;
         // highlight-end
 
         // ...
