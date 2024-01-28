@@ -9,8 +9,9 @@ it to the mapping table.
 :::note
 
 Note that in this case, we don't decorate the transformer to replace the
-original transformer in the dependency injection container. Instead, we add
-a new transformer by decorating the original transformer.
+original transformer in the dependency injection container. Instead, we are
+"duplicating" an existing transformer, and putting it earlier in the mapping
+table.
 
 :::
 
