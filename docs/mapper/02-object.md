@@ -8,7 +8,7 @@ properties that have the same name on the source and the target, transforms
 to the target type, and either sets the target property or adds it to the
 constructor arguments.
 
-## Custom Property Mapping Logic
+## Custom Property Mapper
 
 If you need a custom mapping logic for a specific property, you can create a
 service and add the attribute `AsPropertyMapper` to a custom method. Example:
@@ -65,4 +65,37 @@ class UserMapper
         return $user->getEmailAddress();
     }
 }
+```
+
+If you don't use autowiring, autoconfiguration, or don't want to use attributes,
+you can add the service manually like this:
+
+```yaml title="config/services.yaml"
+services:
+    App\Mapper\UserMapper:
+        tags:
+            -
+                name: 'rekalogika.mapper.property_mapper'
+                method: 'mapName'
+                sourceClass: 'App\Entity\User'
+                targetClass: 'App\Dto\UserDto'
+                property: 'name'
+            -
+                name: 'rekalogika.mapper.property_mapper'
+                method: 'mapBirthDate'
+                sourceClass: 'App\Entity\User'
+                targetClass: 'App\Dto\UserDto'
+                property: 'birthDate'
+            -
+                name: 'rekalogika.mapper.property_mapper'
+                method: 'mapEmail'
+                sourceClass: 'App\Entity\User'
+                targetClass: 'App\Dto\UserDto'
+                property: 'email'
+```
+
+To dump the list of all property mappers, run the following command:
+
+```bash
+$ bin/console debug:container --tag=rekalogika.mapper.property_mapper
 ```
