@@ -58,9 +58,8 @@ $mapper->map($book, $bookDto);
 
 ## Future Features
 
-* Option to map to or from different property name? (seems to be a popular
-  feature, but I prefer the native OOP way of doing it)
-* Option to read & write to private properties?
+* Option to read & write to private properties.
+* Option to inject `Context` and `MainTransformer` to a property mapper.
 * Data collector and profiler integration.
 
 ## Installation
