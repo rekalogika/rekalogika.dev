@@ -44,7 +44,8 @@ $mapper->map($book, $bookDto);
   the type of the nested objects.
 * Handles `array`, `ArrayAccess` and `Traversable` objects, and the mapping
   between them.
-* Handles non-string & non-integer array keys.
+* Handles non-string & non-integer keys in array-like objects, like
+  `SplObjectStorage`.
 * Lazy stream mapping if the target is type-hinted as `Traversable`. Consumes
   less memory & avoids hydrating a Doctrine collection prematurely.
 * In addition, when the target is `Traversable` and the source is a `Countable`,
