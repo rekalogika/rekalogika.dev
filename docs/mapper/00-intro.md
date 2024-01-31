@@ -34,6 +34,7 @@ $mapper->map($book, $bookDto);
 * By default, does not attempt to circumvent your class constraints. Reads only
   from and writes only to public properties, getters, setters. Does not
   instantiate objects without their constructor.
+* Override the mapping logic using a custom property mapper.
 * Constructor initialization.
 * Handles nested objects.
 * Handles recursion and circular references.
@@ -43,6 +44,7 @@ $mapper->map($book, $bookDto);
   the type of the nested objects.
 * Handles `array`, `ArrayAccess` and `Traversable` objects, and the mapping
   between them.
+* Handles non-string & non-integer array keys.
 * Lazy stream mapping if the target is type-hinted as `Traversable`. Consumes
   less memory & avoids hydrating a Doctrine collection prematurely.
 * In addition, when the target is `Traversable` and the source is a `Countable`,
