@@ -3,10 +3,14 @@ title: Mapping Object to Object
 ---
 
 Mapping an object to another object is the most common task done by a mapper.
-Internally, this task is done by `ObjectToObjectTransformer`. It identifies
-properties that have the same name on the source and the target, transforms
-to the target type, and either sets the target property or adds it to the
-constructor arguments.
+Internally, this task is done by `ObjectToObjectTransformer`.
+
+## How It Works
+
+The mapper identifies properties that have the same name on the source and the
+target side. It looks at public properties, public getters & setters, and
+constructor arguments. It then transforms each source value to the target type,
+and either sets the target property or adds it to the constructor arguments.
 
 ## Custom Property Mapper
 
@@ -25,7 +29,7 @@ class UserMapper
     )]
     public function mapName(User $user): string
     {
-        return strtoupper($user->getName());
+        return strtoupper($user->getFirstName() . ' ' . $user->getLastName());
     }
 }
 ```
@@ -50,7 +54,7 @@ class UserMapper
     #[AsPropertyMapper('name')]
     public function mapName(User $user): string
     {
-        return strtoupper($user->getName());
+        return strtoupper($user->getFirstName() . ' ' . $user->getLastName());
     }
 
     #[AsPropertyMapper('birthDate')]

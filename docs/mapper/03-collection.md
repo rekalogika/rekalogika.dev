@@ -14,9 +14,7 @@ use Doctrine\Common\Collections\Collection;
 
 class Post
 {
-    /**
-     * @var Collection<int,Comment>
-     */
+    /** @var Collection<int,Comment> */
     private Collection $comments;
 
     public function __construct()
@@ -55,9 +53,7 @@ like the following. Notice the type-hint of the `$comments` property:
 ```php
 class PostDto
 {
-    /**
-     * @var ?array<int,CommentDto>
-     */
+    /** @var ?array<int,CommentDto> */
     public ?array $comments = null;
 }
 
@@ -102,9 +98,7 @@ object.
 ```php
 class PostDto
 {
-    /**
-     * @var ?\Traversable<int,CommentDto>
-     */
+    /** @var ?\Traversable<int,CommentDto> */
     public ?\Traversable $comments = null;
 }
 ```
