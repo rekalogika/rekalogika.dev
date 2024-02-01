@@ -53,6 +53,7 @@ like the following. Notice the type-hint of the `$comments` property:
 ```php
 class PostDto
 {
+    // highlight-next-line
     /** @var ?array<int,CommentDto> */
     public ?array $comments = null;
 }
@@ -122,7 +123,7 @@ over it.
 ## Non-Integer and Non-String Keys
 
 The mapper supports non-integer and non-string keys if the underlying objects
-support it, like `SplObjectStorage`. The key value will be transformed to the
+support it, including `SplObjectStorage`. The key value will be transformed to the
 target key type-hint, just like the values. Example:
 
 ```php
@@ -153,12 +154,27 @@ $map->spouseMap[$jill] = $jack;
 $mapDto = $mapper->map($map, RelationshipMapDto::class);
 ```
 
+:::warning
+
+For this to work, the type-hint of the target side cannot be `SplObjectStorage`
+or other object. Use `ArrayAccess` instead. Also it must be initially null, not
+pre-initialized. The mapper uses a custom `HashTable` object on the target side
+to accomplish this.
+
+Using `Traversable` type hint also works.
+
+:::
+
 ## Lazy Loading
 
 The mapper supports lazy-loading, and will instantiate a lazy-loading object on
 the target size if the conditions are met.
 
-* `Generator`-backed mapping is always lazy-loading.
+* The target must be type-hinted using `Traversable`, `ArrayAccess`, or the
+  special `ArrayInterface`.
+* If the target is `ArrayAccess` or `ArrayInterface`, the source must be an
+  array, or an array-like object that implements `ArrayAccess`, `Traversable`,
+  and `Countable`.
 * The target side cannot be a simple array.
 * The target variable must not be pre-initialized. It must be null or
   uninitialized.
