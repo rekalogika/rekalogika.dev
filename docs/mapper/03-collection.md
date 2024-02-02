@@ -103,6 +103,42 @@ Supported types of the target side:
 * Doctrine `Collection`
 * Doctrine `ArrayCollection`
 
+## Mapping Using an Adder Method
+
+Mapper supports mapping using an adder method on the target side. Example:
+
+```php
+class PostDto
+{
+    /** @var array<int,CommentDto> */
+    private array $comments = [];
+
+    /**
+     * @return array<int,CommentDto>
+     */
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+
+    // highlight-start
+    public function addComment(CommentDto $comment): void
+    {
+        $this->comments[] = $comment;
+    }
+    // highlight-end
+
+    public function removeComment(CommentDto $comment): void
+    {
+        $key = array_search($comment, $this->comments, true);
+
+        if ($key !== false) {
+            unset($this->comments[$key]);
+        }
+    }
+}
+```
+
 ## `Generator`-Backed Mapping
 
 If the target is type-hinted with `Traversable`, the mapper will map to a
@@ -119,6 +155,17 @@ class PostDto
 With this approach, no values are stored on the target side. Instead, the target
 will transform the source values to the desired type on-the-fly as you iterate
 over it.
+
+If the source is an array or an object that implements `Countable`, the result
+will also be a `Countable`, i.e. that you can `count()` or `->count()`. In
+addition, if your source is an extra-lazy Doctrine Collection, the consumer will
+be able to `count()` the target without causing a full hydration of the source.
+
+:::note
+
+For this to work, the target must be null or unset.
+
+:::
 
 ## Non-Integer and Non-String Keys
 
@@ -157,9 +204,9 @@ $mapDto = $mapper->map($map, RelationshipMapDto::class);
 :::warning
 
 For this to work, the type-hint of the target side cannot be `SplObjectStorage`
-or other object. Use `ArrayAccess` instead. Also it must be initially null, not
-pre-initialized. The mapper uses a custom `HashTable` object on the target side
-to accomplish this.
+or other concrete class. Use `ArrayAccess` instead. Also it must be initially
+null, not pre-initialized. The mapper uses a custom `HashTable` object on the
+target side to accomplish this.
 
 Using `Traversable` type hint also works.
 
@@ -174,18 +221,14 @@ the target size if the conditions are met.
   special `ArrayInterface`.
 * If the target is `ArrayAccess` or `ArrayInterface`, the source must be an
   array, or an array-like object that implements `ArrayAccess`, `Traversable`,
-  and `Countable`.
+  and `Countable` (pretty much all of them do).
 * The target side cannot be a simple array.
 * The target variable must not be pre-initialized. It must be null or
   uninitialized.
 * Does not support non-integer, non-string keys.
 
-If the source supports lazy loading (like Doctrine `PersistentCollection`), it
-will not be hydrated unless the consumer actually uses the mapped property on
-the target side. This might be useful, like if you are using the DTOs in a view,
-where you don't always need to use the property.
-
-If the source is an array or an object that implements `Countable`, you will
-also get a `Countable` target, i.e. you can `count()` or `->count()` it. In
-addition, if your source is an extra-lazy Doctrine Collection, the consumer will
-be able to `count()` the target without causing a full hydration of the source.
+If lazy loading is active on the target side, and the source supports lazy
+loading (like Doctrine `PersistentCollection`), it will not be hydrated unless
+the consumer actually uses the mapped property on the target side. This might be
+useful, like if you are using the DTOs in a view, where you don't always need to
+use the property.
