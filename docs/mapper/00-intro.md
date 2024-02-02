@@ -42,8 +42,8 @@ $mapper->map($book, $bookDto);
   inheritance map attribute.
 * Reads the type from PHP type declaration and PHPDoc annotations, including
   the type of the nested objects.
-* Handles `array`, `ArrayAccess` and `Traversable` objects, and the mapping
-  between them.
+* Handles the mapping between `array` or array-like objects, as well as using an
+  adder method.
 * Handles non-string & non-integer keys in array-like objects, including
   `SplObjectStorage`.
 * Lazy loading & lazy stream mapping. Consumes less memory & avoids hydrating a
