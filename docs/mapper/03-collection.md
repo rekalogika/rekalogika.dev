@@ -225,10 +225,11 @@ the target size if the conditions are met.
 * The target side cannot be a simple array.
 * The target variable must not be pre-initialized. It must be null or
   uninitialized.
+* The target property must not be using an adder method.
 * Does not support non-integer, non-string keys.
 
 If lazy loading is active on the target side, and the source supports lazy
-loading (like Doctrine `PersistentCollection`), it will not be hydrated unless
-the consumer actually uses the mapped property on the target side. This might be
-useful, like if you are using the DTOs in a view, where you don't always need to
-use the property.
+loading (like Doctrine `PersistentCollection`), the source will not be hydrated
+unless the consumer actually uses the mapped property on the target side. This
+might be useful, like if you are using the DTOs in a view, where you don't
+always need to use the property.
