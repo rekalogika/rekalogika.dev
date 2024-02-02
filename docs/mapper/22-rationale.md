@@ -67,7 +67,7 @@ some limited usage. We hit a brick wall when a new requirement surfaced that
 requires the mapper to target an abstract class, a feature that was not
 supported by the mapper. We figured it would be easier for us to spend a week
 creating our own mapper from scratch using our experiences with the other
-mappers.
+mappers. Note: it now supports manual mapping using plain PHP.
 
 Other mappers that were considered:
 
