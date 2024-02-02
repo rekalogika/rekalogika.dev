@@ -34,10 +34,10 @@ class UserMapper
 }
 ```
 
-The above example takes the `name` property from the source object, transforms
-it to uppercase, and returns the result. The framework will then assign the
-result to the `name` property of the target object, as specified in the
-'property' argument of the `AsPropertyMapper` attribute.
+The above example concatenates first name and last name from the source object,
+transforms it to uppercase, and returns the result. The framework will then
+assign the result to the `name` property of the target object, as specified in
+the 'property' argument of the `AsPropertyMapper` attribute.
 
 If you have many properties to manually map, you can also do the following
 shorthand:
