@@ -38,8 +38,10 @@ object, transforms it to uppercase, and returns the result. Mapper will then
 assign the result to the `name` property of the `UserDto` object, as specified
 in the 'property' argument of the `AsPropertyMapper` attribute.
 
-If you have many properties to manually map, you can also do the following
-shorthand:
+### Shorthand Using `AsPropertyMapper` Attached to the Class
+
+If you have many properties to manually map, you can put the `AsPropertyMapper`
+attribute on the class, and it will apply to all methods in the class. Example:
 
 ```php
 use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
@@ -66,6 +68,8 @@ class UserMapper
     }
 }
 ```
+
+### Property Name Magic
 
 For even more shorthand, you can omit the property name altogether, and the
 mapper will use the method name, stripping the leading 'map' and lowercasing
@@ -100,6 +104,34 @@ class UserMapper
 }
 ```
 
+### Injecting Context & Related Services
+
+You also have the option to inject the main mapper and the context to the
+property mapper. But note that the first argument must be the source object.
+
+```php
+use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
+use Rekalogika\Mapper\MainTransformerInterface;
+use Rekalogika\Mapper\Context\Context;
+
+#[AsPropertyMapper(targetClass: UserDto::class)]
+class UserMapper
+{
+    #[AsPropertyMapper]
+    public function mapName(
+        User $user,
+        // highlight-start
+        MainTransformerInterface $mainTransformer,
+        Context $context
+        // highlight-end
+    ): string {
+        return strtoupper($user->getFirstName() . ' ' . $user->getLastName());
+    }
+}
+```
+
+### Manual Wiring
+
 If you don't use autowiring, autoconfiguration, or don't want to use attributes,
 you can add the service manually like this:
 
@@ -126,6 +158,8 @@ services:
                 targetClass: 'App\Dto\UserDto'
                 property: 'email'
 ```
+
+### Dumping Property Mapper Table
 
 To dump the list of all property mappers, run the following command:
 
