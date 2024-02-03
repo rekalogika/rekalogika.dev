@@ -30,7 +30,8 @@ $mapper->map($source, $postDto);
 
 With the `mapForProperty()`, you specify the property name of the variable that
 will contain the result of the mapping. SubMapper will detect the type of the
-object or class in `$containing` and use it as the target type for the mapping.
+property in `$containing::$propertyName` and use it as the target type for the
+mapping.
 
 This is useful if the property is an array or an array-like object, as PHP
 doesn't have generics and it is not simple to specify the type of the array
@@ -39,11 +40,50 @@ elements.
 ```php
 use Rekalogika\Mapper\SubMapper\SubMapperInterface;
 
+class Post {
+    /** @var list<Comment> */
+    public array $comments;
+}
+
+class Comment {}
+
+class PostDto {
+    /** @var list<CommentDto> */
+    public array $comments;
+}
+
+class CommentDto {}
+
+/** @var Post $post */
 /** @var SubMapperInterface $mapper */
 
-$result = $mapper->mapForProperty($source, $containing, $propertyName);
+$postDto = new PostDto();
+$mapper->cache($postDto);
+
+// highlight-next-line
+$commentsDto = $mapper->mapForProperty($post->comments, PostDto::class, 'comments');
+$postDto->comments = $commentsDto;
 ```
 
 `$containing` can be a class string or an existing object. If it is an
 existing object, SubMapper will attempt to retrieve the current object from the
 property and map the source to it.
+
+## `cache()` Method
+
+To reduce the possibility of infinite recursion due to circular references, you
+can use the `cache()` method to store the object that is being mapped. You
+should call `cache()` after you instantiate the object and before you delegate
+the mapping of its properties by calling `map()` or `mapForProperty()`.
+
+```php
+use Rekalogika\Mapper\SubMapper\SubMapperInterface;
+
+/** @var SubMapperInterface $mapper */
+
+$postDto = new PostDto();
+$mapper->cache($postDto);
+$postDto->author = $mapper->map($source->author, AuthorDto::class);
+
+return $postDto;
+```
