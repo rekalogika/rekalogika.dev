@@ -23,7 +23,6 @@ use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
 class UserMapper
 {
     #[AsPropertyMapper(
-        sourceClass: User::class,
         targetClass: UserDto::class,
         property: 'name',
     )]
@@ -34,10 +33,10 @@ class UserMapper
 }
 ```
 
-The above example concatenates first name and last name from the source object,
-transforms it to uppercase, and returns the result. The framework will then
-assign the result to the `name` property of the target object, as specified in
-the 'property' argument of the `AsPropertyMapper` attribute.
+The above example concatenates first name and last name from the source `User`
+object, transforms it to uppercase, and returns the result. Mapper will then
+assign the result to the `name` property of the `UserDto` object, as specified
+in the 'property' argument of the `AsPropertyMapper` attribute.
 
 If you have many properties to manually map, you can also do the following
 shorthand:
@@ -45,10 +44,7 @@ shorthand:
 ```php
 use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
 
-#[AsPropertyMapper(
-    sourceClass: User::class,
-    targetClass: UserDto::class,
-)]
+#[AsPropertyMapper(targetClass: UserDto::class)]
 class UserMapper
 {
     #[AsPropertyMapper('name')]
@@ -64,6 +60,39 @@ class UserMapper
     }
 
     #[AsPropertyMapper('email')]
+    public function mapEmail(User $user): string
+    {
+        return $user->getEmailAddress();
+    }
+}
+```
+
+For even more shorthand, you can omit the property name altogether, and the
+mapper will use the method name, stripping the leading 'map' and lowercasing
+the first letter.
+
+```php
+use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
+
+#[AsPropertyMapper(targetClass: UserDto::class)]
+class UserMapper
+{
+    // maps to 'name'
+    #[AsPropertyMapper]
+    public function mapName(User $user): string
+    {
+        return strtoupper($user->getFirstName() . ' ' . $user->getLastName());
+    }
+
+    // maps to 'birthDate'
+    #[AsPropertyMapper]
+    public function mapBirthDate(User $user): string
+    {
+        return $user->getBirthDate()->format('Y-m-d');
+    }
+
+    // maps to 'email
+    #[AsPropertyMapper]
     public function mapEmail(User $user): string
     {
         return $user->getEmailAddress();
