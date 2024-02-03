@@ -106,30 +106,9 @@ final class MoneyDto implements MapToObjectInterface
     // highlight-end
 }
 ```
-## Sub Mapper
+## SubMapper
 
 The `$mapper` parameter in the `mapFromObject()` and `mapToObject()` methods
-provides you with the sub mapper. You can use it to map another object, so you
-don't have to do everything yourself.
+provides you with the SubMapper. Read more about the sub mapper in the
+[SubMapper](submapper) chapter.
 
-There are two methods in the sub mapper that you can use. The first is `map()`.
-
-```php
-/** @var SubMapperInterface $mapper */
-
-// the $target can be an existing object, or a class-string
-$result = $mapper->map($source, $target);
-```
-
-The other is `mapForProperty()`.
-
-```php
-/** @var SubMapperInterface $mapper */
-
-$result = $mapper->mapForProperty($source, $className, $propertyName);
-```
-
-`mapForProperty()` will detect the type of the specified property, and then use
-it as the target type for the mapping. This is useful if the property is an
-array or an array-like object, as PHP doesn't have generics and it is not simple
-to specify the type of the array elements.
