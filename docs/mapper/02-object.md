@@ -15,7 +15,16 @@ and either sets the target property or adds it to the constructor arguments.
 ## Custom Property Mapper
 
 If you need a custom mapping logic for a specific property, you can create a
-service and add the attribute `AsPropertyMapper` to a custom method. Example:
+service and add the attribute `AsPropertyMapper` to a custom method.
+
+:::note
+
+This is optional. You only need to use this if you need a custom logic to
+populate a specific target property.
+
+:::
+
+Example:
 
 ```php
 use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
@@ -35,8 +44,8 @@ class UserMapper
 
 The above example concatenates first name and last name from the source `User`
 object, transforms it to uppercase, and returns the result. Mapper will then
-assign the result to the `name` property of the `UserDto` object, as specified
-in the 'property' argument of the `AsPropertyMapper` attribute.
+assign the result to the `name` property of the target `UserDto` object, as
+specified in the arguments of the `AsPropertyMapper` attribute.
 
 ### Shorthand Using `AsPropertyMapper` Attached to the Class
 
@@ -104,15 +113,17 @@ class UserMapper
 }
 ```
 
-### Injecting Context & Related Services
+### Extra Arguments
 
-You also have the option to inject the main mapper and the context to the
-property mapper. But note that the first argument must be the source object.
+You also have the option to inject the main transformer, sub-mapper, and the
+context to the property mapper. This can be in any order, but the first argument
+must be the source object.
 
 ```php
-use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
-use Rekalogika\Mapper\MainTransformerInterface;
 use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\MainTransformerInterface;
+use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
+use Rekalogika\Mapper\SubMapper\SubMapperInterface;
 
 #[AsPropertyMapper(targetClass: UserDto::class)]
 class UserMapper
@@ -122,6 +133,7 @@ class UserMapper
         User $user,
         // highlight-start
         MainTransformerInterface $mainTransformer,
+        SubMapperInterface $subMapper,
         Context $context
         // highlight-end
     ): string {

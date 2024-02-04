@@ -1,13 +1,19 @@
 ---
-title: Manual Mapping using a Class Method
+title: Manual Mapping using a Class Factory Method
 ---
 
-This chapter describes how to map using a class method.
+This is one way to have a custom logic of mapping an object to another object.
+You can make your DTO implement the `MapToObjectInterface` or
+`MapFromObjectInterface` and create the required mapper methods.
 
-This feature is an alternative to creating a transformer. It is useful if your
-class requires a custom logic to map the data. You can make your DTO implement
-the `MapToObjectInterface` or `MapFromObjectInterface` and create the required
-methods.
+:::info
+
+You should prefer using the `AsObjectMapper` explained in [Manual Mapping using
+an Object Mapper](object-mapper) chapter. You will be able to map third-party
+classes, separate the logic from the model, and inject other services into the
+mapper.
+
+:::
 
 Suppose you are using the `brick/money` library to represent money in your
 application, and you need to map the `Money` object to the following DTO:

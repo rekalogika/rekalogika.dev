@@ -4,6 +4,14 @@ title: Creating a Custom Transformer
 
 Extend the mapper by creating your own transformer.
 
+:::note
+
+Transformers are considered low-level components. If possible, you should use
+[object mappers](object-mapper), [property mappers](object), or [class factory
+mapper](class-factory-mapper) instead.
+
+:::
+
 ## Creating the Transformer
 
 Suppose you are using the `brick/money` library to represent a monetary value in
