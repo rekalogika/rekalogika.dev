@@ -9,8 +9,14 @@ Internally, this task is done by `ObjectToObjectTransformer`.
 
 The mapper identifies properties that have the same name on the source and the
 target side. It looks at public properties, public getters & setters, and
-constructor arguments. It then transforms each source value to the target type,
-and either sets the target property or adds it to the constructor arguments.
+constructor arguments.
+
+It gets the existing value on the target side. If it is null, then it
+instantiates a new target object, populating its constructor arguments by
+transforming properties of the same name from the source object.
+
+It then transforms each source property to the target type, and sets them on the
+target.
 
 ## Mapping to Abstract Classes and Interfaces
 
@@ -34,6 +40,12 @@ abstract class AbstractClassDto
 
 In the above example, the mapper will map the source to `ConcreteClassADto` if
 the source is an instance of `ConcreteClassA`, and so on.
+
+:::note
+
+This only applies if there is no a preexisting object on the target side.
+
+:::
 
 ## Custom Property Mapper
 
