@@ -16,14 +16,14 @@ The `map()` method maps an object to the class or object you specified.
 ```php
 use Rekalogika\Mapper\SubMapper\SubMapperInterface;
 
-/** @var SubMapperInterface $mapper */
+/** @var SubMapperInterface $subMapper */
 
 // using class-string as the target type
-$postDto = $mapper->map($source, PostDto::class);
+$postDto = $subMapper->map($source, PostDto::class);
 
 // the target can also be an existing object
 $postDto = new PostDto();
-$mapper->map($source, $postDto);
+$subMapper->map($source, $postDto);
 ```
 
 ## `mapForProperty()` Method
@@ -55,13 +55,13 @@ class PostDto {
 class CommentDto {}
 
 /** @var Post $post */
-/** @var SubMapperInterface $mapper */
+/** @var SubMapperInterface $subMapper */
 
 $postDto = new PostDto();
-$mapper->cache($postDto);
+$subMapper->cache($postDto);
 
 // highlight-next-line
-$commentsDto = $mapper->mapForProperty($post->comments, PostDto::class, 'comments');
+$commentsDto = $subMapper->mapForProperty($post->comments, PostDto::class, 'comments');
 $postDto->comments = $commentsDto;
 ```
 
@@ -79,11 +79,11 @@ the mapping of its properties by calling `map()` or `mapForProperty()`.
 ```php
 use Rekalogika\Mapper\SubMapper\SubMapperInterface;
 
-/** @var SubMapperInterface $mapper */
+/** @var SubMapperInterface $subMapper */
 
 $postDto = new PostDto();
-$mapper->cache($postDto);
-$postDto->author = $mapper->map($source->author, AuthorDto::class);
+$subMapper->cache($postDto);
+$postDto->author = $subMapper->map($source->author, AuthorDto::class);
 
 return $postDto;
 ```
