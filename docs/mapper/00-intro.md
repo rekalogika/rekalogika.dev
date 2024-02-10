@@ -49,12 +49,13 @@ Everyone must have that idea at some point. However, as the project grows, the
 target classes (DTOs) may start to reference each other, and become a rich
 object graph. Your code will start to have many special cases, and is no longer
 as simple as you thought it would be. It becomes harder to maintain, and then
-you eventually sit back and try to resolve the problem. If successful, you will
-end up with something that resembles a mapping framework anyway.
+eventually forces you to sit back and try to resolve the problem. When (if?) you
+successfully engineer the solution, you will end up with something that
+resembles a mapping framework anyway.
 
 Mapping can be simple, but can also become a highly complex task. A mapper is
-created out of necessity to handle the complexity, not just a means of saving a
-few keystrokes.
+created out of necessity to handle the complexity, not just as a means of saving
+a few keystrokes.
 
 ## Features
 
