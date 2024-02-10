@@ -1,9 +1,6 @@
 ---
-title: Introduction & Installation
+title: Introduction
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 `rekalogika/mapper` is an object mapper for PHP and Symfony, also commonly known
 as an automapper. It maps an object to another object. Primarily used to map an
@@ -102,64 +99,6 @@ a few keystrokes.
 * Migrate engine to `symfony/type-info`.
 * Auto-detect static factory method.
   
-## Installation
-
-Make sure Composer is installed globally, as explained in the
-[installation chapter](https://getcomposer.org/doc/00-intro.md)
-of the Composer documentation.
-
-<Tabs>
-<TabItem value="flex" label="With Symfony Flex">
-
-Open a command console, enter your project directory, and execute:
-
-```bash
-composer require rekalogika/mapper
-```
-</TabItem>
-
-<TabItem value="noflex" label="Without Symfony Flex">
-
-Step 1: Download the Bundle
-
-Open a command console, enter your project directory, and execute the
-following command to download the latest stable version of this bundle:
-
-```bash
-composer require rekalogika/mapper
-```
-
-Step 2: Enable the Bundle
-
-Then, enable the bundle by adding it to the list of registered bundles
-in the `config/bundles.php` file of your project:
-
-```php title=config/bundles.php
-return [
-    // ...
-    Rekalogika\Mapper\RekalogikaMapperBundle::class => ['all' => true],
-];
-```
-</TabItem>
-
-<TabItem value="nonsymfony" label="Non-Symfony Projects">
-
-Open a command console, enter your project directory, and execute:
-
-```bash
-composer require rekalogika/mapper
-```
-
-:::warning
-
-Many parts of this documentation assume you are using Symfony, and will need
-to be done differently in non-Symfony projects.
-
-:::
-
-</TabItem>
-</Tabs>
-
 ## License
 
 MIT
