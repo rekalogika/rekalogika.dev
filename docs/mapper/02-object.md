@@ -249,7 +249,7 @@ context:
 use Rekalogika\Mapper\Context\Context;
 use Rekalogika\Mapper\Context\MapperOptions;
 
-$options = new MapperOptions(enableLazyLoading: false);
+$options = new MapperOptions(lazyLoading: false);
 $context = Context::create($options);
 
 $target = $this->mapper->map($source, ObjectWithScalarPropertiesDto::class, $context);
@@ -276,11 +276,18 @@ source side. First, it looks for the information in Doctrine's class metadata.
 If not found, it will use `id`, `uuid`, or `identifier` if any of those exists
 on the source side.
 
-These identifier properties are not lazy, and will be mapped immediately after
-the instantiation of the target proxy object. This should not cause the
+These identifier properties will not be lazy, and will be mapped immediately
+after the instantiation of the target proxy object. This should not cause the
 hydration of the source side because a Doctrine proxy already hold the
 identifier, even when uninitialized.
 
 If your application needs to have a custom logic for determining the identifier
 fields, you can create a service implementing
 `EagerPropertiesResolverInterface`.
+
+:::info
+
+If an identifier property maps to a constructor argument on the target side,
+then everything in the constructor will be mapped eagerly.
+
+:::
