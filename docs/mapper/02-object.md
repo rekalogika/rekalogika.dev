@@ -268,3 +268,19 @@ the same identifier property name.
 
 Without lazy-loading, API Platform will hydrate everything in the object graph,
 even only to generate an IRI.
+
+### Eager Properties
+
+During the mapping, Mapper will try to identify the identifier properties on the
+source side. First, it looks for the information in Doctrine's class metadata.
+If not found, it will use `id`, `uuid`, or `identifier` if any of those exists
+on the source side.
+
+These identifier properties are not lazy, and will be mapped immediately after
+the instantiation of the target proxy object. This should not cause the
+hydration of the source side because a Doctrine proxy already hold the
+identifier, even when uninitialized.
+
+If your application needs to have a custom logic for determining the identifier
+fields, you can create a service implementing
+`EagerPropertiesResolverInterface`.
