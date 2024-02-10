@@ -6,9 +6,9 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 `rekalogika/mapper` is an object mapper for PHP and Symfony, also commonly known
-as an automapper. It maps an object to another object. It removes a lot of the
-repetitive code you would normally have to write to map an object to another
-object.
+as an automapper. It maps an object to another object. It removes the complexity
+of mapping an object to another object, and even an object graph to another
+object graph.
 
 ## Synopsis
 
@@ -27,6 +27,35 @@ $bookDto = new BookDto();
 $mapper->map($book, $bookDto);
 ```
 
+## Why Use a Mapper?
+
+Why do we need to use a mapper to save a few keystrokes, and not just use
+something simple like this?
+
+```php
+class BookDto
+{
+    public static function create(Book $book): self
+    {
+        $dto = new self();
+        // ...
+
+        return $dto;
+    }
+}
+```
+
+Everyone must have that idea at some point. However, as the project grows, the
+target classes (DTOs) may start to reference each other, and become a rich
+object graph. Your code will start to have many special cases, and is no longer
+as simple as you thought it would be. It becomes harder to maintain, and then
+you eventually sit back and try to resolve the problem. If successful, you will
+end up with something that resembles a mapping framework anyway.
+
+Mapping can be simple, but can also become a highly complex task. A mapper is
+created out of necessity to handle the complexity, not just a means of saving a
+few keystrokes.
+
 ## Features
 
 * Automatically lists the properties of the source and target, detects their
@@ -42,12 +71,18 @@ $mapper->map($book, $bookDto);
   inheritance map attribute.
 * Reads the type from PHP type declaration and PHPDoc annotations, including
   the type of the nested objects.
+* If possible, target objects are lazy-loaded. The mapping does not take place
+  until the target is accessed.
+* Attempts to detect identifier properties on the source side. Those properties
+  on the target side will be mapped eagerly, and will not trigger the hydration.
+  Thus, API Platform will be able to generate IRIs without causing the hydration
+  of the entire object graph.
 * Handles the mapping between `array` or array-like objects, as well as using an
   adder method.
 * Handles non-string & non-integer keys in array-like objects, including
   `SplObjectStorage`.
-* Lazy loading & lazy stream mapping. Consumes less memory & avoids hydrating a
-  Doctrine collection prematurely.
+* Lazy loading & lazy stream mapping with collection types. Consumes less memory
+  & avoids hydrating a Doctrine collection prematurely.
 * With lazy loading, if the source is a `Countable`, then the target will also
   be a `Countable`. With an extra-lazy Doctrine Collection, the consumer will be
   able to count the target without causing a full hydration of the source.
@@ -57,12 +92,15 @@ $mapper->map($book, $bookDto);
   class names.
 * Helpful exception messages.
 * Console commands for debugging.
+* Data collector and profiler integration.
 
 ## Future Features
 
 * Option to read & write to private properties.
 * Option to inject `Context` and `MainTransformer` to a property mapper.
 * Data collector and profiler integration.
+
+
 
 ## Installation
 

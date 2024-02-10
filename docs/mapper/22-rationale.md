@@ -11,7 +11,12 @@ TLDR:
 * Helpful error messages.
 * Easy to extend.
 
----
+:::info
+
+The situation described there is valid at the time of writing, at the start of
+2024. The situation may have changed since then.
+
+:::
 
 We developed a project that during its planning phase we determined that it
 would be beneficial to integrate an automapper into the architecture. We looked
