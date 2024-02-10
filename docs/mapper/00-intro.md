@@ -6,9 +6,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 `rekalogika/mapper` is an object mapper for PHP and Symfony, also commonly known
-as an automapper. It maps an object to another object. It removes the complexity
-of mapping an object to another object, and even an object graph to another
-object graph.
+as an automapper. It maps an object to another object. Primarily used to map an
+entity to a DTO, but also useful for other mapping purposes. It removes the
+complexity of mapping an object to another object, and even an object graph to
+another object graph.
 
 ## Synopsis
 
@@ -50,8 +51,8 @@ target classes (DTOs) may start to reference each other, and become a rich
 object graph. Your code will start to have many special cases, and is no longer
 as simple as you thought it would be. It becomes harder to maintain, and then
 eventually forces you to sit back and try to resolve the problem. When (if?) you
-successfully engineer the solution, you will end up with something that
-resembles a mapping framework anyway.
+successfully engineer a solution, you will end up with something that resembles
+a mapping framework anyway.
 
 Mapping can be simple, but can also become a highly complex task. A mapper is
 created out of necessity to handle the complexity, not just as a means of saving
@@ -98,11 +99,9 @@ a few keystrokes.
 ## Future Features
 
 * Option to read & write to private properties.
-* Option to inject `Context` and `MainTransformer` to a property mapper.
-* Data collector and profiler integration.
-
-
-
+* Migrate engine to `symfony/type-info`.
+* Auto-detect static factory method.
+  
 ## Installation
 
 Make sure Composer is installed globally, as explained in the

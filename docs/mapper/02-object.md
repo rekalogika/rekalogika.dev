@@ -213,3 +213,58 @@ To dump the list of all property mappers, run the following command:
 ```bash
 $ bin/console debug:container --tag=rekalogika.mapper.property_mapper
 ```
+
+## Lazy Loading
+
+Mapper will attempt to create a lazy-loading proxy for the target object, and
+use it in place of the real object. The benefit is that the target object will
+not be hydrated until it is actually used.
+
+If the source object is a Doctrine entity, the mapping will not trigger the
+hydration of the source; even accessing ID properties on the target will also
+not trigger the hydration. Only after accessing other properties of the target
+will the hydration take place.
+
+:::warning
+
+If the target is `final`, then lazy-loading will not be possible. There are also
+things that can prevent a lazy-loading proxy from being created. To see if a
+proxy is being used, or the reason why it is not, you can see that in the Mapper
+panel in the Symfony profiler.
+
+:::
+
+### Disabling Lazy-Loading
+
+There should be no downside to using a lazy-loading proxy in place of the real
+object, they should be interchangeable. However, a proxy incurs a small
+overhead, and you may wish to disable it in some cases, for example if you are
+using the Mapper in a batch process.
+
+If you want to disable lazy-loading for a mapping run, you can set the option
+`enableLazyLoading` to false in the `MapperOptions` object, and add it to the
+context:
+
+```php
+use Rekalogika\Mapper\Context\Context;
+use Rekalogika\Mapper\Context\MapperOptions;
+
+$options = new MapperOptions(enableLazyLoading: false);
+$context = Context::create($options);
+
+$target = $this->mapper->map($source, ObjectWithScalarPropertiesDto::class, $context);
+```
+
+To disable lazy-loading for a specific mapping, you can make the target class
+`final`.
+
+### API Platform
+
+With API Platform, if you are using DTOs as `ApiResource`, then API Platform
+should be able to generate IRIs without causing the hydration of the source (if
+the source is a Doctrine entity). The only thing you need to do is to ensure
+the source (a Doctrine entity) and the target (an `ApiResource` DTO) both use
+the same identifier property name.
+
+Without lazy-loading, API Platform will hydrate everything in the object graph,
+even only to generate an IRI.
