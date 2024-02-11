@@ -1,0 +1,71 @@
+@startuml mapper
+
+class Mapper
+Mapper ..> MainTransformer
+
+class MainTransformer
+MainTransformer ..> ObjectCacheFactory
+MainTransformer ..> TransformerRegistry
+' MainTransformer ..> TypeResolver
+
+TransformerRegistry ..> Transformer
+' TransformerRegistry ..> TypeResolver
+TransformerRegistry ..> MappingFactory
+
+interface Transformer
+
+class ArrayToObjectTransformer
+ArrayToObjectTransformer ..> Denormalizer
+Transformer <|..... ArrayToObjectTransformer
+
+class ObjectToArrayTransformer
+ObjectToArrayTransformer ..> Normalizer
+Transformer <|....... ObjectToArrayTransformer
+
+class ClassMethodTransformer
+ClassMethodTransformer ..> SubMapperFactory
+Transformer <|...... ClassMethodTransformer
+
+class ObjectMapperTransformer implements Transformer
+ObjectMapperTransformer ..> SubMapperFactory
+ObjectMapperTransformer ....> ObjectMapperTableFactory  
+ObjectMapperTransformer ..> ObjectMapperResolver
+ObjectMapperTransformer ..> ObjectMapper
+
+ObjectMapperResolver ..> ObjectMapper
+
+class ObjectToObjectTransformer
+ObjectToObjectTransformer ...> ProxyRegistry
+ObjectToObjectTransformer ..> ObjectToObjectMetadataFactory
+ObjectToObjectTransformer ..> PropertyMapper
+ObjectToObjectTransformer ..> SubMapperFactory
+Transformer <|.... ObjectToObjectTransformer
+
+ObjectToObjectMetadataFactory ...> PropertyInfo
+ObjectToObjectMetadataFactory ....> PropertyMapperResolver
+ObjectToObjectMetadataFactory ...> ProxyGenerator
+ObjectToObjectMetadataFactory .....> EagerPropertiesResolver
+' ObjectToObjectMetadataFactory ..> TypeResolver
+
+class TraversableToArrayAccessTransformer
+TraversableToArrayAccessTransformer ..> ArrayLikeMetadataFactory
+Transformer <|. TraversableToArrayAccessTransformer
+
+class TraversableToTraversableTransformer
+TraversableToTraversableTransformer ..> ArrayLikeMetadataFactory
+Transformer <|.. TraversableToTraversableTransformer
+
+PropertyMapperResolver ..> PropertyMapper
+
+' ObjectCacheFactory ..> TypeResolver
+
+' MappingFactory ..> TypeResolver
+MappingFactory ..> Transformer
+
+ObjectMapperResolver ..> ObjectMapperTableFactory
+
+SubMapperFactory ...> PropertyTypeExtractor
+SubMapperFactory ..> PropertyAccessor
+
+
+@enduml
