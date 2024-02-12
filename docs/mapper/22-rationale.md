@@ -38,7 +38,7 @@ Symfony PropertyAccess component.
 AutoMapper-Plus can automatically create mapping pairs on-the-fly. But it is
 limited to simple mapping that does not involve conversion or nested objects. We
 needed to create a mapping for every non-trivial pair, despite the type
-information is already there in the involved classes. If would be nice if the
+information is already there in the involved classes. It would be nice if the
 mapper **can recognize the type information and maps the variables
 automatically**, at least most of the time.
 
