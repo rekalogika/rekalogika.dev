@@ -25,7 +25,7 @@ A row in the mapping table has the following properties:
   source type is always variant.
 * **Transformer service ID**.
 
-## Dumping the Mapping Table
+## Viewing the Mapping Table
 
 To inspect the mapping table, you can use the `rekalogika:mapper:mapping`
 command:
@@ -33,6 +33,8 @@ command:
 ```bash
 $ php bin/console rekalogika:mapper:mapping
 ```
+
+The Mapper panel of the Symfony Profiler also shows the mapping table.
 
 ## Default Mapping Table
 

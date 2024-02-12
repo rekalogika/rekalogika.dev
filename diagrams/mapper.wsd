@@ -8,26 +8,32 @@ MainTransformer ..> ObjectCacheFactory
 MainTransformer ..> TransformerRegistry
 ' MainTransformer ..> TypeResolver
 
+
 TransformerRegistry ..> Transformer
 ' TransformerRegistry ..> TypeResolver
 TransformerRegistry ..> MappingFactory
 
 interface Transformer
 
+interface Transformer&MainTransformerAware
+Transformer <|.. "Transformer&MainTransformerAware"
+"Transformer&MainTransformerAware" ..> MainTransformer
+
 class ArrayToObjectTransformer
-ArrayToObjectTransformer ..> Denormalizer
-Transformer <|..... ArrayToObjectTransformer
+ArrayToObjectTransformer ..> SymfonySerializer
+Transformer <|.. ArrayToObjectTransformer
 
 class ObjectToArrayTransformer
-ObjectToArrayTransformer ..> Normalizer
-Transformer <|....... ObjectToArrayTransformer
+ObjectToArrayTransformer ..> SymfonySerializer
+Transformer <|... ObjectToArrayTransformer
 
 class ClassMethodTransformer
 ClassMethodTransformer ..> SubMapperFactory
-Transformer <|...... ClassMethodTransformer
+Transformer <|..... ClassMethodTransformer
 
 class ObjectMapperTransformer implements Transformer
-ObjectMapperTransformer ..> SubMapperFactory
+"Transformer&MainTransformerAware" <|.. ObjectMapperTransformer
+ObjectMapperTransformer .....> SubMapperFactory
 ObjectMapperTransformer ....> ObjectMapperTableFactory  
 ObjectMapperTransformer ..> ObjectMapperResolver
 ObjectMapperTransformer ..> ObjectMapper
@@ -35,25 +41,25 @@ ObjectMapperTransformer ..> ObjectMapper
 ObjectMapperResolver ..> ObjectMapper
 
 class ObjectToObjectTransformer
-ObjectToObjectTransformer ...> ProxyRegistry
+"Transformer&MainTransformerAware" <|..... ObjectToObjectTransformer
+ObjectToObjectTransformer ..> ProxyRegistry
 ObjectToObjectTransformer ..> ObjectToObjectMetadataFactory
-ObjectToObjectTransformer ..> PropertyMapper
-ObjectToObjectTransformer ..> SubMapperFactory
-Transformer <|.... ObjectToObjectTransformer
+ObjectToObjectTransformer ......> PropertyMapper
+ObjectToObjectTransformer ...> SubMapperFactory
 
-ObjectToObjectMetadataFactory ...> PropertyInfo
-ObjectToObjectMetadataFactory ....> PropertyMapperResolver
-ObjectToObjectMetadataFactory ...> ProxyGenerator
-ObjectToObjectMetadataFactory .....> EagerPropertiesResolver
+ObjectToObjectMetadataFactory ...> EagerPropertiesResolver
+ObjectToObjectMetadataFactory ...> SymfonyPropertyInfo
+ObjectToObjectMetadataFactory ...> PropertyMapperResolver
+ObjectToObjectMetadataFactory ..> ProxyGenerator
 ' ObjectToObjectMetadataFactory ..> TypeResolver
 
 class TraversableToArrayAccessTransformer
+"Transformer&MainTransformerAware" <|.. TraversableToArrayAccessTransformer
 TraversableToArrayAccessTransformer ..> ArrayLikeMetadataFactory
-Transformer <|. TraversableToArrayAccessTransformer
 
 class TraversableToTraversableTransformer
+"Transformer&MainTransformerAware" <|... TraversableToTraversableTransformer
 TraversableToTraversableTransformer ..> ArrayLikeMetadataFactory
-Transformer <|.. TraversableToTraversableTransformer
 
 PropertyMapperResolver ..> PropertyMapper
 
@@ -64,7 +70,7 @@ MappingFactory ..> Transformer
 
 ObjectMapperResolver ..> ObjectMapperTableFactory
 
-SubMapperFactory ...> PropertyTypeExtractor
+SubMapperFactory ...> SymfonyPropertyInfo
 SubMapperFactory ..> PropertyAccessor
 
 
