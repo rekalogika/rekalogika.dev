@@ -4,7 +4,7 @@ title: Creating a Custom Transformer
 
 Extend the mapper by creating your own transformer.
 
-:::note
+:::warning
 
 Transformers are considered low-level components. If possible, you should use
 [object mappers](object-mapper), [property mappers](object), or [class factory

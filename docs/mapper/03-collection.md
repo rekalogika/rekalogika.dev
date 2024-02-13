@@ -218,8 +218,8 @@ The mapper supports lazy-loading, and will instantiate a lazy-loading object on
 the target size if the conditions are met.
 
 * The target must be type-hinted using `Traversable`, `ArrayAccess`, or the
-  special `ArrayInterface`.
-* If the target is `ArrayAccess` or `ArrayInterface`, the source must be an
+  special `CollectionInterface`.
+* If the target is `ArrayAccess` or `CollectionInterface`, the source must be an
   array, or an array-like object that implements `ArrayAccess`, `Traversable`,
   and `Countable` (pretty much all of them do).
 * The target side cannot be a simple array.
