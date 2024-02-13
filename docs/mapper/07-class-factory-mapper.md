@@ -2,18 +2,22 @@
 title: Manual Mapping using a Class Factory Method
 ---
 
-This is one way to have a custom logic of mapping an object to another object.
-You can make your DTO implement the `MapToObjectInterface` or
-`MapFromObjectInterface` and create the required mapper methods.
+This mapping method is deprecated.
 
-:::info
+:::danger Deprecated
 
-You should prefer using the `AsObjectMapper` explained in [Manual Mapping using
-an Object Mapper](object-mapper) chapter. You will be able to map third-party
+This mapping method is deprecated as it is not considered a good practice.
+
+You should instead use `AsObjectMapper` explained in [Manual Mapping using an
+Object Mapper](object-mapper) chapter. You will be able to map third-party
 classes, separate the logic from the model, and inject other services into the
 mapper.
 
 :::
+
+This is one way to have a custom logic of mapping an object to another object.
+You can make your DTO implement the `MapToObjectInterface` or
+`MapFromObjectInterface` and create the required mapper methods.
 
 Suppose you are using the `brick/money` library to represent money in your
 application, and you need to map the `Money` object to the following DTO:
