@@ -87,3 +87,36 @@ $postDto->author = $subMapper->map($source->author, AuthorDto::class);
 
 return $postDto;
 ```
+
+## `createProxy()` Method
+
+You can use the `createProxy()` method to create a proxy object that will be
+initialized only after you first access its properties.
+
+```php
+use Rekalogika\Mapper\SubMapper\SubMapperInterface;
+
+/** @var SubMapperInterface $subMapper */
+/** @var Post $source */
+
+// this is the function that will be used to initialize the proxy object
+$initializer = static function (
+    PostDto $target
+) use ($source): void {
+    $target->__construct();
+    $target->name = $source->getName();
+};
+
+$postDto = $subMapper->createProxy(
+    PostDto::class, // real target class
+    $initializer,   // will be executed when the proxy is first accessed
+    ['id']          // eager properties, accessing these will not trigger the 
+                    // hydration of the proxy object
+);
+
+// id is eager, so this will not cause the initializer to be called.
+$postDto->id = $post->getId();
+
+// this will trigger the initializer
+$name = $postDto->name; 
+```
