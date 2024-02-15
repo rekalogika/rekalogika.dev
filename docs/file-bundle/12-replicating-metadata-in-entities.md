@@ -113,7 +113,7 @@ class Product
     public function setImage(?FileInterface $image): self
     {
         // highlight-next-line
-        FileDecorator::setFile($file, $this->file, $this->fileMetadata);
+        FileDecorator::setFile($image, $this->image, $this->imageMetadata);
 
         return $this;
     }
