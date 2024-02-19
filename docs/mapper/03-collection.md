@@ -102,6 +102,7 @@ Supported types of the target side:
 * Doctrine `ReadableCollection`
 * Doctrine `Collection`
 * Doctrine `ArrayCollection`
+* `CollectionInterface`
 
 ## Mapping Using an Adder Method
 
