@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.1.1">
 <title data-rh="true">Introduction | Rekalogika.DEV</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://rekalogika.dev/img/social.png"><meta data-rh="true" name="twitter:image" content="https://rekalogika.dev/img/social.png"><meta data-rh="true" property="og:url" content="https://rekalogika.dev/mapper/intro"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Introduction | Rekalogika.DEV"><meta data-rh="true" name="description" content="rekalogika/mapper is an object mapper for PHP and Symfony, also commonly known"><meta data-rh="true" property="og:description" content="rekalogika/mapper is an object mapper for PHP and Symfony, also commonly known"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://rekalogika.dev/mapper/intro"><link data-rh="true" rel="alternate" href="https://rekalogika.dev/mapper/intro" hreflang="en"><link data-rh="true" rel="alternate" href="https://rekalogika.dev/mapper/intro" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.ef4f99c9.css">
-<script src="/assets/js/runtime~main.3b211b2d.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.2f876576.js" defer="defer"></script>
 <script src="/assets/js/main.cffcc741.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -30,44 +30,66 @@ a mapping framework anyway.</p>
 created out of necessity to handle the complexity, not just as a means of saving
 a few keystrokes.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="general">General<a href="#general" class="hash-link" aria-label="Direct link to General" title="Direct link to General">​</a></h3>
 <ul>
 <li>Automatically lists the properties of the source and target, detects their
 types, and maps them accordingly.</li>
-<li>By default, does not attempt to circumvent your class constraints. Reads only
-from and writes only to public properties, getters, setters. Does not
-instantiate objects without their constructor.</li>
-<li>Override the mapping logic using a custom property mapper.</li>
+<li>Reads the type from PHP type declaration and PHPDoc annotations, including
+the type of the nested objects.</li>
+<li>Does not attempt to circumvent your class constraints. Reads only from and
+writes only to public properties, getters, setters. Does not instantiate
+objects without their constructor.</li>
 <li>Constructor initialization.</li>
 <li>Handles nested objects.</li>
 <li>Handles recursion and circular references.</li>
 <li>Inheritance support. Maps to abstract classes and interfaces using an
 inheritance map attribute.</li>
-<li>Reads the type from PHP type declaration and PHPDoc annotations, including
-the type of the nested objects.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="custom-mapping">Custom Mapping<a href="#custom-mapping" class="hash-link" aria-label="Direct link to Custom Mapping" title="Direct link to Custom Mapping">​</a></h3>
+<ul>
+<li>Override the mapping of a specific property using a custom property mapper.</li>
+<li>Override the mapping between two specific classes using a custom object
+mapper.</li>
+<li>Extend the mapper by creating new transformers, or decorating the existing
+ones.</li>
+<li>Match classes using attributes in your transformers, in addition to using
+class names.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="object-lazy-loading">Object Lazy-Loading<a href="#object-lazy-loading" class="hash-link" aria-label="Direct link to Object Lazy-Loading" title="Direct link to Object Lazy-Loading">​</a></h3>
+<ul>
 <li>If possible, target objects are lazy-loaded. The mapping does not take place
-until the target is accessed.</li>
+until the target is accessed, and will never take place if it is never
+accessed.</li>
 <li>Attempts to detect identifier properties on the source side. Those properties
-on the target side will be mapped eagerly, and will not trigger the hydration.
-Thus, API Platform will be able to generate IRIs without causing the hydration
-of the entire object graph.</li>
-<li>Handles the mapping between <code>array</code> or array-like objects, as well as using an
-adder method.</li>
+will be mapped eagerly to the target side, as they should not trigger the
+hydration of the source. As an example, API Platform will be able to generate
+IRIs without causing the hydration of the entire object graph.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="arrays-and-array-like-objects">Arrays and Array-Like Objects<a href="#arrays-and-array-like-objects" class="hash-link" aria-label="Direct link to Arrays and Array-Like Objects" title="Direct link to Arrays and Array-Like Objects">​</a></h3>
+<ul>
+<li>Handles the mapping between <code>array</code> or array-like objects.</li>
+<li>Handles adder methods on the target side.</li>
 <li>Handles non-string &amp; non-integer keys in array-like objects, including
 <code>SplObjectStorage</code>.</li>
-<li>Lazy loading &amp; lazy stream mapping with collection types. Consumes less memory
-&amp; avoids hydrating a Doctrine collection prematurely.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="array-like-lazy-loading">Array-Like Lazy-Loading<a href="#array-like-lazy-loading" class="hash-link" aria-label="Direct link to Array-Like Lazy-Loading" title="Direct link to Array-Like Lazy-Loading">​</a></h3>
+<ul>
+<li>Lazy loading if the target is type-hinted with <code>ArrayAccess</code>, <code>Traversable</code> or
+<code>CollectionInterface</code>. The target will not iterate the source object until it
+is accessed, or never if it is never accessed.</li>
+<li>Stream mapping. Maps the source members to the target side as they are being
+iterated. This may consume less memory.</li>
 <li>With lazy loading, if the source is a <code>Countable</code>, then the target will also
 be a <code>Countable</code>. With an extra-lazy Doctrine Collection, the consumer will be
 able to count the target without causing a full hydration of the source.</li>
-<li>Manual mapping using a class method.</li>
-<li>Easy to extend by creating new transformers, or decorating the existing ones.</li>
-<li>Match classes using attributes in your transformers, in addition to using
-class names.</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="development-experience-dx">Development Experience (DX)<a href="#development-experience-dx" class="hash-link" aria-label="Direct link to Development Experience (DX)" title="Direct link to Development Experience (DX)">​</a></h3>
+<ul>
 <li>Helpful exception messages.</li>
 <li>Console commands for debugging.</li>
 <li>Data collector and profiler integration.</li>
 <li>Coded from the start using PHP 8, strict types, and maxed-out PHPStan and
-Psalm.</li>
+Psalm level.</li>
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="to-do-list">To-Do List<a href="#to-do-list" class="hash-link" aria-label="Direct link to To-Do List" title="Direct link to To-Do List">​</a></h2>
 <ul>
@@ -78,12 +100,14 @@ Psalm.</li>
 <li><code>MapFrom</code> and <code>MapTo</code> attributes.</li>
 <li>Support <code>ramsey/uuid</code></li>
 <li>Improve non-framework usage.</li>
-<li>Warm up proxies from the list of classes provided by the user.</li>
+<li>Warm up proxies on build time from the list of classes provided by the user.</li>
+<li>Lazy-loading using Doctrine <code>Collection</code> type hint on the target side.</li>
+<li><code>PresetTransformer</code>. Transforms objects using a predetermined table of values.</li>
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="license">License<a href="#license" class="hash-link" aria-label="Direct link to License" title="Direct link to License">​</a></h2>
 <p>MIT</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="contributing">Contributing<a href="#contributing" class="hash-link" aria-label="Direct link to Contributing" title="Direct link to Contributing">​</a></h2>
 <p>Issues and pull requests should be filed in the GitHub repository
-<a href="https://github.com/rekalogika/mapper" target="_blank" rel="noopener noreferrer">rekalogika/mapper</a>.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/rekalogika/rekalogika-docs/edit/main/docs/mapper/00-intro.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/mapper"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">rekalogika/mapper</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/mapper/installation-usage"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Installation &amp; Basic Usage</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#synopsis" class="table-of-contents__link toc-highlight">Synopsis</a></li><li><a href="#why-use-a-mapper" class="table-of-contents__link toc-highlight">Why Use a Mapper?</a></li><li><a href="#features" class="table-of-contents__link toc-highlight">Features</a></li><li><a href="#to-do-list" class="table-of-contents__link toc-highlight">To-Do List</a></li><li><a href="#license" class="table-of-contents__link toc-highlight">License</a></li><li><a href="#contributing" class="table-of-contents__link toc-highlight">Contributing</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2016-2024 Rekalogika.DEV</div></div></div></footer></div>
+<a href="https://github.com/rekalogika/mapper" target="_blank" rel="noopener noreferrer">rekalogika/mapper</a>.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/rekalogika/rekalogika-docs/edit/main/docs/mapper/00-intro.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/mapper"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">rekalogika/mapper</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/mapper/installation-usage"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Installation &amp; Basic Usage</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#synopsis" class="table-of-contents__link toc-highlight">Synopsis</a></li><li><a href="#why-use-a-mapper" class="table-of-contents__link toc-highlight">Why Use a Mapper?</a></li><li><a href="#features" class="table-of-contents__link toc-highlight">Features</a><ul><li><a href="#general" class="table-of-contents__link toc-highlight">General</a></li><li><a href="#custom-mapping" class="table-of-contents__link toc-highlight">Custom Mapping</a></li><li><a href="#object-lazy-loading" class="table-of-contents__link toc-highlight">Object Lazy-Loading</a></li><li><a href="#arrays-and-array-like-objects" class="table-of-contents__link toc-highlight">Arrays and Array-Like Objects</a></li><li><a href="#array-like-lazy-loading" class="table-of-contents__link toc-highlight">Array-Like Lazy-Loading</a></li><li><a href="#development-experience-dx" class="table-of-contents__link toc-highlight">Development Experience (DX)</a></li></ul></li><li><a href="#to-do-list" class="table-of-contents__link toc-highlight">To-Do List</a></li><li><a href="#license" class="table-of-contents__link toc-highlight">License</a></li><li><a href="#contributing" class="table-of-contents__link toc-highlight">Contributing</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2016-2024 Rekalogika.DEV</div></div></div></footer></div>
 </body>
 </html>
