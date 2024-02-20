@@ -304,3 +304,11 @@ $target = $this->mapper->map($source, TargetDto::class, $context);
 * You can decorate `ProxyGeneratorInterface`, and throw
   `ProxyNotSupportedException` if it asks for your specific class. Read
   `DoctrineProxyGenerator` for example.
+
+## Classes With Dynamic Properties, Including `stdClass`
+
+Mapper supports classes with `#[AllowDynamicProperties]`, including `stdClass`,
+on the source side.
+
+On the target side, the behavior is currently not defined, but it should work
+with explicit properties & method. It just won't write to dynamic properties.
