@@ -307,8 +307,13 @@ $target = $this->mapper->map($source, TargetDto::class, $context);
 
 ## Classes With Dynamic Properties, Including `stdClass`
 
-Mapper supports classes with `#[AllowDynamicProperties]`, including `stdClass`,
-on the source side.
+Mapper supports classes with `#[AllowDynamicProperties]`, including `stdClass`
+and all classes that extends `stdClass`, with the following semantics.
 
-On the target side, the behavior is currently not defined, but it should work
-with explicit properties & method. It just won't write to dynamic properties.
+If the target is `stdClass` (or an object with `#[AllowDynamicProperties]`),
+then all properties of the source will be mapped to the target. If the target
+has explicit properties, then they will be respected as usual.
+
+If the source is a `stdClass` (or an object with `#[AllowDynamicProperties]`)
+and the target is a regular object, then the mapping will take place for each
+property of the target that has a matching property on the source side.
