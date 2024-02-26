@@ -117,7 +117,7 @@ to add the following configuration to the Doctrine's mapping configuration.
 
 <TabItem value="xml" label="XML">
 
-```xml
+```markup
 <doctrine-mapping>
     <!-- ... -->
     <entity name="Image">
