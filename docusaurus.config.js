@@ -64,7 +64,7 @@ const config = {
       docs: {
         sidebar: {
           hideable: true,
-          autoCollapseCategories: true,
+          // autoCollapseCategories: true,
         },
       },
       // Replace with your project's social card
@@ -143,7 +143,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['php', 'bash', 'twig']
+        additionalLanguages: ['php', 'bash', 'twig', 'yaml', 'json', 'markup']
       },
     }),
 };
