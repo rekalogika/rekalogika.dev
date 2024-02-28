@@ -5,6 +5,16 @@ import Link from '@docusaurus/Link';
 
 const FeatureList = [
   {
+    title: 'rekalogika/api-lite',
+    link: 'api-lite',
+    tags: ['api-platform', 'symfony'],
+    description: (
+      <>
+        A set of tools to simplify working with API Platform in your projects, in a way that is more aligned with the principles of Domain-Driven Design.
+      </>
+    ),
+  },
+  {
     title: 'rekalogika/mapper',
     link: 'mapper',
     tags: ['symfony', 'php'],
