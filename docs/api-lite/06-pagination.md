@@ -2,8 +2,8 @@
 title: Pagination
 ---
 
-The `AbstractState` class provides the `mapCollection()` method that automates
-the task of handling collection results, including pagination.
+The `mapCollection()` method automates the task of handling collection results,
+including pagination.
 
 ## Usage
 
