@@ -74,5 +74,5 @@ will either be `null` or points to the DTO, not the entity.
 Instead, our `AbstractState` provides `isGranted()` and
 `denyAccessUnlessGranted()` methods that most of us are already familiar.
 Security checks involving an action toward an object should be done next to the
-action anyway, not in a separate class. Otherwise, it can easily lead to coding
-errors and reduces readability.
+action anyway, not in a separate class. Otherwise, it reduces readability, and
+can easily lead to coding errors.
