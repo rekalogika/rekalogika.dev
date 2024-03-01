@@ -16,9 +16,9 @@ time. And when it doesn't, it is only a simple matter to extend it.
 
 However, when you need to map a DTO to an entity, it requires more
 consideration. Your domain model might mandate a specific way to do things,
-which is more than just calling the setters. If you can rely too much on the
-mapper, it might indicate that your domain model is
-[anemic](https://martinfowler.com/bliki/AnemicDomainModel.html), and you should
+which might be different from than just calling the setters. If you can rely too
+much on the mapper, it might indicate that your [domain model is
+anemic](https://martinfowler.com/bliki/AnemicDomainModel.html), and you should
 look into that. The integrity of your domain model should not suffer just
 because using the mapper is convenient.
 
@@ -46,7 +46,8 @@ you have a mapping problem.
 
 ### Lazy-Loading Collection Example
 
-API platform will turn the `reviews` property to the IRI of the collection:
+With the following example, API platform will turn the `reviews` property to the
+IRI of the collection:
 
 ```php
 use ApiPlatform\Core\Annotation\ApiProperty;
@@ -67,11 +68,15 @@ property, and therefore Doctrine won't hydrate the source collection.
 
 ### Lazy-Loading Object Example
 
-The `book` property below will be turned into the IRI of the `BookDto` resource:
+With the following example, the `book` property below will be turned into the
+IRI of the `BookDto` resource:
 
 ```php
+use ApiPlatform\Core\Annotation\ApiProperty;
+
 class ReviewDto
 {
+    #[ApiProperty(readableLink: false)]
     public ?BookDto $book = null;
 }
 ```

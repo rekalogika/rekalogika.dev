@@ -34,6 +34,7 @@ By default, API Platform will use IRIs to refer to a resource. But, if you want 
 ```php title="src/ApiResource/User/BookDto.php"
 namespace App\ApiResource\User;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ApiResource(
@@ -93,6 +94,7 @@ class ReviewDto
 ```php title="src/ApiResource/User/BookDto.php"
 namespace App\ApiResource\User;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ApiResource(

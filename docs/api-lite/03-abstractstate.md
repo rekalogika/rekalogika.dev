@@ -10,6 +10,13 @@ commonly used in the state providers and processors. Some of the methods are
 'stolen' from `AbstractController`, so anyone familiar with Symfony controllers
 should feel at home.
 
+:::info
+
+If you don't want your state providers and processors to extend `AbstractState`,
+read the [Usage Without AbstractState](./without-abstractstate) section.
+
+:::
+
 ## `map()`
 
 Maps an object to another object. Useful for mapping an entity to its API
@@ -44,21 +51,8 @@ return $this->mapCollection(
 );
 ```
 
-## `paginate()`
-
-Takes a collection object, and returns a `PaginatorInterface`. Unlike `mapCollection()`,
-it does not map the items to another class.
-
-```php
-/** @var Book $book */
-
-// returns a paginator of `Review`
-return $this->paginate(
-    collection: $book->getReviews(),
-    operation: $operation, // operation from the `provide()` method
-    context: $context, // context from the `provide()` method
-);
-```
+If the target is null, `mapCollection()` skips the mapping, it only does the
+pagination.
 
 ## `getUser()`
 
@@ -95,5 +89,3 @@ Creates an `AccessDeniedException`.
 ## `createNotFoundException()`
 
 Creates a `NotFoundException`.
-
-```php

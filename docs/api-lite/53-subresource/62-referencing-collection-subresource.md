@@ -40,6 +40,7 @@ objects. But, if you want this style, we recommend setting it explicitly using
 ```php title="src/ApiResource/User/BookDto.php"
 namespace App\ApiResource\User;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ApiResource(
@@ -100,6 +101,7 @@ class BookDto
 ```php title="src/ApiResource/User/BookDto.php"
 namespace App\ApiResource\User;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ApiResource(
