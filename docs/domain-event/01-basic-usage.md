@@ -5,7 +5,8 @@ title: Basic Usage
 ## Creating Domain Events
 
 Domain events are plain old PHP objects that you create to represent a specific
-event happening in your domain.
+event happening in your domain. There is no particular requirement for these
+classes.
 
 ```php
 // our event superclass for the Post object

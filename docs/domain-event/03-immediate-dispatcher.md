@@ -22,7 +22,6 @@ class SomeTest extends TestCase
     {
         $installer = new ImmediateDomainEventDispatcherInstaller(new EventDispatcher);
         $installer->install();
-
     }
 
     // ...
