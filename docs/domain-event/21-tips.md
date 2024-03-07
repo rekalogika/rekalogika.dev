@@ -45,10 +45,7 @@ Use pre-flush events to make alterations to your domain that will be
 
 * Currently only supports `EntityManager`. Support for other `ObjectManager`s
   is planned.
-* It is not aware of explicit transactions yet. You should dispatch the events
-  manually if you are using an explicit transaction as described above. In the
-  future, we have plans to dispatch post-flush events after the outermost
-  `commit()`, and dispatch pre-flush events before every `commit()`.
 * Symfony Event Dispatcher does not currently support event inheritance. This
   needs to be mentioned because many programmers expect an event dispatcher to
-  support event inheritance, especially when working with many events.
+  support event inheritance, especially when working with a large amount of
+  event objects.
