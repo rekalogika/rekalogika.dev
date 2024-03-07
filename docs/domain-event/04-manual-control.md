@@ -13,6 +13,8 @@ You can disable automatic dispatching on `flush()` by calling
 `setAutoDispatchDomainEvents(false)`.
 
 ```php
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+
 /** @var DomainEventAwareEntityManagerInterface $entityManager */
 
 $entityManager->setAutoDispatchDomainEvents(false);
@@ -41,6 +43,8 @@ dispatch both pre-flush and post-flush events as above. Alternatively, you can
 clear the events if you don't want them dispatched:
 
 ```php
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+
 /** @var DomainEventAwareEntityManagerInterface $entityManager */
 
 $entityManager->setAutoDispatchDomainEvents(false);
@@ -66,6 +70,8 @@ you need to manually clear the events.
 You can get the undispatched events in the queue by calling `popDomainEvents()`.
 
 ```php
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+
 /** @var DomainEventAwareEntityManagerInterface $entityManager */
 
 $events = $entityManager->popDomainEvents();

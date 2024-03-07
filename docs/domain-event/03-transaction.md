@@ -13,6 +13,7 @@ The framework supports transaction with the following semantics.
 :::warning
 
 `rollback()` currently clears all the events from the queue regardless of the
-transaction depth, and regardless where the events came from.
+transaction depth, and regardless where the events came from. You should not
+rely on this behavior.
 
 :::
