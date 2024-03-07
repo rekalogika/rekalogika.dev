@@ -90,9 +90,14 @@ class Post implements DomainEventEmitterInterface
 
 ## Listening to Events
 
+When an entity records the event, the event will be dispatched three times:
+immediately when it is recorded (immediate strategy), before the `flush()` is
+called (pre-flush strategy), and after the `flush()` is called (post-flush
+strategy).
+
 To listen to the events, you can use the usual Symfony way of listening to
-events. The framework will collect events from persisted entities, and dispatch
-them at the end of the `flush()`.
+events. In the following example, the event listener will be invoked after you
+call `flush()`.
 
 ```php
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -120,18 +125,18 @@ class PostEventListener
 {
     #[AsImmediateDomainEventListener]
     public function immediate(PostCreated $event) {
-        // this will run immediately after the entity records the event
+        // this will be executed immediately after the entity records the event
     }
 
     #[AsPreFlushDomainEventListener]
     public function preFlush(PostCreated $event) {
-        // this will run when you flush() the new post. before the actual
+        // this will be executed when you flush() the new post. before the actual
         // flush()
     }
 
     #[AsPostFlushDomainEventListener]
     public function postFlush(PostCreated $event) {
-        // this will run when you flush() the new post. after the actual
+        // this will be executed when you flush() the new post. after the actual
         // flush()
     }
 }
@@ -148,56 +153,25 @@ class PostEventListener
 
 :::
 
-## Equatable Domain Events
+## Dispatching the Events
 
-A domain event can optionally implement `EquatableDomainEventInterface` which
-requires the method `getSignature()`. Two objects with the same signature will
-be considered identical by `DomainEventManager` and won't be dispatched twice.
+With pre and post-flush strategy, the actual dispatching of the events is done
+when you call `flush()` on the entity manager. It will do the following in
+order:
 
-This is useful if your entity is working with a million of related objects. By
-implementing `EquatableDomainEventInterface`, you can have your `ObjectChanged`
-event dispatched only once and occupy only a single spot in the memory,
-instead of a million times.
+* Collects the events from the entities, and adds them to the pre-flush and
+  post-flush queue. Then it dispatches the events in the pre-flush queue.
+* Calls the actual `flush()`.
+* Dispatches post-flush events in the queue.
 
-```php
-use Rekalogika\Contracts\DomainEvent\EquatableDomainEventInterface;
-
-class PostCommentAdded implements EquatableDomainEventInterface
-{
-    public function __construct(private string $postId)
-    {
-    }
-
-    public function getSignature(): string
-    {
-        return sha1(serialize($this));
-    }
-}
-
-use Rekalogika\Contracts\DomainEvent\DomainEventEmitterInterface;
-use Rekalogika\Contracts\DomainEvent\DomainEventEmitterTrait;
-
-class Post implements DomainEventEmitterInterface
-{
-    use DomainEventEmitterTrait;
-
-    // ...
-
-    public function addComment(string $comment): Comment
-    {
-        // ...
-
-        // the PostCommentAdded event will only get dispatched once despite of
-        // addComment being called multiple times.
-        $this->recordEvent(new PostCommentAdded($this->id));
-    }
-}
-```
+The pre-flush events might generate additional events, in which case they will
+also be dispatched in the pre-flush phase. It does that until there are no more
+events to dispatch.
 
 :::note
 
-Equatable domain events only apply to pre-flush and post-flush events. Immediate
-domain events are dispatched immediately, and there is no chance for the
-equatable check to take place.
+There is a safeguard in place to prevent infinite loops. If the pre-flush events
+keep generating more pre-flush events, it will throw a
+`SafeguardTriggeredException` after 100 iterations.
 
 :::
