@@ -15,6 +15,14 @@ These events are dispatched using the default Symfony event dispatcher.
 * `DomainEventPreFlushDispatchEvent`: dispatched before the `flush()` is called.
 * `DomainEventPostFlushDispatchEvent`: dispatched after the `flush()` is called.
 
+:::note
+
+`DomainEventPreFlushDispatchEvent` and `DomainEventPostFlushDispatchEvent` also
+includes the `ObjectManager` (`EntityManager`) instance that manages the object
+that emitted the domain event.
+
+:::
+
 ## Listening to the Dispatch Events
 
 ```php
