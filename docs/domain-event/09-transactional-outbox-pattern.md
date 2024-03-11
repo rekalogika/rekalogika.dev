@@ -31,9 +31,12 @@ the events will be delivered.
 
 ## Comparison with the Post-Flush Strategy
 
-If the message bus is down during the dispatching, then the event is lost. In
-contrast, the transactional outbox pattern guarantees that the event will be
-delivered.
+With the post-flush strategy, if an error happens during the dispatching, then
+the event is lost.
+
+In contrast, the transactional outbox pattern guarantees that the event will be
+delivered. If an error happens, both the events and the entire changes to the
+domain model must have rolled back.
 
 ## Message Preparer
 
