@@ -36,7 +36,9 @@ the event is lost.
 
 In contrast, the transactional outbox pattern guarantees that the event will be
 delivered. If an error happens, both the events and the entire changes to the
-domain model must have rolled back.
+domain model will not be committed to the database. Because all the other
+changes are rolled back, the discarded events would have been invalid anyway,
+and should not be delivered.
 
 ## Message Preparer
 

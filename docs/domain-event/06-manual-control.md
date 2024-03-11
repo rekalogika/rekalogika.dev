@@ -98,6 +98,34 @@ $entityManager->flush();
 $entityManager->dispatchPostFlushDomainEvents();
 ```
 
+You might find the `DomainEventStore` object useful. You can use it to store the
+events in transit. It handles events `EquatableDomainEventInterface` and will
+not keep more than one event having the same signature.
+
+```php
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+use Rekalogika\DomainEvent\Model\DomainEventStore;
+
+/** @var DomainEventAwareEntityManagerInterface $entityManager */
+
+$domainEventStore = new DomainEventStore();
+
+// a batch process
+foreach (...) {
+    // ...
+    $domainEventStore->add($entityManager->popDomainEvents());
+}
+
+// ...
+
+// now at the end of the batch process
+
+$entityManager->recordDomainEvent($domainEventStore);
+$entityManager->dispatchPreFlushDomainEvents();
+$entityManager->flush();
+$entityManager->dispatchPostFlushDomainEvents();
+```
+
 ## Multiple Entity Managers
 
 When working with multiple entity managers, usually the `ManagerRegistry` is
