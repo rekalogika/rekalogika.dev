@@ -47,7 +47,7 @@ Step 2: Enable the Bundle
 Then, enable the bundle by adding it to the list of registered bundles
 in the `config/bundles.php` file of your project:
 
-```php title=config/bundles.php
+```php title="config/bundles.php"
 return [
     // ...
     Rekalogika\File\Bundle\RekalogikaFileBundle::class => ['all' => true],
@@ -64,7 +64,7 @@ create a filesystem identified by 'default' that stores files in the directory
 
 The following is the default configuration:
 
-```yaml title=config/packages/rekalogika_file.yaml
+```yaml title="config/packages/rekalogika_file.yaml"
 rekalogika_file:
     filesystems:
         # our default filesystem service
@@ -78,7 +78,7 @@ rekalogika_file:
 If you are using the Flysystem bundle, you can use the filesystems defined in
 the Flysystem bundle:
 
-```yaml title=config/packages/rekalogika_file.yaml
+```yaml title="config/packages/rekalogika_file.yaml"
 rekalogika_file:
     filesystems:
         # 'default.storage' is the filesystem key under 'flysystem.storages'

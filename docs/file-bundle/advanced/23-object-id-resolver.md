@@ -44,7 +44,7 @@ class MyObjectIdResolver implements ObjectIdResolverInterface
 If you are using autoconfiguration, then it is all set. If not, you need to
 register your class in the service container:
 
-```yaml title=config/services.yaml
+```yaml title="config/services.yaml"
 services:
     App\MyObjectIdResolver:
         tags:

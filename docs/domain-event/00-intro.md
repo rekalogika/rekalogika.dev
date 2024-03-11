@@ -9,9 +9,9 @@ An implementation of domain event pattern for Symfony & Doctrine.
 
 ## What is a Domain Event?
 
-A domain event is simply a regular event you would normally use with Symfony's
-EventDispatcher. The difference is that a domain event is dispatched by your
-entities, as opposed to being dispatched from your controllers or other
+A domain event is simply a regular event like you would normally use with
+Symfony's EventDispatcher. The difference is that a domain event is dispatched
+by your entities, as opposed to being dispatched from your controllers or other
 services.
 
 ## Why Use Domain Events?
@@ -23,10 +23,11 @@ will be dispatched in all the cases. No need to make sure to dispatch the event
 from all the different places where the method is called.
 
 The application layer (controllers, services) can tell an entity to do
-something, but it cannot reliably know if the action is actually performed. A
-controller or a service can ask `$bookshelf->removeBook($book)`, but only the
-`$bookshelf` knows if the book was actually removed. And if it actually
-happened, it can tell the world about it by dispatching a `BookRemoved` event.
+something, but it cannot reliably know if the action is actually performed, or
+if an additional action is performed. A controller or a service can ask
+`$bookshelf->removeBook($book)`, but only the `$bookshelf` knows if the book was
+actually removed. And if the event actually happened, the entity can tell the
+world about it by recording a `BookRemoved` event.
 
 Some problems might tempt you to inject a service into your entity. With domain
 events, you can avoid that. Your entity can dispatch an event, and you can set
@@ -42,9 +43,9 @@ entity, instead of the other way around.
   & listener registrations.
 * Transaction support.
 * Works with multiple entity managers.
-* Three dispatching strategies: pre-flush, post-flush, and immediate.
-* In pre-flush or post-flush modes, multiple events considered identical are
-  dispatched only once.
+* Transactional outbox pattern support.
+* Four listening strategies: immediate, pre-flush, post-flush, and event bus.
+* Multiple events considered identical are dispatched only once.
 * Does not require you to change how you work with entities.
 * Should work everywhere without any change: in controllers, message handlers,
   command line, etc.
@@ -52,6 +53,11 @@ entity, instead of the other way around.
   boundaries. Your domain doesn't have to depend on the framework.
 * Symfony Profiler integration. Debug your events in the profiler's events
   panel.
+
+## To Do
+
+* Support for Doctrine MongoDB ODM.
+* Support event inheritance.
 
 ## Synopsis
 
@@ -155,7 +161,7 @@ Step 2: Enable the Bundle
 Then, enable the bundle by adding it to the list of registered bundles
 in the `config/bundles.php` file of your project:
 
-```php title=config/bundles.php
+```php title="config/bundles.php"
 return [
     // ...
     Rekalogika\DomainEvent\RekalogikaDomainEventBundle::class => ['all' => true],

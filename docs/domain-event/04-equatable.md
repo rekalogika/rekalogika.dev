@@ -53,3 +53,4 @@ domain events are dispatched immediately, and there is no chance for the
 equatable check to take place.
 
 :::
+

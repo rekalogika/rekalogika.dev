@@ -42,3 +42,10 @@ class PreFlushDispatchEventListener
 This mechanism is created to allow you to build on top of the domain events. For
 example, you can record the events for audit trails, or publish the events on an
 event bus.
+
+:::info
+
+The package `rekalogika/domain-event-outbox` is completely decoupled from
+`rekalogika/domain-event`. The only thing that connects them is the event `DomainEventPreFlushDispatchEvent`.
+
+:::

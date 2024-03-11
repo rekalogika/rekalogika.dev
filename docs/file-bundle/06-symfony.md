@@ -156,7 +156,7 @@ class SomeFormType extends AbstractType
 You can also modify all the existing Symfony's `FileType` fields en masse by
 registering the `FileTypeExtension`:
 
-```yaml title=config/services.yaml
+```yaml title="config/services.yaml"
 services:
     Rekalogika\File\Bridge\Symfony\Form\FileTypeExtension:
         tags:

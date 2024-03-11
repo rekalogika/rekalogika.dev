@@ -39,7 +39,7 @@ Step 2: Enable the Bundle
 Then, enable the bundle by adding it to the list of registered bundles
 in the `config/bundles.php` file of your project:
 
-```php title=config/bundles.php
+```php title="config/bundles.php"
 return [
     // ...
     Rekalogika\Mapper\RekalogikaMapperBundle::class => ['all' => true],

@@ -66,7 +66,7 @@ class TextAppender extends AbstractFileFilter
 If you are using autoconfiguration, then you are all set. Otherwise, you need
 to tag your class with `rekalogika.file.derivation.filter`:
 
-```yaml title=config/services.yaml
+```yaml title="config/services.yaml"
 services:
     App\TextAppender:
         tags:

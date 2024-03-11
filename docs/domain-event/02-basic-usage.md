@@ -2,11 +2,16 @@
 title: Basic Usage
 ---
 
+You make your entities record events happening in your domain. This library
+dispatches each of the events up to four times in different phases. Your
+listener chooses which event to listen, and where to listen to.
+
 ## Creating Domain Events
 
 Domain events are plain old PHP objects that you create to represent a specific
 event happening in your domain. There is no particular requirement for these
-classes.
+classes, except they should be serializable. For event bus dispatching, they
+must be serializable.
 
 ```php
 // our event superclass for the Post object
@@ -70,8 +75,8 @@ class Post implements DomainEventEmitterInterface
         $this->recordEvent(new PostCreated($this->id));
     }
 
-    // __remove() is our special method that gets triggered when the entity is
-    // going to be removed from the persistence layer
+    // __remove() is our pseudo magic method that gets triggered when the entity
+    // is about to be removed from the persistence layer
     public function __remove()
     {
         // highlight-next-line
@@ -90,14 +95,14 @@ class Post implements DomainEventEmitterInterface
 
 ## Listening to Events
 
-When an entity records the event, the event will be dispatched three times:
+When an entity records the event, the event will be dispatched up to four times:
 immediately when it is recorded (immediate strategy), before the `flush()` is
 called (pre-flush strategy), and after the `flush()` is called (post-flush
-strategy).
+strategy). Additionally, with the optional `rekalogika/domain-event-outbox`
+package, the event will be published on an event bus.
 
 To listen to the events, you can use the usual Symfony way of listening to
-events. In the following example, the event listener will be invoked after you
-call `flush()`.
+events, where the event listener will be invoked after you call `flush()`:
 
 ```php
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -113,13 +118,13 @@ class PostEventListener
 }
 ```
 
-Alternatively, you can use different attributes to choose a different
-dispatching strategy.
+To choose different dispatching strategy, you can use different attributes:
 
 ```php
 use Rekalogika\Contracts\DomainEvent\Attribute\AsImmediateDomainEventListener;
 use Rekalogika\Contracts\DomainEvent\Attribute\AsPostFlushDomainEventListener;
 use Rekalogika\Contracts\DomainEvent\Attribute\AsPreFlushDomainEventListener;
+use Rekalogika\Contracts\DomainEvent\Attribute\AsPublishedDomainEventListener;
 
 class PostEventListener
 {
@@ -139,6 +144,12 @@ class PostEventListener
         // this will be executed when you flush() the new post. after the actual
         // flush()
     }
+
+    #[AsPublishedDomainEventListener]
+    public function eventBus(PostCreated $event) {
+        // the event will be published on the event bus, and this method will
+        // be executed when the event is consumed from the bus
+    }
 }
 ```
 
@@ -150,6 +161,8 @@ class PostEventListener
   `AsPostFlushDomainEventListener` while keeping `AsEventListener` standard.
 * Doing a `flush()` inside a pre-flush listener is not allowed and will result
   in a `FlushNotAllowedException`.
+* `AsPublishedDomainEventListener` requires the optional
+  `rekalogika/domain-event-outbox` package.
 
 :::
 
@@ -175,3 +188,7 @@ keep generating more pre-flush events, it will throw a
 `SafeguardTriggeredException` after 100 iterations.
 
 :::
+
+The `AsPublishedDomainEventListener` strategy works by adding the events to the
+outbox table in the same phase as the pre-flush strategy. Then the message relay
+reads the table, and publishes the events to the event bus.

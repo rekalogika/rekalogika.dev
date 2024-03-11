@@ -42,7 +42,7 @@ Step 2: Enable the Bundle
 Then, enable the bundle by adding it to the list of registered bundles
 in the `config/bundles.php` file of your project:
 
-```php title=config/bundles.php
+```php title="config/bundles.php"
 return [
     // ...
     Rekalogika\TemporaryUrl\RekalogikaTemporaryUrlBundle::class => ['all' => true],
@@ -53,7 +53,7 @@ Step 3: Configure the route
 
 Add the route in `config/routes/rekalogika_temporary_url.yaml`.
 
-```yaml title=config/routes/rekalogika_temporary_url.yaml
+```yaml title="config/routes/rekalogika_temporary_url.yaml"
 rekalogika_temporary_url:
     resource: '@RekalogikaTemporaryUrlBundle/config/routes.xml'
     prefix: /_temporary
@@ -67,7 +67,7 @@ You may change the prefix if you like.
 
 Step 4: Add the Stimulus controller in the configuration
 
-```json title=assets/controllers.json
+```json title="assets/controllers.json"
 {
     "controllers": {
         "@rekalogika/temporary-url-bundle": {

@@ -28,13 +28,12 @@ $entityManager->dispatchPostFlushDomainEvents();
 
 :::note
 
-Immediate dispatching is dispatched outside `DomainEventManager` and
-`DomainEventAwareEntityManager`, and therefore unaffected by
-`setAutoDispatchDomainEvents()`.
+Immediate dispatching is dispatched outside `DomainEventAwareEntityManager`, and
+therefore unaffected by `setAutoDispatchDomainEvents()`.
 
 :::
 
-## Clearing Events
+## Clearing the Events
 
 If the domain event queues are not empty at the end of the request,
 `DomainEventManager` will throw `UndispatchedEventsException`. To prevent that
@@ -65,7 +64,7 @@ you need to manually clear the events.
 
 :::
 
-## Getting the Events in the Queue
+## Getting the Events From the Queue and Dispatching Them Elsewhere
 
 You can get the undispatched events in the queue by calling `popDomainEvents()`.
 
@@ -77,5 +76,41 @@ use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
 $events = $entityManager->popDomainEvents();
 ```
 
-This can be useful if you want to dispatch the events in another process, or
-store them in a database, etc.
+:::note
+
+As it suggests, `popDomainEvents()` also removes the events from the queue.
+
+:::
+
+Then, you can dispatch them in another place, for example, in another process,
+or at the end of a batch process.
+
+```php
+use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
+
+/** @var DomainEventAwareEntityManagerInterface $entityManager */
+
+// highlight-next-line
+$entityManager->recordDomainEvent($events);
+
+$entityManager->dispatchPreFlushDomainEvents();
+$entityManager->flush();
+$entityManager->dispatchPostFlushDomainEvents();
+```
+
+## Multiple Entity Managers
+
+When working with multiple entity managers, usually the `ManagerRegistry` is
+used to get the correct entity manager. This method still works with domain
+events without any change.
+
+However, if you need the domain-event-specific methods, you can use
+`DomainEventAwareManagerRegistry` in place of `ManagerRegistry`. It adds several
+methods to the registry that you can use to manage domain event dispatching:
+
+* `getDomainEventAwareManager()`
+* `getDomainEventAwareManagers()`
+* `getDomainEventAwareManagerForClass()`
+
+These are basically the same as their counterparts in `ManagerRegistry`, only
+return `DomainEventAwareObjectManager` instead of `ObjectManager`.
