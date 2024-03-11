@@ -36,10 +36,10 @@ therefore unaffected by `setAutoDispatchDomainEvents()`.
 ## Clearing the Events
 
 If the domain event queues are not empty at the end of the request,
-`DomainEventManager` will throw `UndispatchedEventsException`. To prevent that
-from happening, if you disable auto-dispatch, you need to make sure that you
-dispatch both pre-flush and post-flush events as above. Alternatively, you can
-clear the events if you don't want them dispatched:
+`DomainEventEntityManager` will throw `UndispatchedEventsException`. To prevent
+that from happening, if you disable auto-dispatch, you need to make sure that
+you dispatch both pre-flush and post-flush events as above. Alternatively, you
+can clear the events if you don't want them dispatched:
 
 ```php
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;
