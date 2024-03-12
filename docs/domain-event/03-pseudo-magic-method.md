@@ -26,4 +26,4 @@ class Post implements DomainEventEmitterInterface
 ```
 
 This mechanism is devised because otherwise the entity cannot possibly know if
-it is being removed from the database.
+it is being removed from the persistence layer.
