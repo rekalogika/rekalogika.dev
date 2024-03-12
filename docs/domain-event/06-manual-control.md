@@ -99,8 +99,8 @@ $entityManager->dispatchPostFlushDomainEvents();
 ```
 
 You might find the `DomainEventStore` object useful. You can use it to store the
-events in transit. It handles events `EquatableDomainEventInterface` and will
-not keep more than one event having the same signature.
+events in transit. It handles `EquatableDomainEventInterface` and will
+automatically discard duplicate events.
 
 ```php
 use Rekalogika\DomainEvent\DomainEventAwareEntityManagerInterface;

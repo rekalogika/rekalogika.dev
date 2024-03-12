@@ -18,7 +18,7 @@ When `flush()` or `commit()` is finally called, Doctrine will save the
 the domain entities. This guarantees that the events are published only if the
 transaction is successful.
 
-Then the message relay is executed. It reads the outbox table, publishes the
+When the message relay is executed. It reads the outbox table, publishes the
 events to the event bus, and removes the events from the outbox table.
 
 ## Comparison with the Post-Flush Strategy
@@ -38,11 +38,14 @@ Message relay's job is to read the outbox table, publish the events to the event
 bus, and remove the events from the outbox table. The message relay is executed
 using the following mechanisms:
 
-* Using the `kernel.terminate` and `console.terminate` events, a listener checks
-  if there are new messages sent to the outbox in the current session. If there
-  are, it tells the message relay to run using Symfony Messenger bus.
-* Using Symfony Scheduler, the message relay is executed every hour.
-* Manually, using the console command `bin/console rekalogika:domain-event:relay`.
+1. Using the `kernel.terminate` and `console.terminate` events, a listener
+   checks if there are new messages sent to the outbox in the current session.
+   If there are, it tells the message relay to run using Symfony Messenger bus.
+2. Using Symfony Scheduler, the message relay is executed every hour. This is
+   mainly used for safety, in case the above mechanism failed to execute for
+   whatever reason.
+3. Manually, using the console command `bin/console
+   rekalogika:domain-event:relay`.
 
 ## Message Preparer
 

@@ -48,9 +48,16 @@ class Post implements DomainEventEmitterInterface
 
 :::note
 
-Equatable domain events only apply to pre-flush and post-flush events. Immediate
-domain events are dispatched immediately, and there is no chance for the
-equatable check to take place.
+Equatable domain events only apply to where the events are spooled before they
+are processed. Immediate domain events are dispatched immediately, and there is
+no chance for the equatable check to take place.
 
 :::
 
+:::warning
+
+There is no guarantee that the event will be dispatched only once. Two events
+considered identical may have been recorded in two different phases, and never
+get grouped together.
+
+:::
