@@ -76,7 +76,7 @@ act on your entity, instead of the other way around.
 // The event
 //
 
-final readonly class PostChanged
+final readonly class PostPublished
 {
     public function __construct(public string $postId) {}
 }
@@ -94,11 +94,16 @@ class Post implements DomainEventEmitterInterface
     
     // ...
 
-    public function setTitle(string $title): void
+    public function setStatus(string $status): void
     {
-        $this->title = $title;
-        // highlight-next-line
-        $this->recordEvent(new PostChanged($this->id));
+        $originalStatus = $this->status;
+        $this->status = $status;
+
+        // records the published event if the new status is published and it
+        // is different from the original status
+        if ($status === 'published' && $originalStatus !== $status) {
+            $this->recordEvent(new PostPublished($this->id));
+        }
     }
 
     // ...
@@ -115,12 +120,11 @@ class PostEventListener
 {
     public function __construct(private LoggerInterface $logger) {}
     
-    // highlight-next-line
     #[AsPostFlushDomainEventListener]
-    public function onPostChanged(PostChanged $event) {
+    public function onPostPublished(PostPublished $event) {
         $postId = $event->postId;
 
-        $this->logger->info("Post $postId has been changed.");
+        $this->logger->info("Post $postId has been published.");
     }
 }
 
@@ -133,10 +137,10 @@ use Doctrine\ORM\EntityManagerInterface;
 /** @var Post $post */
 /** @var EntityManagerInterface $entityManager */
 
-$post->setTitle('New title');
+$post->setStatus('published');
 $entityManager->flush();
-// the event is dispatched after the flush above, and a message will
-// appear in the log file
+// the event will be dispatched after the flush above, afterwards a message
+// will appear in the log file
 ```
 
 ## Installation
