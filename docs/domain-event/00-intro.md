@@ -101,6 +101,7 @@ class Post implements DomainEventEmitterInterface
 
         // records the published event if the new status is published and it
         // is different from the original status
+
         if ($status === 'published' && $originalStatus !== $status) {
             $this->recordEvent(new PostPublished($this->id));
         }
@@ -119,6 +120,9 @@ use Rekalogika\Contracts\DomainEvent\Attribute\AsPostFlushDomainEventListener;
 class PostEventListener
 {
     public function __construct(private LoggerInterface $logger) {}
+
+    // will be called after the post is published and the entity manager is
+    // flushed
     
     #[AsPostFlushDomainEventListener]
     public function onPostPublished(PostPublished $event) {
@@ -139,8 +143,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 $post->setStatus('published');
 $entityManager->flush();
-// the event will be dispatched after the flush above, afterwards a message
-// will appear in the log file
+
+// the event will be dispatched after the flush above, afterwards the listener
+// above will be called, sending a message to the logger
 ```
 
 ## Installation
