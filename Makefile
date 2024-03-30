@@ -1,11 +1,11 @@
 PLANTUML=docker run --rm --user $$(id -u):$$(id -g) -v ./:/data/ plantuml/plantuml
 # PLANTUML=java -jar ~/Downloads/plantuml-1.2023.11.jar
 
-WSD=$(wildcard diagrams/*.wsd)
-LIGHTSVG=$(patsubst diagrams/%.wsd, static/diagrams/light/%.svg, $(WSD))
-DARKSVG=$(patsubst diagrams/%.wsd, static/diagrams/dark/%.svg, $(WSD))
-LIGHTPNG=$(patsubst diagrams/%.wsd, static/diagrams/light/%.png, $(WSD))
-DARKPNG=$(patsubst diagrams/%.wsd, static/diagrams/dark/%.png, $(WSD))
+WSD=$(wildcard static-src/diagrams/*.wsd)
+LIGHTSVG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/light/%.svg, $(WSD))
+DARKSVG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/dark/%.svg, $(WSD))
+LIGHTPNG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/light/%.png, $(WSD))
+DARKPNG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/dark/%.png, $(WSD))
 
 all: svg static/img/social.png
 
@@ -38,17 +38,17 @@ clean:
 	rm -rf \?
 
 .PHONY: static/diagrams/light/%.svg
-static/diagrams/light/%.svg: diagrams/%.wsd
-	$(PLANTUML) -tsvg -SbackgroundColor=transparent $< -o ../static/diagrams/light/
+static/diagrams/light/%.svg: static-src/diagrams/%.wsd
+	$(PLANTUML) -tsvg -SbackgroundColor=transparent $< -o ../../static/diagrams/light/
 
 .PHONY: static/diagrams/dark/%.svg
-static/diagrams/dark/%.svg: diagrams/%.wsd
-	$(PLANTUML) -tsvg -darkmode -SbackgroundColor=transparent $< -o ../static/diagrams/dark/
+static/diagrams/dark/%.svg: static-src/diagrams/%.wsd
+	$(PLANTUML) -tsvg -darkmode -SbackgroundColor=transparent $< -o ../../static/diagrams/dark/
 
 .PHONY: static/diagrams/light/%.png
-static/diagrams/light/%.png: diagrams/%.wsd
-	$(PLANTUML) -tpng -SbackgroundColor=transparent $< -o ../static/diagrams/light/
+static/diagrams/light/%.png: static-src/diagrams/%.wsd
+	$(PLANTUML) -tpng -SbackgroundColor=transparent $< -o ../../static/diagrams/light/
 
 .PHONY: static/diagrams/dark/%.png
-static/diagrams/dark/%.png: diagrams/%.wsd
-	$(PLANTUML) -tpng -darkmode -SbackgroundColor=transparent $< -o ../static/diagrams/dark/
+static/diagrams/dark/%.png: static-src/diagrams/%.wsd
+	$(PLANTUML) -tpng -darkmode -SbackgroundColor=transparent $< -o ../../static/diagrams/dark/
