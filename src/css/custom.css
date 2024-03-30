@@ -87,3 +87,8 @@ code {
     font-size: 0.8rem;
   }
 }
+
+img {
+  width: auto;
+  height: auto;
+}

@@ -7,6 +7,9 @@ DARKSVG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/dark/%.svg, $(WSD)
 LIGHTPNG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/light/%.png, $(WSD))
 DARKPNG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/dark/%.png, $(WSD))
 
+REKAPAGER_SRC=$(wildcard static-src/rekapager/*.png)
+REKAPAGER_DST=$(patsubst static-src/rekapager/%.png, static/rekapager/%.png, $(REKAPAGER_SRC))
+
 all: svg static/img/social.png
 
 static/img/social.png: src/images/social.svg
@@ -52,3 +55,10 @@ static/diagrams/light/%.png: static-src/diagrams/%.wsd
 .PHONY: static/diagrams/dark/%.png
 static/diagrams/dark/%.png: static-src/diagrams/%.wsd
 	$(PLANTUML) -tpng -darkmode -SbackgroundColor=transparent $< -o ../../static/diagrams/dark/
+
+.PHONY: rekapager
+rekapager: $(REKAPAGER_DST)
+
+.PHONY: static/rekapager/%.png
+static/rekapager/%.png: static-src/rekapager/%.png
+	convert $< -alpha set -fuzz 3% -transparent '#ffffff' -shave 60x60 -resize 25% $@
