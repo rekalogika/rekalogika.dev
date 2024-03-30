@@ -21,12 +21,12 @@ jobs:
       - name: PlantUML light
         uses: docker://plantuml/plantuml
         with:
-          args: -tsvg -SbackgroundColor=transparent diagrams/*.wsd -o ../static/diagrams/light/
+          args: -tsvg -SbackgroundColor=transparent static-src/diagrams/*.wsd -o ../../static/diagrams/light/
 
       - name: PlantUML dark
         uses: docker://plantuml/plantuml
         with:
-          args: -tsvg -darkmode -SbackgroundColor=transparent diagrams/*.wsd -o ../static/diagrams/dark/
+          args: -tsvg -darkmode -SbackgroundColor=transparent static-src/diagrams/*.wsd -o ../../static/diagrams/dark/
 
       - name: Install dependencies
         run: npm ci
