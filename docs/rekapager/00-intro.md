@@ -73,7 +73,7 @@ allowed to navigate to it:
 
 This feature prevents denials of service, malicious or accidental. In most
 cases, a real user won't have a good reason for accessing page 56267264, but
-doing so can crash the server.
+doing so can cause a denial of service.
 
 ## Adapters
 
