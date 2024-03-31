@@ -5,59 +5,81 @@ title: Introduction
 Rekapager is a pagination library for PHP, supporting both offset-based and
 keyset-based pagination.
 
-## Features
+:::warning
 
-* Supports offset-based and keyset-based pagination.
-* Works on the separate layer from your filtering and sorting logic. Does not
-  mandate a specific way to filter or sort your data.
-* By default, the pager does not fetch the total count from the underlying data,
-  avoiding common database performance issues.
-* The caller can supply the total count that the pager can use instead of
-  fetching it from the underlying data.
-* The total count is completely optional. The pager can work without knowing the
-  total count of the underlying data.
-* Fast seek to the last page if using keyset pagination, even without knowing
-  the total count.
-* Bidirectional navigation on keyset pagination.
-* Offset page seeking on keyset pagination. Does not limit you only to the
-  immediate next or previous page.
-* Option to limit navigation to a specific maximum page number, preventing
-  denials of service, malicious or accidental. Offset pagination has a default
-  limit of 100 pages.
-* Uses only a single query parameter for referencing a page. With offset
-  pagination, it is in the form of page number. With keyset pagination, it is in
-  the form of an encoded page identifier object.
+Rekapager is currently in the early stages of development, and not yet published
+to Packagist.
 
-## User Interface
+:::
 
-Default:
+## Keyset Pagination
 
-![Pager](/rekapager/default.png)
+Keyset pagination is a method of pagination that uses the last row of the
+current page to fetch the next page. This method is more efficient than offset
+pagination because it does not require the database to scan all rows from the
+beginning to reach the desired page.
 
-If the last page is not known:
+Instead of using page numbers, the keyset pagination implementation uses a page
+identifier object to reference a page. This identifier is encoded into a string
+and passed as a single query parameter.
 
-![Pager](/rekapager/unknown-last.png)
+The library works separately from the filtering and sorting logic, and does not
+require a specific way to filter or sort your data. It just needs the query (or
+comparable information), and it will automatically modify the query to perform
+the pagination. The only requirement is that the query needs to have a
+deterministic sort order. Queries with multiple sort columns are also supported.
 
-Navigating to the last page if the count is not known:
+Bidirectional navigation is supported. The user will be able to navigate forward
+and backward from the current page. It also supports offset seeking, allowing
+the user to skip the immediate next or previous page up to the configured
+proximity setting.
 
-![Pager](/rekapager/last-without-count.png)
+In the user interface, the pager will look like a regular pagination control:
 
-And if the count is known:
+![with pages around the current page](/rekapager/middle.png)
 
-![Pager](/rekapager/last-with-count.png)
+The page number is informational only, and carried over from the start page.
 
-Page number limit in effect:
+Seeking to the last page is possible. And with keyset pagination, it will be as
+fast as seeking to the first page:
 
-![Pager](/rekapager/limit.png)
+![last page](/rekapager/last-without-count.png)
 
-Zero proximity:
+The page numbers at the end are negative because by default the pager does not
+fetch the total count from the underlying data, which is another common
+performance issue involving pagination. It can work without knowing the total
+count, but if the count is available, the pager will use it:
 
-![Pager](/rekapager/zero-proximity.png)
+![last page with count](/rekapager/last-with-count.png)
+
+It can query the count from the underlying data, or the caller can supply the
+count. The count can also be an approximation, and the pager will work without
+an exact count.
+
+## Offset Pagination
+
+The library also supports the traditional offset pagination method with several
+important improvements. First, it can paginate without the total count of the
+data. If the count is not available, the pager won't allow the user to navigate
+to the last page:
+
+![no last page](/rekapager/unknown-last.png)
+
+It also limits the maximum page number that can be navigated to. By default, the
+limit is 100. The UI will indicate that the page exists, but the user is not
+allowed to navigate to it:
+
+![page limit](/rekapager/limit.png)
+
+This feature prevents denials of service, malicious or accidental. In most
+cases, a real user won't have a good reason for accessing page 56267264, but
+doing so can crash the server.
 
 ## Adapters
 
 * Doctrine ORM `QueryBuilder`
 * Doctrine Collections `Selectable` and `Collection`
+* Pagerfanta adapters
 
 ## Demo
 
