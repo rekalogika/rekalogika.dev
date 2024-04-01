@@ -79,7 +79,7 @@ the database.
 
 ### Transforming the underlying data into a `PageableInterface` object
 
-This phase is framework-independent.
+This part is framework-independent.
 
 ```php
 use Doctrine\DBAL\Types\Types;
