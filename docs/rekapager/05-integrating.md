@@ -33,3 +33,9 @@ This factory should do the following:
   call the static method `getPageByIdentifier()` on the pageable object.
 * Call `getPageByIdentifier()` on the pageable object to get the current page.
 * Instantiate `Pager`, and return it.
+
+## Create a Pager Renderer (optional)
+
+This class should take a `PagerInterface` object, and render the pagination
+control in the user interface, which is probably the final result that most
+people are looking for.
