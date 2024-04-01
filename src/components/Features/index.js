@@ -5,6 +5,16 @@ import Link from '@docusaurus/Link';
 
 const FeatureList = [
   {
+    title: 'rekalogika/rekapager',
+    link: 'rekapager',
+    tags: ['php', 'symfony', 'doctrine'],
+    description: (
+      <>
+        Pagination library for PHP, supporting both offset-based and keyset-based pagination.
+      </>
+    ),
+  },
+  {
     title: 'rekalogika/api-lite',
     link: 'api-lite',
     tags: ['api-platform', 'symfony'],
