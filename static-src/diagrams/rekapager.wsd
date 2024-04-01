@@ -1,0 +1,49 @@
+@startuml rekapager
+
+interface PageableInterface {
+    getPageByIdentifier()
+    getFirstPage()
+    getLastPage()
+    getItemsPerPage()
+    withItemsPerPage()
+    getTotalPages()
+    getTotalItems()
+}
+
+interface PageInterface {
+    getPageIdentifier()
+    getPageNumber()
+    getPageable()
+    getItemsPerPage()
+    getNextPage()
+    getPreviousPage()
+    getNextPages()
+    getPreviousPages()
+}
+
+interface NullPageInterface
+
+PageableInterface *- PageInterface
+PageInterface <|- NullPageInterface
+
+interface PagerInterface {
+    getProximity()
+    withProximity()
+    getCurrentPage()
+    getPreviousPage()
+    getNextPage()
+    hasGapToFirstPage()
+    hasGapToLastPage()
+    getPreviousNeighboringPages()
+    getNextNeighboringPages()
+}
+
+interface PagerItemInterface {
+    getUrl()
+    isDisabled()
+}
+
+PageInterface <|-- PagerItemInterface
+PagerInterface *- PagerItemInterface
+
+@enduml

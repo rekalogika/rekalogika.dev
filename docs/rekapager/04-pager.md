@@ -10,6 +10,18 @@ to determine the current page from the context of the request, and it needs to
 be able to generate URLs for each page. Therefore, a factory should be used to
 instantiate a pager, and the factory will be framework-specific.
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import ThemedImage from '@theme/ThemedImage';
+
+<ThemedImage
+  alt="File classes"
+  sources={{
+    light: useBaseUrl('/diagrams/light/rekapager-pager.svg'),
+    dark: useBaseUrl('/diagrams/dark/rekapager-pager.svg'),
+  }}
+  width="100%"
+/>
+
 :::info
 
 The example below uses the Symfony integration provided by the package
@@ -54,6 +66,23 @@ class MyController extends AbstractController
 }
 ```
 
+Available options:
+
+* `pageParameterName`: The query string parameter name for the page number.
+  The default is `page`.
+* `proximity`: The number of pages to show before and after the current page.
+  The default is `2`.
+* `routeName`: The route name to generate the URL. The default is the current
+  route.
+* `routeParameters`: The route parameters. The default is the current route
+  parameters.
+* `urlReferenceType`: The type of URL reference, see
+  `UrlGeneratorInterface::generate()` for more information. The default is
+  `UrlGeneratorInterface::ABSOLUTE_PATH`.
+* `itemsPerPage`: The number of items per page. The default is `50`.
+* `pageLimit`: The maximum number of pages to show in the pagination control.
+  The default is the effective value in the pageable object.
+
 ## Rendering the Pager
 
 In Twig template, you can use the `rekapager()` function to render the pager.
@@ -80,5 +109,16 @@ In Twig template, you can use the `rekapager()` function to render the pager.
 
 {# Render the pager #}
 
-{{ rekapager(pager) }}
+// highlight-next-line
+{{ rekapager(pager, template="@RekalogikaRekapager/bootstrap5.html.twig") }}
 ```
+
+Available options:
+
+* `template`: The template to use for rendering the pager. The default is
+  `@RekalogikaRekapager/default.html.twig`.
+* `proximity`: Override the number of pages to show before and after the current
+  page.
+* `locale`: Override the current locale for translations.
+
+All options are optional.

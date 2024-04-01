@@ -30,8 +30,8 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
 /** @var EntityRepository $postRepository */
 $queryBuilder = $postRepository
     ->createQueryBuilder('p')
-    ->where('p.setName = :setName')
-    ->setParameter('setName', $setName)
+    ->where('p.group = :group')
+    ->setParameter('group', $group)
     ->addOrderBy('p.date', 'DESC') // a date field that accepts DateTime
     ->addOrderBy('p.title', 'ASC')
     ->addOrderBy('p.id', 'ASC');
@@ -77,7 +77,7 @@ $selectable = $postRepository; // a Doctrine repository is also a Selectable
 $selectable = $user->getComments(); // a Doctrine Collection in an entity
 
 $criteria = Criteria::create()
-    ->where(Criteria::expr()->eq('setName', $setName))
+    ->where(Criteria::expr()->eq('group', $group))
     ->orderBy([
         'date' => Order::Descending,
         'title' => Order::Ascending,
@@ -129,7 +129,7 @@ use Rekalogika\Rekapager\Offset\OffsetPageable;
 use Rekalogika\Rekapager\Pagerfanta\PagerfantaAdapterAdapter;
 
 $criteria = Criteria::create()
-        ->where(Criteria::expr()->eq('setName', $setName));
+        ->where(Criteria::expr()->eq('group', $group));
 
 $pagerfantaAdapter = new SelectableAdapter($user->getPosts(), $criteria);
 // highlight-next-line

@@ -92,8 +92,8 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
 /** @var EntityRepository $postRepository */
 $queryBuilder = $postRepository
     ->createQueryBuilder('p')
-    ->where('p.setName = :setName')
-    ->setParameter('setName', $setName)
+    ->where('p.group = :group')
+    ->setParameter('group', $group)
     ->addOrderBy('p.date', 'DESC')
     ->addOrderBy('p.title', 'ASC')
     ->addOrderBy('p.id', 'ASC');

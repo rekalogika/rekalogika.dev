@@ -1,0 +1,39 @@
+@startuml rekapager-pageable
+
+interface PageableInterface {
+    getPageByIdentifier()
+    getFirstPage()
+    getLastPage()
+    getItemsPerPage()
+    withItemsPerPage()
+    getTotalPages()
+    getTotalItems()
+}
+
+interface PageInterface {
+    getPageIdentifier()
+    getPageNumber()
+    getPageable()
+    getItemsPerPage()
+    getNextPage()
+    getPreviousPage()
+    getNextPages()
+    getPreviousPages()
+}
+
+interface NullPageInterface
+
+PageableInterface *- PageInterface
+PageInterface <|. NullPageInterface
+
+class KeysetPageable
+PageableInterface <|-- KeysetPageable
+
+class OffsetPageable
+PageableInterface <|-- OffsetPageable
+
+class PagerfantaPageable
+PageableInterface <|-- PagerfantaPageable
+OffsetPageable -* PagerfantaPageable
+
+@enduml

@@ -5,6 +5,18 @@ title: Pageables and Pages
 A `PageableInterface` represents a collection that can be
 partitioned into pages, or `PageInterface`.
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import ThemedImage from '@theme/ThemedImage';
+
+<ThemedImage
+  alt="File classes"
+  sources={{
+    light: useBaseUrl('/diagrams/light/rekapager-pageable.svg'),
+    dark: useBaseUrl('/diagrams/dark/rekapager-pageable.svg'),
+  }}
+  width="100%"
+/>
+
 ## Pageable Implementations
 
 ### `KeysetPageable`
