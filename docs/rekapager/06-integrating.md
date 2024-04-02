@@ -37,7 +37,7 @@ This factory should do the following:
   page as the current page.
 * Transform the string into a page identifier object. You can use the same
   locator that you implemented earlier. To get the identifier class, you can
-  call the static method `getPageByIdentifier()` on the pageable object.
+  call the static method `getPageIdentifierClass()` on the pageable object.
 * Call `getPageByIdentifier()` on the pageable object to get the current page.
 * Instantiate `Pager`, and return it.
 
