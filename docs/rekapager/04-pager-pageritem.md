@@ -1,5 +1,5 @@
 ---
-title: Pager
+title: Pager and Pager Items
 ---
 
 A `PagerInterface` represents navigation through a collection of items. A view
@@ -15,6 +15,9 @@ A pager works at a higher level than a `PageableInterface`. It needs to be able
 to determine the current page from the context of the request, and it needs to
 be able to generate URLs for each page. Therefore, a factory should be used to
 instantiate a pager, and the factory will be framework-specific.
+
+A pager has many pager items. A pager item is an extended page object that
+contains a URL.
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import ThemedImage from '@theme/ThemedImage';

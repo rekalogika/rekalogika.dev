@@ -5,35 +5,19 @@ title: Installation
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Components
+## General
 
-This library is separated into several packages. You can install only what you
-need.
+Generally, you need to install the integration package for the framework you are
+using. Currently, only [Symfony integration](#symfony-bundle-installation)
+exists for now.
 
-Core components, required in all cases:
+Then, [install one or more adapters](adapters) that you need for
+your project.
 
-* `rekalogika/rekapager-contracts`: core interfaces and classes.
-* `rekalogika/rekapager-core`: core pager implementation.
-
-Pagination strategies, implementations of `PageableInterface` and `PageInterface`:
-
-* `rekalogika/rekapager-offset-pagination`
-* `rekalogika/rekapager-keyset-pagination`
-  
-Adapters:
-
-* `rekalogika/rekapager-doctrine-collections-adapter`
-* `rekalogika/rekapager-doctrine-orm-adapter`
-* `rekalogika/rekapager-pagerfanta-adapter`
-
-Framework integration:
-
-* `rekalogika/rekapager-bundle`
+If you are using this library only for batch processing, then installing only
+the adapters you need is sufficient.
 
 ## Symfony Bundle Installation
-
-Rekapager provides a Symfony bundle that integrates the library with the Symfony
-framework.
 
 Make sure Composer is installed globally, as explained in the [installation
 chapter](https://getcomposer.org/doc/00-intro.md) of the Composer documentation.

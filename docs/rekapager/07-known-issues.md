@@ -1,0 +1,16 @@
+---
+title: Known Issues
+---
+
+## `SelectableAdapter`
+
+There is a Doctrine bug that calling `->matching()->count()` returns the count
+of the whole collection, not the count of the filtered collection:
+
+* [issue #9951](https://github.com/doctrine/orm/issues/9951)
+* [issue #10766](https://github.com/doctrine/orm/issues/10766)
+* [PR #10767](https://github.com/doctrine/orm/pull/10767)
+
+We work around that bug by fetching the items and counting them manually. This
+is suboptimal, but it works. If performance is critical, use a small proximity
+and a small page size. Or, use `QueryBuilderAdapter` instead.

@@ -5,6 +5,13 @@ title: Integrating Rekapager into a Framework
 This document explains what you need to do to integrate Rekapager into a
 framework.
 
+## Dependencies
+
+The integration package should depends on:
+
+* `rekalogika/rekapager-contracts`
+* `rekalogika/rekapager-core`
+
 ## Implement `PageIdentifierEncoderLocatorInterface`
 
 It takes the class name of a page identifier object, and returns an instance of

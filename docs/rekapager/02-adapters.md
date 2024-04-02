@@ -9,11 +9,12 @@ one or both of these interfaces.
 
 ## Doctrine ORM `QueryBuilder` Adapter
 
-The `QueryBuilderAdapter` is available with the
-`rekalogika/rekapager-doctrine-orm-adapter` package. It supports keyset
-pagination.
+```bash
+composer require rekalogika/rekapager-doctrine-orm-adapter
+```
 
-The class requires a `QueryBuilder` instance with the following conditions:
+The `QueryBuilderAdapter` supports keyset pagination. The class requires a
+`QueryBuilder` instance with the following conditions:
 
 * It must have a sort order. Be sure to call `orderBy()` or `addOrderBy()` on
   the query builder before passing it to the adapter.
@@ -51,12 +52,13 @@ $pageable = new KeysetPageable($adapter);
 
 ## Doctrine Collections `Selectable` Adapter
 
-The `SelectableAdapter` is available with the
-`rekalogika/rekapager-doctrine-collections-adapter` package. It supports keyset
-and offset pagination.
+```bash
+composer require rekalogika/rekapager-doctrine-collections-adapter
+```
 
-The class requires a `Selectable` instance. Usually, it is a Doctrine
-`Collection` used in entities, or a Doctrine repository.
+The `SelectableAdapter` supports both keyset and offset pagination. The class
+requires a `Selectable` instance. Usually, it is a Doctrine `Collection` used in
+entities, or a Doctrine repository.
 
 The class needs to work with a `Criteria` object, but if the caller omits it,
 the adapter will create an empty `Criteria` object. If the `Criteria` does not
@@ -94,11 +96,12 @@ $pageable = new OffsetPageable($adapter);
 
 ## Doctrine Collections `Collection` Adapter
 
-The `CollectionAdapter` is available with the
-`rekalogika/rekapager-doctrine-collections-adapter` package. It supports only
-offset pagination.
+```bash
+composer require rekalogika/rekapager-doctrine-collections-adapter
+```
 
-The class works with a Doctrine `ReadableCollection` instance.
+The `CollectionAdapter` supports only offset pagination. The class works with a
+Doctrine `ReadableCollection` (also `Collection`) instance.
 
 ```php
 use Doctrine\Common\Collections\Collection;
@@ -116,12 +119,13 @@ $pageable = new OffsetPageable($adapter);
 
 ## Pagerfanta Adapter Adapter
 
-Allows leveraging any of the existing Pagerfanta adapters. The
-`PagerfantaAdapterAdapter` is available with the
-`rekalogika/rekapager-pagerfanta-adapter` package. It supports only offset
-pagination.
+```bash
+composer require rekalogika/rekapager-pagerfanta-adapter
+```
 
-The adapter takes a Pagerfanta's `AdapterInterface` instance as its argument.
+Allows leveraging any of the existing Pagerfanta adapters. The
+`PagerfantaAdapterAdapter` supports only offset pagination. The adapter takes a
+Pagerfanta's `AdapterInterface` instance as its argument.
 
 ```php
 use Pagerfanta\Doctrine\Collections\SelectableAdapter;

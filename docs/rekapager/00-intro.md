@@ -46,10 +46,10 @@ fast as seeking to the first page:
 
 ![last page](/rekapager/last-without-count.png)
 
-Negatives page numbers shown above indicate page numbers from the end. The last
-page is -1, the second to last is -2, and so on. It is done this way because by
-default the pager does not fetch the total count from the underlying data, which
-is another common performance issue involving pagination.
+Negative page numbers shown above indicate the page numbers from the end. The
+last page is -1, the second to last is -2, and so on. It is done this way
+because by default the pager does not fetch the total count from the underlying
+data, which is another common performance issue involving pagination.
 
 The pager can work without knowing the total count, but if the count is
 available, the pager will use it:
@@ -209,13 +209,12 @@ use Rekalogika\Rekapager\PageableInterface;
 /** @var PageableInterface $pageable */
 /** @var EntityManagerInterface $entityManager */
 
-$page = $pageable->withItemsPerPage(1000)->getFirstPage();
-
-while ($page = $page->getNextPage()) {
+foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
     foreach ($page as $item) {
         // Do something with the item
     }
 
+    // Do something after each page here
     $entityManager->flush(); // if required
     $entitymanager->clear();
 }
@@ -230,6 +229,13 @@ docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:main
 ```
 
 Then access the demo at [http://localhost:8187](http://localhost:8187).
+
+## Acknowledgements
+
+* [Use the Index, Luke](https://use-the-index-luke.com/no-offset)
+* [Pagerfanta](https://www.babdev.com/open-source/packages/pagerfanta/docs/4.x/intro)
+* [PagerWave](https://gitlab.com/pagerwave/PagerWave)
+* [fast-doctrine-paginator](https://github.com/mentionapp/fast-doctrine-paginator)
 
 ## License
 

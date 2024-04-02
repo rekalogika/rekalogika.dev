@@ -141,33 +141,3 @@ The `rekapager/rekapager-keyset-pagination` package ships with two encoders:
   `Serializer` component to serialize and unserialize the object.
 
 Our Symfony integration uses the latter encoder.
-
-## Batch Processing
-
-To iterate over a large amount of data, you can use the following pattern:
-
-```php
-use Doctrine\ORM\EntityManagerInterface;
-use Rekalogika\Rekapager\PageableInterface;
-
-/** @var PageableInterface $pageable */
-/** @var EntityManagerInterface $entityManager */
-
-$page = $pageable->withItemsPerPage(1000)->getFirstPage();
-
-while ($page = $page->getNextPage()) {
-    foreach ($page as $item) {
-        // Do something with the item
-    }
-
-    $entityManager->flush(); // if required
-    $entitymanager->clear();
-}
-```
-
-:::tip Protip
-
-You should always use keyset pagination for batch processing large amounts of
-data residing in a database.
-
-:::
