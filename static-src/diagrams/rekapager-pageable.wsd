@@ -2,6 +2,7 @@
 
 interface PageableInterface {
     getPageByIdentifier()
+    getPages()
     getFirstPage()
     getLastPage()
     getItemsPerPage()
