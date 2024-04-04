@@ -5,7 +5,7 @@ title: Known Issues
 ## `SelectableAdapter`
 
 There is a Doctrine bug involving `->matching()->count()`. If the `Criteria` has
-a `maxResults`, then it will be disregarded and the `count()` it will return the
+a `maxResults`, then it will be disregarded and the `count()` will return the
 total number of items as if the `maxResults` were not set.
 
 * [issue #9951](https://github.com/doctrine/orm/issues/9951)

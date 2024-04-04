@@ -92,24 +92,31 @@ Available options:
 
 In Twig template, you can use the `rekapager()` function to render the pager.
 
-```twig
+```handlebars
 {# Outputs the item from the current page #}
 
 <table class="table">
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Date</th>
-        <th>Content</th>
-    </tr>
-    {% for post in pager.currentPage %}
+    <thead>
         <tr>
-            <td>{{ post.id }}</td>
-            <td>{{ post.title }}</td>
-            <td>{{ post.date|date('Y-m-d') }}</td>
-            <td>{{ post.content }}</td>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Content</th>
         </tr>
-    {% endfor %}
+    </thead>
+
+    {# Optionally enables infinite scrolling #}
+    // highlight-next-line
+    <tbody {{ rekapager_infinite_scrolling_content() }}>
+        {% for post in pager.currentPage %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.date|date('Y-m-d') }}</td>
+                <td>{{ post.content }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
 {# Render the pager #}
@@ -138,6 +145,22 @@ List of currently available templates:
 
 * `@RekalogikaRekapager/default.html.twig`
 * `@RekalogikaRekapager/bootstrap5.html.twig`
+
+## Infinite Scrolling
+
+Because infinite scrolling is such a common feature in modern web applications,
+we provide a helper function to enable it. To enable infinite scrolling, simply
+add `{{ rekapager_infinite_scrolling_content() }}` to the element that contains
+the items.
+
+If the width of the page is less than 768px (equivalent to Bootstrap's `xs` and
+`sm` breakpoints), infinite scrolling will be activated. It will find the
+pagination element (`.pagination`), take note of the next page URL (from
+`[rel="next"]`), and hide the pagination element.
+
+When the user scrolls to the bottom of the page, it will fetch the next page,
+parse the document, get the new items, and appends them to the same element in
+the current page.
 
 ## Default Options
 

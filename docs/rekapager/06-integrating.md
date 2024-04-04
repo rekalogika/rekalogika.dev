@@ -7,7 +7,7 @@ framework.
 
 ## Dependencies
 
-The integration package should depends on:
+The integration package should depend on:
 
 * `rekalogika/rekapager-contracts`
 * `rekalogika/rekapager-core`
