@@ -24,7 +24,7 @@ composer require rekalogika/rekapager-bundle
 
 Before we can render a pagination control in the UI, we need to transform the
 `PageableInterface` into a `PagerInterface` object. To do that, wire the
-`PagerFactoryInterface` service, and use the `create()` method.
+`PagerFactoryInterface` service, and use the `createPager()` method.
 
 Example with a Symfony Controller:
 
