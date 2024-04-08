@@ -112,6 +112,11 @@ existing Pagerfanta adapters, as well as adapting a Pagerfanta instance into an
 * Doctrine Collections `Selectable` and `Collection`
 * Pagerfanta adapters
 
+## Framework Integrations
+
+* Symfony
+* API Platform
+
 ## Usage
 
 ### Transforming the underlying data into a `PageableInterface` object

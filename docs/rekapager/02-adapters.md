@@ -18,9 +18,17 @@ The `QueryBuilderAdapter` supports keyset pagination. The class requires a
 
 * It must have a sort order. Be sure to call `orderBy()` or `addOrderBy()` on
   the query builder before passing it to the adapter.
-* If a field in a sort order uses non-scalar type, you need to provide a type
+* If a field in a sort order uses non-scalar type, you should provide a type
   mapping. The adapter will use it in the `setParameter()` method of the
   `QueryBuilder`. See the example below.
+
+:::info
+
+If you don't provide a type mapping, the adapter will try to look it up from
+Doctrine's class metadata. If it fails, it will use heuristics to detect the
+type for some common objects.
+
+:::
 
 ```php
 use Doctrine\DBAL\Types\Types;
