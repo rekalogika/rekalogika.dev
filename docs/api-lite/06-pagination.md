@@ -59,6 +59,9 @@ following types:
 * Doctrine ORM `QueryBuilder`.
 * Doctrine `Selectable`.
 
+If Rekapager is enabled, but the underlying collection object is not supported,
+the method will fall back to the default offset-based pagination.
+
 ## Keyset Pagination (or Cursor Pagination) using Rekapager
 
 The package supports keyset pagination using our [Rekapager](/rekapager)
