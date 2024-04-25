@@ -4,7 +4,7 @@ title: AbstractState
 
 Base class for our providers and processors.
 
-This package provide `AbstractProvider` and `AbstractProcessor` to be extended
+This package provides `AbstractProvider` and `AbstractProcessor` to be extended
 by your state providers and processors. They consist of useful methods that are
 commonly used in the state providers and processors. Some of the methods are
 'stolen' from `AbstractController`, so anyone familiar with Symfony controllers

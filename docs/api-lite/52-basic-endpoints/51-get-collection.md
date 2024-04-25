@@ -19,6 +19,10 @@ use App\ApiState\Admin\Book\BookCollectionProvider;
 #[ApiResource(
     shortName: 'Admin/Book',
     routePrefix: '/admin',
+    // // Uncomment the following to enable keyset-pagination:
+    // extraProperties: [
+    //     'api_lite_rekapager' => true
+    // ]
     operations: [
         // ...
         new GetCollection(

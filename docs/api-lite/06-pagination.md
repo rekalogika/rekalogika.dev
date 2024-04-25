@@ -53,6 +53,49 @@ The `mapCollection()` method supports the following collection object types:
 * Doctrine ORM `Query` and `QueryBuilder`.
 * Pagerfanta's `PagerfantaInterface` and `PagerfantaAdapterInterface`
 
+If you enable Rekapager support to get keyset-based pagination, it supports the
+following types:
+
+* Doctrine ORM `QueryBuilder`.
+* Doctrine `Selectable`.
+
+## Keyset Pagination (or Cursor Pagination) using Rekapager
+
+The package supports keyset pagination using our [Rekapager](/rekapager)
+package. Its usage is opt-in. By default, paginations will be done using the
+default offset-based API Platform pagination.
+
+:::info
+
+Learn more about Rekapager and keyset pagination in our [Rekapager
+documentation](/rekapager).
+
+:::
+
+To enable Rekapager support per operation, add the `api_lite_rekapager` extra
+property to the operation:
+
+```php
+#[ApiResource(
+    extraProperties: [
+        'api_lite_rekapager' => true
+    ]
+)]
+class Book
+{
+    // ...
+}
+```
+
+To enable it globally, you can set it in API Platform's configuration:
+
+```yaml title="config/packages/api_platform.yaml"
+api_platform:
+    defaults:
+        extra_properties:
+            api_lite_rekapager: true
+```
+
 ## Supporting Other Collection Objects
 
 If you need to support other collection object types, you can create a class
@@ -61,7 +104,7 @@ implementing `PaginatorApplierInterface`.
 ## Use Case: Doctrine Repository
 
 Doctrine repositories implement `Selectable`, so you can conveniently do the
-following in the state provider, and avoid the need to create queries:
+following in the state provider, and avoid the nee d to create queries:
 
 ```php
 use ApiPlatform\Metadata\Operation;
