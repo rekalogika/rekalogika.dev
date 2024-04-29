@@ -80,7 +80,7 @@ $mapperFactory = new MapperFactory();
 $mapper = $mapperFactory->getMapper();
 ```
 
-## Usage
+## Mapping a Single Object
 
 Suppose you have a `Book` entity:
 
@@ -136,9 +136,40 @@ use Rekalogika\Mapper\MapperInterface;
 /** @var Book $book */
 
 $result = $mapper->map($book, BookDto::class);
+/** @var BookDto $result */
 
 // or map to an existing object
 
 $bookDto = new BookDto();
 $mapper->map($book, $bookDto);
+```
+
+## Mapping Multiple Objects
+
+You can also map an iterable of objects of the same type by using `IterableMapperInterface`.
+
+In Symfony projects, you can simply autowire the service `IterableMapperInterface`.
+
+In non-Symfony projects, you can use the `MapperFactory` to get the iterable
+mapper service:
+
+```php
+use Rekalogika\Mapper\MapperFactory;
+
+$mapperFactory = new MapperFactory();
+$iterableMapper = $mapperFactory->getIterableMapper();
+```
+
+Then, you can use the `mapIterable()` method to map an iterable of `Book`
+entities to an iterable of `BookDto` objects:
+
+```php
+use App\Entity\Book;
+use Rekalogika\Mapper\IterableMapperInterface;
+
+/** @var IterableMapperInterface $iterableMapper */
+/** @var iterable<Book> $books */
+
+$result = $iterableMapper->mapIterable($books, BookDto::class);
+/** @var iterable<BookDto> $result */
 ```
