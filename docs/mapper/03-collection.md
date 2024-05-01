@@ -104,9 +104,10 @@ Supported types of the target side:
 * Doctrine `ArrayCollection`
 * `CollectionInterface`
 
-## Mapping Using an Adder Method
+## Mapping Using Adder and Remover Methods
 
-Mapper supports mapping using an adder method on the target side. Example:
+Mapper supports mapping using adder and remover method on the target side.
+Example:
 
 ```php
 class PostDto
@@ -122,12 +123,10 @@ class PostDto
         return $this->comments;
     }
 
-    // highlight-start
     public function addComment(CommentDto $comment): void
     {
         $this->comments[] = $comment;
     }
-    // highlight-end
 
     public function removeComment(CommentDto $comment): void
     {
@@ -234,3 +233,29 @@ loading (like Doctrine `PersistentCollection`), the source will not be hydrated
 unless the consumer actually uses the mapped property on the target side. This
 might be useful, like if you are using the DTOs in a view, where you don't
 always need to use the property.
+
+## Deleting Items on the Target Side Not Present in Source
+
+If you add the `AllowDelete` attribute to the target property, Mapper will
+remove items from the target side that are not present in the source. Example:
+
+```php
+use Rekalogika\Mapper\Attributes\AllowDelete;
+
+class PostDto
+{
+    /** @var ?array<int,CommentDto> */
+    // highlight-next-line
+    #[AllowDelete]
+    public ?array $comments = null;
+}
+```
+
+:::note
+
+The identity check is done on the value, after transformation. This means it
+will only work, for example, if you have set up an object mapper to map a DTO to
+a persisted Doctrine entity. For an example on how to accomplish this, see
+[Mapping a DTO to a Persisted Doctrine Entity](cookbook/doctrine-entity).
+
+:::

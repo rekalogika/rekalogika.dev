@@ -7,8 +7,7 @@ Extend the mapper by creating your own transformer.
 :::warning
 
 Transformers are considered low-level components. If possible, you should use
-[object mappers](object-mapper), [property mappers](object), or [class factory
-mapper](class-factory-mapper) instead.
+[object mappers](object-mapper) or [property mappers](object).
 
 :::
 
