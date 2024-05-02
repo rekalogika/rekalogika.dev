@@ -237,7 +237,8 @@ always need to use the property.
 ## Deleting Items on the Target Side Not Present in Source
 
 If you add the `AllowDelete` attribute to the target property, Mapper will
-remove items from the target side that are not present in the source. Example:
+remove existing items from the target side that are not present in the source.
+Example:
 
 ```php
 use Rekalogika\Mapper\Attributes\AllowDelete;
@@ -253,7 +254,7 @@ class PostDto
 
 :::note
 
-The identity check is done on the value, after transformation. This means it
+The identity check is done on the items, after transformation. This means it
 will only work, for example, if you have set up an object mapper to map a DTO to
 a persisted Doctrine entity. For an example on how to accomplish this, see
 [Mapping a DTO to a Persisted Doctrine Entity](cookbook/doctrine-entity).
