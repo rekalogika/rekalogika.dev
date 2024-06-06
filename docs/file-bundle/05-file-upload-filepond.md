@@ -175,18 +175,3 @@ This is the list of the enabled plugins:
 * Image Resize
 * Image Transform
 * Image ValidateSize
-
-## Caveats and Limitations
-
-Due to a [FilePond bug](https://github.com/pqina/filepond/pull/941),
-`FilePondCollectionType` uses the [file encode
-plugin](https://pqina.nl/filepond/docs/api/plugins/file-encode/) to upload the
-files. It works by encoding the files as Base64 strings, and then sending them
-to the server. It means the files will be about 33% larger on the wire, it might
-also trigger application based firewalls that limit the size of the request
-body, and it might exhaust the browser's or the server's memory if the files are
-too large.
-
-`FilePondType` is also affected by the bug. But we can afford to tolerate it as
-the bug does not appear to affect its function, except that we will get an error
-in the console every time a file is added to the field.
