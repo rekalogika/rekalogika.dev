@@ -113,3 +113,12 @@ $product2->setImage($product1->getImage());
 $product1->setImage(null);
 $entityManager->flush();
 ```
+
+## Caveat: Avoid Doctrine's `Query::toIterable()`
+
+Doctrine documentation tells us to use `Query::toIterable()` to iterate over
+large result sets. This is not recommended because `toIterable()` may not
+trigger the `postLoad` event handler that is necessary for our use case.
+
+We recommend using our `rekalogika/rekapager` package instead. Read more in our
+[batch processing](/rekapager/batch-processing) documentation.

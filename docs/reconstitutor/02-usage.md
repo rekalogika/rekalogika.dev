@@ -196,3 +196,15 @@ These are just forwarders to our custom implementation of the familiar Symfony
 PropertyAccess (see [rekalogika/direct-property-access](../direct-property-access)
 for more information). Therefore, you can catch the same exceptions as you would
 when using the original Symfony PropertyAccess.
+
+## Caveat: Avoid `Query::toIterable`
+
+Doctrine's documentation [recommends using
+`Query::toIterable()`](https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/batch-processing.html#iterating-results)
+to iterate over large result sets. However, using `Query::toIterable()` may
+[prevent the triggering of the `postLoad` event
+handlers](https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#postload),
+and may prevent our reconstitutors from working correctly.
+
+We recommend using our `rekalogika/rekapager` package instead. Read more in our
+[batch processing](/rekapager/batch-processing) documentation.

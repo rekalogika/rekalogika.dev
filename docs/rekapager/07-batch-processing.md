@@ -36,6 +36,25 @@ foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
 :::tip Protip
 
 You should always use keyset pagination for batch processing large amounts of
-data residing in a database.
+data residing in a database. Offset pagination will become slower as the offset
+increases.
 
 :::
+
+## Comparison to `Query::toIterable()`
+
+Doctrine's documentation [recommends using
+`Query::toIterable()`](https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/batch-processing.html#iterating-results)
+to iterate over large result sets. This, however, has several drawbacks:
+
+* Despite what we might expect, `toIterable()` actually runs the query only
+  once, and loads the entire result set into memory, which can be problematic
+  for large result sets. It only saves us memory in the hydration phase, in the
+  sense that it does not hydrate the result into entities all at once.
+
+* `toIterable()` may not trigger the [`postLoad` event
+  handlers](https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#postload).
+  Therefore, your entities might not behave the same way as when you load them
+  normally.
+
+Using `PageableInterface` for batch processing should solve these issues.
