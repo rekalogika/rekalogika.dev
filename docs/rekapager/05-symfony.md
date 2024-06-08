@@ -251,7 +251,7 @@ final readonly class RekapagerOutOfBoundsListener
         </p>
 
         <p>
-            <a href="{{ pager.getFirstPage().getUrl() }}">Go to the first page</a>
+            <a href="{{ pager.firstPage.url }}">Go to the first page</a>
         </p>
     </body>
 </html>
