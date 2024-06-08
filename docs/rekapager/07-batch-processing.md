@@ -47,9 +47,9 @@ Doctrine's documentation [recommends using
 `Query::toIterable()`](https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/batch-processing.html#iterating-results)
 to iterate over large result sets. This, however, has several drawbacks:
 
-* Despite what we might expect, `toIterable()` actually runs the query only
-  once, and loads the entire result set into memory, which can be problematic
-  for large result sets. It only saves us memory in the hydration phase, in the
+* Contrary to what one might expect, `toIterable()` actually runs the query only
+  once, then loads the entire result into memory, which can be problematic for
+  large result sets. It only saves us memory in the hydration phase, in the
   sense that it does not hydrate the result into entities all at once.
 
 * `toIterable()` may not trigger the [`postLoad` event

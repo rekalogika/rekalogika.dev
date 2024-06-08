@@ -143,9 +143,9 @@ add `{{ rekapager_infinite_scrolling_content() }}` to the element that contains
 the items; if you are using a table, it should be the `tbody` element.
 
 Infinite scrolling will be activated if the width of the page is less than 768px
-(equivalent to Bootstrap's `xs` and `sm` breakpoints) when the page is loaded.
-It will find the pagination element (`.pagination`), take note of the next page
-URL (from `[rel="next"]`), and remove the pagination element.
+(equivalent to Bootstrap's `xs` and `sm` breakpoints) when the page is first
+loaded. It will find the pagination element (`.pagination`), take note of the
+next page URL (from `[rel="next"]`), and remove the pagination element.
 
 When the user scrolls to the bottom of the page, it will fetch the next page,
 parse the document, get the new items, and appends them to the same element in
@@ -160,4 +160,99 @@ rekalogika_rekapager:
     default_template: '@RekalogikaRekapager/default.html.twig'
     default_page_parameter_name: page
     default_proximity: 2
+```
+
+## Customizing Out of Bounds Behavior
+
+If the user navigates to a page beyond the last page, the pager will throw
+`OutOfBoundsException`, and Symfony will show a 404 error page by default.
+
+The `OutOfBoundsException` class provided by the bundle is an extended class
+that contains information about the pager and the pager options. You can create
+a `KernelEvents::EXCEPTION` event listener to intercept the exception and
+customize the behavior.
+
+### Redirecting to the First Page
+
+```php
+use Rekalogika\Rekapager\Bundle\Exception\OutOfBoundsException;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+
+final readonly class RekapagerOutOfBoundsListener
+{
+    #[AsEventListener(KernelEvents::EXCEPTION)]
+    public function onKernelException(
+        ExceptionEvent $event
+    ): void {
+        $exception = $event->getThrowable();
+
+        if (!$exception instanceof OutOfBoundsException) {
+            return;
+        }
+
+        $url = $exception->getPager()->getFirstPage()->getUrl();
+        $response = new RedirectResponse($url);
+        $event->setResponse($response);
+    }
+}
+```
+
+### Showing a Custom Error Message
+
+```php
+use Rekalogika\Rekapager\Bundle\Exception\OutOfBoundsException;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Twig\Environment;
+
+final readonly class RekapagerOutOfBoundsListener
+{
+    public function __construct(
+        private Environment $twig
+    ) {
+    }
+
+    #[AsEventListener(KernelEvents::EXCEPTION)]
+    public function onKernelException(
+        ExceptionEvent $event
+    ): void {
+        $exception = $event->getThrowable();
+
+        if (!$exception instanceof OutOfBoundsException) {
+            return;
+        }
+
+        $html = $this->twig->render('out_of_bounds.html.twig', [
+            'pager' => $exception->getPager(),
+            'pager_options' => $exception->getPagerOptions(),
+        ]);
+
+        $response = new Response($html, Response::HTTP_NOT_FOUND);
+        $event->setResponse($response);
+    }
+}
+```
+
+```twig title="templates/out_of_bounds.html.twig"
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Not Found</title>
+    </head>
+    <body>
+        <h1>Page Not Found</h1>
+        <p>
+            The page you are looking for does not exist.
+        </p>
+
+        <p>
+            <a href="{{ pager.getFirstPage().getUrl() }}">Go to the first page</a>
+        </p>
+    </body>
+</html>
 ```
