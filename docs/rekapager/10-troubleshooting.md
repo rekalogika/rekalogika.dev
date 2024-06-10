@@ -13,9 +13,10 @@ apply to any database-backed adapters.
 
 ## Wonky Pager
 
-If the pager is not working as expected, as like going to page 5 lands you on
-page 3 or 8, or it skips some entries when going to the next page, etc; the
-most common cause is that the query lacks a deterministic sort order.
+If you are using keyset pagination and the pager is not working as expected, as
+like going to page 5 lands you on page 3 or 8, or it skips some entries when
+going to the next page, etc; the most common cause is that the query lacks a
+deterministic sort order.
 
 For example:
 
@@ -50,8 +51,8 @@ sort order.
 
 ## Slow First (and Last) Page
 
-If only the first (and last) page feels slower than the rest, usually it is
-because the query requires further optimization.
+If you are using keyset pagination, but the first (and last) page feels slower
+than the rest, usually it is because the query requires further optimization.
 
 A common example:
 
@@ -62,10 +63,10 @@ WHERE post_id = 123
 ORDER BY id ASC
 ```
 
-If the amount of comments for a post is large, the database might prefer to
-scan the entire index to find the comments for post 123. Other pages are not
-affected much because the pager adds an anchor where to start looking for the
-entries.
+If the amount of comments for a post is large, the database might prefer to scan
+the entire index to find the comments for post 123. Other pages are not affected
+much because the pager adds an anchor that the database uses to start looking
+for the entries.
 
 To show a non-first page, the pager will modify the query above to something
 like:
@@ -82,12 +83,16 @@ Where `1234` is the ID of the last comment on the previous page. This query will
 be much faster because the database can easily locate the starting point and
 skip all the comments before the anchor.
 
+### Solution 1: Create an Index
+
 You can optimize the query by adding a composite index on the `post_id` and `id`
 field:
 
 ```sql
 CREATE INDEX idx_comments_post_id_id ON comments (post_id, id)
 ```
+
+### Solution 2: Add the Boundaries to the Query
 
 Alternatively, you can also try adding the boundary to the first and last page
 yourself:
@@ -102,4 +107,5 @@ ORDER BY id ASC
 ```
 
 Where `1000` is the ID of the first comment on the page, and `2000` is that of
-the last comment.
+the last comment. Obviously, with this solution you need to have the IDs
+beforehand, maybe by storing the IDs in the `posts` table.
