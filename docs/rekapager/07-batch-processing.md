@@ -35,9 +35,9 @@ foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
 
 :::tip Protip
 
-You should always use keyset pagination for batch processing large amounts of
-data residing in a database. Offset pagination will become slower as the offset
-increases.
+You should always use keyset pagination for batch processing. With offset
+pagination you risk missing items, or processing the same items multiple times,
+if the underlying data changes while you are processing it.
 
 :::
 

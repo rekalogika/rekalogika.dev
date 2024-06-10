@@ -75,8 +75,11 @@ like:
 SELECT *
 FROM comments
 WHERE post_id = 123
+-- highlight-next-line
     AND id > 1234
 ORDER BY id ASC
+-- highlight-next-line
+LIMIT 10
 ```
 
 Where `1234` is the ID of the last comment on the previous page. This query will
@@ -101,11 +104,13 @@ yourself:
 SELECT *
 FROM comments
 WHERE post_id = 123
+-- highlight-start
     AND id >= 1000
     AND id <= 2000
+-- highlight-end
 ORDER BY id ASC
 ```
 
-Where `1000` is the ID of the first comment on the page, and `2000` is that of
+Where `1000` is the ID of the first comment of the page, and `2000` is that of
 the last comment. Obviously, with this solution you need to have the IDs
 beforehand, maybe by storing the IDs in the `posts` table.
