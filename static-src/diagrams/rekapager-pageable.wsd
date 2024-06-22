@@ -14,6 +14,7 @@ interface PageableInterface {
 interface PageInterface {
     getPageIdentifier()
     getPageNumber()
+    withPageNumber()
     getPageable()
     getItemsPerPage()
     getNextPage()
