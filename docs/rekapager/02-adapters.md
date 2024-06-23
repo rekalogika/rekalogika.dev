@@ -50,13 +50,24 @@ $adapter = new QueryBuilderAdapter(
     queryBuilder: $queryBuilder,
     typeMapping: [
         'p.date' => Types::DATE_MUTABLE // the type of the date field
-    ]
+    ],
+    indexBy: 'id' // optional
 );
 // highlight-end
 
 // QueryBuilderAdapter only supports Keyset pagination
 $pageable = new KeysetPageable($adapter);
 ```
+
+### `indexBy` Parameter
+
+The `QueryBuilderAdapter` adds items to the end of the `select` clause.
+Therefore, it does not support QueryBuilder's `indexBy` (the third parameter of
+`from()`, or the second parameter of a repository's `createQueryBuilder()`).
+
+If you need the feature, use the `indexBy` parameter of `QueryBuilderAdapter` as
+the above example. `indexBy` supports deep addressing by using the dot notation,
+e.g., `indexBy: 'user.id'`.
 
 ## Doctrine Collections `Selectable` Adapter
 
@@ -94,13 +105,24 @@ $criteria = Criteria::create()
         'id' => Order::Ascending
     ]);
 
-// highlight-next-line
-$adapter = new SelectableAdapter($selectable, $criteria);
+// highlight-start
+$adapter = new SelectableAdapter(
+    collection: $selectable,
+    criteria: $criteria,
+    indexBy: 'id' // optional
+);
+// highlight-end
 
 $pageable = new KeysetPageable($adapter);
 // or
 $pageable = new OffsetPageable($adapter);
 ```
+
+### `indexBy` Parameter
+
+There is a Doctrine bug that may prevents a `matching()` call from preserving
+the keys of the collection. To workaround this issue, add the `indexBy`
+parameter to the adapter like the example above.
 
 ## Doctrine Collections `Collection` Adapter
 
