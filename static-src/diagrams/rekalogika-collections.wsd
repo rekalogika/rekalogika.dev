@@ -1,0 +1,142 @@
+@startuml collection
+
+skinparam packageStyle rectangle
+
+package php {
+    interface ArrayAccess as "ArrayAccess" {
+        +offsetExists($offset)
+        +offsetGet($offset)
+        +offsetSet($offset, $value)
+        +offsetUnset($offset)
+    }
+
+    interface Countable as "Countable" {
+        +count()
+    }
+
+    interface IteratorAggregate as "IteratorAggregate" {
+        +getIterator()
+    }
+}
+
+package "doctrine/collections" {
+    interface ReadableCollection as "ReadableCollection" {
+        +contains($element)
+        +isEmpty()
+        +containsKey($key)
+        +get($key)
+        +getKeys()
+        +getValues()
+        +toArray()
+        +first()
+        +last()
+        +key()
+        +current()
+        +next()
+        +slice($offset, $length)
+        +exists(Closure)
+        +filter(Closure)
+        +map(Closure)
+        +partition(Closure)
+        +forAll(Closure)
+        +indexOf($element)
+        +findFirst(Closure)
+        +reduce(Closure, $initial = null)
+    }
+
+    Countable <|-- ReadableCollection
+    IteratorAggregate <|-- ReadableCollection
+
+    interface Collection as "Collection" {
+        +add($element)
+        +clear()
+        +remove($key)
+        +removeElement($element)
+        +set($key, $value)
+        +map(Closure)
+        +filter(Closure)
+        +partition(Closure)
+    }
+
+    ArrayAccess <|--- Collection
+
+    ReadableCollection <|- Collection
+}
+
+package "rekalogika/rekapager-contracts" {
+    interface PageableInterface {
+        +getPageByIdentifier()
+        +getPageIdentiferClass()
+        +getFirstPage()
+        +getLastPage()
+        +getPages($start)
+        +getItemsPerPage()
+        +withItemsPerPage()
+        +getTotalPages()
+        +getTotalItems()
+    }
+}
+
+package "rekalogika/collections-contracts" {
+    package "recollection" {
+        interface ReadableRecollection {
+            +getOrFail($key)
+            +refreshCount()
+        }
+
+        PageableInterface <|-- ReadableRecollection
+        ReadableCollection <|-- ReadableRecollection
+
+        interface Recollection {
+            +refreshCount()
+        }
+
+        ReadableRecollection <|-- Recollection
+        Collection <|-- Recollection
+
+        interface BasicReadableRecollection {
+            +contains($element)
+            +containsKey($key)
+            +get($key)
+            +getOrFail($key)
+        }
+
+        PageableInterface <|-- BasicReadableRecollection
+
+        interface BasicRecollection {
+            +add($element)
+        }
+
+        BasicReadableRecollection <|-- BasicRecollection
+    }
+
+    package "repository" {
+        interface BasicReadableRepository {
+            +getReference($key)
+        }
+
+        BasicReadableRecollection <|--- BasicReadableRepository
+
+        interface BasicRepository {
+            +remove($key)
+            +removeElement($element)
+        }
+
+        BasicReadableRepository <|-- BasicRepository
+        BasicRecollection <|-- BasicRepository
+
+        interface ReadableRepository {
+            +getReference($key)
+        }
+
+        ReadableRecollection <|-- ReadableRepository
+
+        interface Repository {
+        }
+
+        ReadableRepository <|-- Repository
+        Recollection <|-- Repository
+    }
+}
+
+@enduml
