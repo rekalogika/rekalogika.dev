@@ -1,0 +1,80 @@
+@startuml collections-recollection
+
+skinparam packageStyle rectangle
+hide empty methods
+hide empty attributes
+
+<style>
+title {
+    HorizontalAlignment left
+    FontSize 18
+    FontStyle normal
+}
+</style>
+
+package php {
+    interface ArrayAccess as "ArrayAccess" {
+        (methods omitted)
+    }
+
+    interface Countable as "Countable" {
+        (methods omitted)
+    }
+
+    interface IteratorAggregate as "IteratorAggregate" {
+        (methods omitted)
+    }
+}
+
+package "doctrine/collections" {
+    interface ReadableCollection as "ReadableCollection" {
+        (methods omitted)
+    }
+
+    Countable <|-- ReadableCollection
+    IteratorAggregate <|-- ReadableCollection
+
+    interface Collection as "Collection" {
+        (methods omitted)
+    }
+
+    ArrayAccess <|--- Collection
+
+    ReadableCollection <|- Collection
+}
+
+package "rekalogika/rekapager-contracts" {
+    interface PageableInterface {
+        +getPageByIdentifier()
+        +getPageIdentiferClass()
+        +getFirstPage()
+        +getLastPage()
+        +getPages($start)
+        +getItemsPerPage()
+        +withItemsPerPage()
+        +getTotalPages()
+        +getTotalItems()
+    }
+}
+
+package "rekalogika/collections-contracts" {
+    interface ReadableRecollection {
+        +containsKey($key)
+        +get($key)
+        +fetch($key)
+        +refreshCount()
+    }
+
+    PageableInterface <|--- ReadableRecollection
+    ReadableCollection <|--- ReadableRecollection
+
+    interface Recollection {
+        +remove($key)
+        +set($key, $value)
+    }
+
+    ReadableRecollection <|- Recollection
+    Collection <|--- Recollection
+}
+
+@enduml

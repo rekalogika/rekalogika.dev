@@ -1,0 +1,37 @@
+@startuml collections-pageable-recollection
+
+skinparam packageStyle rectangle
+hide empty methods
+hide empty attributes
+
+<style>
+title {
+    HorizontalAlignment left
+    FontSize 18
+    FontStyle normal
+}
+</style>
+
+package "rekalogika/rekapager-contracts" {
+    interface PageableInterface {
+        +getPageByIdentifier()
+        +getPageIdentiferClass()
+        +getFirstPage()
+        +getLastPage()
+        +getPages($start)
+        +getItemsPerPage()
+        +withItemsPerPage()
+        +getTotalPages()
+        +getTotalItems()
+    }
+}
+
+package "rekalogika/collections-contracts" {
+    interface PageableRecollection {
+        +refreshCount()
+    }
+
+    PageableInterface <|-- PageableRecollection
+}
+
+@enduml

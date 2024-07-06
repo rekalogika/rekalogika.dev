@@ -1,0 +1,175 @@
+@startuml collections-interface
+
+skinparam packageStyle rectangle
+hide empty methods
+hide empty attributes
+
+<style>
+title {
+    HorizontalAlignment left
+    FontSize 18
+    FontStyle normal
+}
+</style>
+
+package php {
+    interface ArrayAccess as "ArrayAccess" {
+        +offsetExists($offset)
+        +offsetGet($offset)
+        +offsetSet($offset, $value)
+        +offsetUnset($offset)
+    }
+
+    interface Countable as "Countable" {
+        +count()
+    }
+
+    interface IteratorAggregate as "IteratorAggregate" {
+        +getIterator()
+    }
+}
+
+package "rekalogika/rekapager-contracts" {
+    interface PageableInterface {
+        +getPageByIdentifier()
+        +getPageIdentiferClass()
+        +getFirstPage()
+        +getLastPage()
+        +getPages($start)
+        +getItemsPerPage()
+        +withItemsPerPage()
+        +getTotalPages()
+        +getTotalItems()
+    }
+}
+
+package "doctrine/collections" {
+    interface ReadableCollection as "ReadableCollection" {
+        +contains($element)
+        +isEmpty()
+        +containsKey($key)
+        +get($key)
+        +getKeys()
+        +getValues()
+        +toArray()
+        +first()
+        +last()
+        +key()
+        +current()
+        +next()
+        +slice($offset, $length)
+        +exists(Closure)
+        +filter(Closure)
+        +map(Closure)
+        +partition(Closure)
+        +forAll(Closure)
+        +indexOf($element)
+        +findFirst(Closure)
+        +reduce(Closure, $initial = null)
+    }
+
+    Countable <|-- ReadableCollection
+    IteratorAggregate <|-- ReadableCollection
+
+    interface Collection as "Collection" {
+        +add($element)
+        +clear()
+        +remove($key)
+        +removeElement($element)
+        +set($key, $value)
+        +map(Closure)
+        +filter(Closure)
+        +partition(Closure)
+    }
+
+    ArrayAccess <|--- Collection
+
+    ReadableCollection <|- Collection
+}
+
+package "rekalogika/collections-contracts" {
+
+    package "recollection" {
+        interface PageableRecollection {
+            +refreshCount()
+        }
+
+        package "minimal" {
+            interface MinimalReadableRecollection {
+                +contains($element)
+                +containsKey($key)
+                +get($key)
+                +fetch($key)
+                +refreshCount()
+            }
+
+            PageableInterface <|-- MinimalReadableRecollection
+
+            interface MinimalRecollection {
+                +add($element)
+            }
+
+            MinimalReadableRecollection <|- MinimalRecollection
+        }
+
+        package "full" {
+            interface ReadableRecollection {
+                +containsKey($key)
+                +get($key)
+                +fetch($key)
+                +refreshCount()
+            }
+
+            PageableInterface <|--- ReadableRecollection
+            ReadableCollection <|--- ReadableRecollection
+
+            interface Recollection {
+                +remove($key)
+                +set($key, $value)
+                +offsetExists($offset)
+                +offsetGet($offset)
+                +offsetSet($offset, $value)
+                +offsetUnset($offset)
+            }
+
+            ReadableRecollection <|- Recollection
+            Collection <|--- Recollection
+        }
+
+        PageableInterface <|-- PageableRecollection
+    }
+
+    package "repository" {
+        package "full" {
+            interface ReadableRepository {
+                +reference($key)
+            }
+
+            ReadableRecollection <|-- ReadableRepository
+
+            interface Repository {
+            }
+
+            ReadableRepository <|- Repository
+            Recollection <|-- Repository
+        }
+
+        package "minimal" {
+            interface MinimalReadableRepository {
+                +reference($key)
+            }
+
+            MinimalReadableRecollection <|--- MinimalReadableRepository
+
+            interface MinimalRepository {
+                +remove($key)
+                +removeElement($element)
+            }
+
+            MinimalReadableRepository <|- MinimalRepository
+            MinimalRecollection <|-- MinimalRepository
+        }
+    }
+}
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml collections-minimal-repository
+
+skinparam packageStyle rectangle
+hide empty methods
+hide empty attributes
+
+<style>
+title {
+    HorizontalAlignment left
+    FontSize 18
+    FontStyle normal
+}
+</style>
+
+package "rekalogika/collections-contracts" {
+    interface MinimalReadableRecollection {
+        (methods omitted)
+    }
+
+    interface MinimalRecollection {
+        (methods omitted)
+    }
+
+    MinimalReadableRecollection <|- MinimalRecollection
+
+    interface MinimalReadableRepository {
+        +reference($key)
+    }
+
+    MinimalReadableRecollection <|-- MinimalReadableRepository
+
+    interface MinimalRepository {
+        +remove($key)
+        +removeElement($element)
+    }
+
+    MinimalReadableRepository <|- MinimalRepository
+    MinimalRecollection <|-- MinimalRepository
+}
+
+@enduml

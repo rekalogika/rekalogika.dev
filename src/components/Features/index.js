@@ -15,6 +15,16 @@ const FeatureList = [
     ),
   },
   {
+    title: 'rekalogika/collections',
+    link: 'collections',
+    tags: ['doctrine'],
+    description: (
+      <>
+        Pragmatic, opinionated extensions to Doctrine's Collections library.
+      </>
+    ),
+  },
+  {
     title: 'rekalogika/api-lite',
     link: 'api-lite',
     tags: ['api-platform', 'symfony'],

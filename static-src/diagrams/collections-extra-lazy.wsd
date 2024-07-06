@@ -1,0 +1,85 @@
+@startuml collections-extra-lazy
+
+skinparam packageStyle rectangle
+hide empty methods
+hide empty attributes
+
+<style>
+title {
+    HorizontalAlignment left
+    FontSize 18
+    FontStyle normal
+}
+</style>
+
+title
+<b>#EL</b>: safe if fetch is EXTRA_LAZY
+<b>#ELIB</b>: safe if fetch is EXTRA_LAZY and indexBy is set
+<b>#always</b>: always safe
+<b>#null</b>: safe if $offset is null
+<b>#query</b>: require extra query under Recollection
+end title
+
+package php {
+    interface ArrayAccess as "ArrayAccess" {
+        +offsetExists($offset) <b>#ELIB</b>
+        +offsetGet($offset) <b>#ELIB</b>
+        +offsetSet($offset, $value) <b>#null</b> <b>#query</b>
+        +offsetUnset($offset) <b>#query</b>
+    }
+
+    interface IteratorAggregate as "IteratorAggregate" {
+        +getIterator()
+    }
+
+    interface Countable as "Countable" {
+        +count() <b>#EL</b>
+    }
+}
+
+package "doctrine/collections" {
+    interface ReadableCollection as "ReadableCollection" {
+        +contains($element) <b>#EL</b>
+        +isEmpty()
+        +containsKey($key) <b>#ELIB</b>
+        +get($key) <b>#ELIB</b>
+        +getKeys()
+        +getValues()
+        +toArray()
+        +first()
+        +last()
+        +key()
+        +current()
+        +next()
+        +slice($offset, $length) <b>#EL</b>
+        +exists(Closure)
+        +filter(Closure)
+        +map(Closure)
+        +partition(Closure)
+        +forAll(Closure)
+        +indexOf($element)
+        +findFirst(Closure)
+        +reduce(Closure, $initial = null)
+    }
+
+    Countable <|-- ReadableCollection
+    IteratorAggregate <|-- ReadableCollection
+
+    interface Collection as "Collection" {
+        +add($element) <b>#always</b>
+        +clear() <b>#query</b>
+        +remove($key) <b>#query</b>
+        +removeElement($element) <b>#query</b>
+        +set($key, $value) <b>#query</b>
+        +map(Closure)
+        +filter(Closure)
+        +partition(Closure)
+    }
+
+    ArrayAccess <|--- Collection
+
+    ReadableCollection <|- Collection
+}
+
+
+@enduml
