@@ -14,7 +14,7 @@ composer require rekalogika/collections-domain
 
 ## Usage
 
-Simply substitute `Doctrine\Common\Collections\ArrayCollection` to
+Simply substitute `Doctrine\Common\Collections\ArrayCollection` with
 `Rekalogika\Domain\Collections\ArrayCollection`:
 
 ```diff
