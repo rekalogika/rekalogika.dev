@@ -48,10 +48,11 @@ the headaches:
 
 * You still have compact, binary UUIDs in the database.
 * You still have time-ordered UUIDs.
-* You still have the opportunity to work with object-based UUIDs in your PHP
-  code.
+* You still have the means to work with object-based UUIDs in your PHP code
+  using the `getUuid()` method.
 * You don't need to change how you work with `QueryBuilder`'s `setParameter()`.
-* `Collection` key is now usable. You no longer need to choose whether to use
+* `Collection` key is now usable. You will be able to reliably call
+  `$collection->get($id)`. You no longer need to choose whether to use
   `toRfc4122()` or `toBinary()` depending on the database driver, or even
   depending on whether the `Collection` is lazily loaded or not.
 * If you previously use object-based UUIDs, it should not be difficult to
