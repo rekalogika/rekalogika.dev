@@ -13,7 +13,10 @@ collection. However it uses offset pagination that has these drawbacks:
 * With a large collection, it will become slower and slower as you go further
   away from the start.
 * If the underlying data changes while you are iterating it, the entire set will
-  drift, and the iteration is going to miss or duplicate some records.
+  drift, and the iteration is going to miss or duplicate some records. It
+  basically will only work on static data.
+* `slice()` is rather low level. You need to supply the iterating logic
+  yourself.
 
 ## Solution
 

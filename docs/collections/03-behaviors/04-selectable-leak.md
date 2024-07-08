@@ -22,7 +22,11 @@ of the class.
 
 ## Example
 
-An example of the problem:
+The following is an example of the problem. It is a problem because `matching()`
+is used outside the entity. It mentions the property 'age', which is almost
+always private. If the property is, for example, renamed, then we would need to
+scour the codebase to find all the places where 'age' is used, and update them
+accordingly.
 
 ```php
 /** @var Country $country */
@@ -34,7 +38,7 @@ $workingAgeCitizens = $country->getCitizens()->matching(
 );
 ```
 
-That code should be refactored into:
+That code above should have been written like this:
 
 ```php
 /** @var Country $country */
@@ -61,7 +65,7 @@ class CitizenCollection extends RecollectionDecorator
                 ->andWhere(Criteria::expr()->lte('age', 64))
         );
 
-        return $this->createCriteriaCollection(
+        return $this->createCriteriaRecollection(
             criteria: $criteria,
             instanceId: __METHOD__,
         );
@@ -76,10 +80,7 @@ use Rekalogika\Contracts\Collections\ReadableRecollection;
 
 class Country
 {
-    /**
-     * @return ReadableRecollection<int,Citizen>
-     */
-    public function getCitizens(): ReadableRecollection
+    public function getCitizens(): CitizenCollection
     {
         return new CitizenCollection(
             collection: $this->citizen,

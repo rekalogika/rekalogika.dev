@@ -2,10 +2,10 @@
 title: Repository
 ---
 
-Implementation of the repository pattern. This is an alternative to Doctrine's
-standard `EntityRepository`. Unlike Doctrine's, our repository implements
-`Collection` interface, so you can work with the repository like any other
-implementation of `Collection`.
+An implementation of the repository pattern. This is an alternative to
+Doctrine's standard `EntityRepository`. Unlike Doctrine's, our repository
+implements `Collection` interface, so you can work with the repository like any
+other implementation of `Collection`.
 
 ## Installation
 
@@ -38,14 +38,18 @@ use Rekalogika\Collections\ORM\Configuration\RepositoryConfiguration;
 /**
  * @extends AbstractRepository<int,Citizen>
  */
-class CitizenRepository extends AbstractRepository implements CitizenRepository
+class CitizenRepositoryImplementation extends AbstractRepository implements
+    CitizenRepository
 {
-    protected function configure(): RepositoryConfiguration
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        return new RepositoryConfiguration(
+        parent::__construct(
+            managerRegistry: $managerRegistry,
             class: Citizen::class,
         );
     }
+
+    // you may wish to add custom methods here
 }
 ```
 

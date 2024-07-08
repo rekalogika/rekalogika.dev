@@ -29,10 +29,9 @@ In Doctrine `Collection`, the following methods accept `int|string` as the argum
 * `remove($key)`
 * `set($key, $value)`
 
-By the widening, it can now accept UUID objects as the key. Decorators will
-automatically transform the UUID to the format expected by the underlying
-`Collection`. Also, by accepting `mixed`, the caller does not need to perform
-type checking, avoiding a lot of boilerplate code.
+The widening can remove some boilerplate code, because the caller no longer
+needs to perform type checking and conversion. It will be done by our classes
+instead.
 
 `Recollection` adds these new methods:
 

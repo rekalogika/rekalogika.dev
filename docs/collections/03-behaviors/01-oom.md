@@ -21,13 +21,14 @@ and won't cause out-of-memory errors:
 * `offsetGet($key)` (only if `indexBy` is set)
 * `matching($criteria)`
 
-If a non-safe method is called, Doctrine will still load the entire collection
-into memory, potentially causing out-of-memory errors. These errors can be very
-difficult to debug. It is hard to catch in CI. And it often get triggered in
-seemingly unrelated parts of the application.
+All the other methods not listed above are not safe. If a non-safe method is
+called, Doctrine will load the entire collection into memory, potentially
+causing out-of-memory errors. These errors can be very difficult to debug. It is
+difficult to catch in CI. And it often gets triggered in seemingly unrelated
+parts of the application.
 
-And it can be all too easy to call the non-safe methods by accident, giving us
-elusive errors that occur only in production, and never in development
+And it can be all too easy to call the non-safe methods accidentally, giving us
+elusive errors that occur only in production, and never in the development
 environment.
 
 ## Solution
@@ -66,4 +67,5 @@ These minimal flavors should never trigger full load of the collection.
 
 Then you can run a static analysis tool to find all the places that still call
 the non-safe methods. You can then refactor the code to use a different
-approach.
+approach. If you need to iterate over it, read the [Iterating Large
+Collections](02-iterator.md) section.
