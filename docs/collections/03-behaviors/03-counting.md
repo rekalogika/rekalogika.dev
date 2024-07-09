@@ -165,13 +165,14 @@ collection for user interface or API output.
 
 Unlike traditional pagination, our `PageableInterface` does not need the count
 to perform pagination, and therefore remains performant even with huge
-collections. But if your collection uses a counting strategy that does not
-provide the count, the pagination will use it.
+collections. Howver, if your collection uses a counting strategy that does
+provide the count, the pagination will happily use it to improve the user
+experience.
 
 ## Counting in Minimal Classes
 
 Our minimal classes do not implement `Countable`. So, you cannot do a `count()`
-or `->count()` on their instances. However, they still have the counting logic
+or `->count()` on their instances. However, they still retain the counting logic
 internally. You can use the method `getTotalItems()` to get the count result.
 Unlike `Countable::count()`, `getTotalItems()` may return null if the count is
-not available.
+not known.
