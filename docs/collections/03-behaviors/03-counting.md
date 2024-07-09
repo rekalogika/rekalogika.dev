@@ -165,9 +165,11 @@ collection for user interface or API output.
 
 Unlike traditional pagination, our `PageableInterface` does not need the count
 to perform pagination, and therefore remains performant even with huge
-collections. Howver, if your collection uses a counting strategy that does
-provide the count, the pagination will happily use it to improve the user
-experience.
+collections. You can safely use `DisabledCountStrategy` on your collection and
+pagination will still work without any problem.
+
+However, if your collection uses a counting strategy that does provide the
+count, the pagination will happily use it to improve the user experience.
 
 ## Counting in Minimal Classes
 

@@ -2,7 +2,7 @@
 title: Collection Decorators
 ---
 
-Classes that decorate a Doctrine `Collection` and transform it into a
+Classes that decorate any Doctrine `Collection` object and transform it into a
 `Recollection` object.
 
 ## Installation

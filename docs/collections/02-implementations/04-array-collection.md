@@ -2,7 +2,7 @@
 title: ArrayCollection
 ---
 
-Modification of Doctrine's `ArrayCollection`, so that it does `matching()`
+Modification to Doctrine's `ArrayCollection`, so that it does `matching()`
 against the private properties directly, not against the return values of their
 getters.
 
@@ -26,14 +26,17 @@ It should be safe to do a mass find-and-replace in all of your entities.
 
 ## Description
 
-Doctrine ORM does the `matching()` against the entities' private properties
-directly. While `ArrayCollection` does it against the return values of the
-getters.
+Doctrine entities usually initialize a `Collection` using `ArrayCollection` in
+their constructors. But when the entity is hydrated from the database, Doctrine
+ORM will inject a `PersistentCollection` directly into the property.
+
+If we call `matching()` against the `PersistentCollection`, it will be done
+against the related entities' private properties directly. While
+`ArrayCollection` does it against the return values of the getters.
 
 Therefore, there will be a 'mismatching' in the collection's behavior between
-when the instance is an `ArrayCollection` (when the owning entity is new) and
-when it is a `PersistentCollection` (when the owning entity is hydrated from the
-database).
+when the owning entity is new and not yet persisted, and after it is hydrated
+from the database.
 
 The problem happens when, for example:
 
@@ -47,17 +50,18 @@ The problem usually happens with new, not-yet-persisted entities, and in unit
 tests where the tests don't involve the database.
 
 Our `ArrayCollection` changes the behavior so that it does the `matching()`
-against the private properties directly.
+against the private properties directly, so that both `Collection`s will have
+the same behavior.
 
 ## Limitation
 
-The problem will also happen with `fetch` set to `EAGER`, or when the collection
-is initialized before the `matching()` is called. Unfortunately, this problem is
-impossible to workaround outside Doctrine.
+This problem will also happen when `fetch` set to `EAGER`, or when the
+collection is initialized before the `matching()` is called. Unfortunately, it
+is impossible to work around this problem outside Doctrine.
 
 However, if you can afford to fetch the collection eagerly, then you can afford
 to use `filter()` instead. Unlike `matching()`, `filter()` is always consistent
-in all cases.
+in every cases.
 
 ## Example
 

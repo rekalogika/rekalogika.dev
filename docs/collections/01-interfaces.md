@@ -9,7 +9,7 @@ Interfaces provided by this package.
 
 ## `Recollection`
 
-This package improves Doctrine Collections by extending the `Collection`
+This package enhances Doctrine Collections by extending the `Collection`
 interface with additional methods. We call this new interface `Recollection`.
 
 <ThemedImage
