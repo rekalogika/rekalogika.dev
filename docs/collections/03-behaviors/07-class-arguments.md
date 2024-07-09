@@ -4,7 +4,7 @@ title: Class Arguments
 
 Our classes accept arguments in their constructors. Different classes may or
 may not accept the different arguments listed below. Most of these arguments
-accept null, which means use the default value.
+accept null, which means the default value.
 
 ## The Arguments
 
@@ -13,10 +13,10 @@ accept null, which means use the default value.
 The `orderBy` argument is used to sort the collection. It accepts one of the
 following values:
 
-* `string`, means the column name to sort by.
+* `string` means the column name to sort by.
 * `array<string,Order>`. The key means the column names to sort, the value is
   the order to sort by.
-* `null`, means use the default order by.
+* `null` means use the default order by.
 
 ### `indexBy`
 
@@ -54,8 +54,9 @@ Widening](./05-key-type-widening.md) section.
 The default argument values can be changed by setting the static properties of
 `Configuration`.
 
-You can change them using one of these methods:
+To change the default value, for example, you can do it in one of these
+following places:
 
 * In your application's kernel.
-* In `composer.json`'s `files` autoloading mechanism.
-* In another way provided by the framework you are using.
+* Using `composer.json`'s `files` autoloading mechanism.
+* In `index.php`.
