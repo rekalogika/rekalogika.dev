@@ -10,11 +10,13 @@ records](https://wiki.postgresql.org/wiki/Slow_Counting). Consequently, calling
 extra-lazy Doctrine `Collection` can be very slow because it becomes a `COUNT()`
 query behind the scenes.
 
-## Default Behavior of Our Classes
+## Default Behavior
 
-Our classes offers plugable counting strategy. The default counting strategy is
-`ConditionalDelegatedCountStrategy`. It delegates the count to the underlying
-collection, with these caveats:
+Our classes offer pluggable counting strategy.
+
+The default counting strategy for
+full classes is `SafeDelegatedCountStrategy`. It delegates the count to
+the underlying collection, with these caveats:
 
 * If the result count is more than 5000, it will give a deprecation warning.
 * If the result count is more than 50000, it will throw an exception.
@@ -23,6 +25,9 @@ collection, with these caveats:
 
 The threshold can be changed in `Configuration` globally, or by providing the
 arguments in the constructor of the strategy.
+
+Our minimal classes use `DisabledCountStrategy`. See the corresponding
+explanation below.
 
 ## What to Do After the Threshold is Reached
 
@@ -78,10 +83,11 @@ class Country
 
 ## Available Counting Strategies
 
-* `ConditionalDelegatedCountStrategy`: The default, delegates the count to the
+* `SafeDelegatedCountStrategy`: The default, delegates the count to the
   underlying collection with exceptions described above.
 * `DelegatedCountStrategy`: Delegates the count to the underlying collection
-  without any checks.
+  without any checks. This strategy provides the same behavior as the original
+  `Collection`.
 * `DisabledCountStrategy`: Disables the count operation. Throws an exception if
   the count is called.
 * `PrecountingStrategy`: Saves and restores the count to another property. See the
@@ -155,6 +161,17 @@ $entityManager->flush();
 
 All of our classes implement `PageableInterface` from our
 `rekalogika/rekapager-contracts` package. This allows you to paginate the
-collection for user interface or API output. Unlike traditional pagination, our
-`PageableInterface` does not need the count to perform pagination, and therefore
-remains performant even with huge collections.
+collection for user interface or API output.
+
+Unlike traditional pagination, our `PageableInterface` does not need the count
+to perform pagination, and therefore remains performant even with huge
+collections. But if your collection uses a counting strategy that does not
+provide the count, the pagination will use it.
+
+## Counting in Minimal Classes
+
+Our minimal classes do not implement `Countable`. So, you cannot do a `count()`
+or `->count()` on their instances. However, they still have the counting logic
+internally. You can use the method `getTotalItems()` to get the count result.
+Unlike `Countable::count()`, `getTotalItems()` may return null if the count is
+not available.

@@ -41,7 +41,7 @@ class MyController extends AbstractController
         PagerFactoryInterface $pagerFactory,
         Request $request
     ): Response {
-        $pageable = ...; // Create a PageableInterface object
+        $pageable = ...; // Get or create a PageableInterface object here
 
         // highlight-start
         $pager = $pagerFactory->createPager(

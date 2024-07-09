@@ -52,8 +52,8 @@ against the private properties directly.
 ## Limitation
 
 The problem will also happen with `fetch` set to `EAGER`, or when the collection
-is initialized before the `matching()` is called. Unfortunately, it is
-impossible to fix using this solution.
+is initialized before the `matching()` is called. Unfortunately, this problem is
+impossible to workaround outside Doctrine.
 
 However, if you can afford to fetch the collection eagerly, then you can afford
 to use `filter()` instead. Unlike `matching()`, `filter()` is always consistent

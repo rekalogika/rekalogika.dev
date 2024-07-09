@@ -49,9 +49,9 @@ will become a 404 error.
 The above is the default behavior as defined in `DefaultKeyTransformer`. The
 behavior can be changed using the argument `$keyTransformer` in any of our
 classes. The default behavior can be changed by setting
-`Configuration::$defaultKeyTransformer`. A new behavior can be created by
+`Configuration::$defaultKeyTransformer`. A custom behavior can be created by
 implementing the `KeyTransformer` interface.
 
-Other than `DefaultKeyTransformer`, the library also ships with
-`UuidKeyTransformer`. It ensures the input is in the correct UUID format before
-passing it to the underlying `Collection`.
+The library also ships with `UuidKeyTransformer`. It ensures the input is in the
+correct UUID format before passing it to the underlying `Collection`. If not in
+the correct format, it will throw an exception.

@@ -15,18 +15,16 @@ lot of code.
 
 ## Solution
 
-Our classes does not expose the `Selectable` interface. Instead, they are made
-to be easily extended. We can easily add expressive, higher-level methods to the
-class to provide the same functionality, but without exposing the inner workings
-of the class.
+Our classes do not expose the `Selectable` interface. Instead, they can be
+easily extended. We can easily add expressive, higher-level methods to the class
+to provide the same functionality, but without exposing the inner workings of
+the class.
 
 ## Example
 
 The following is an example of the problem. It is a problem because `matching()`
 is used outside the entity. It mentions the property 'age', which is almost
-always private. If the property is, for example, renamed, then we would need to
-scour the codebase to find all the places where 'age' is used, and update them
-accordingly.
+always private.
 
 ```php
 /** @var Country $country */
@@ -38,7 +36,11 @@ $workingAgeCitizens = $country->getCitizens()->matching(
 );
 ```
 
-That code above should have been written like this:
+In the future, we might rename the property. If that happens, we would need to
+scour the codebase to find all the places where 'age' is used, and update them
+accordingly.
+
+Instead, we should aim to be able to write the above code like this:
 
 ```php
 /** @var Country $country */

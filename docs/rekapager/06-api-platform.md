@@ -52,7 +52,6 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
 class PostProvider implements ProviderInterface
 {
     public function __construct(
-        private PostRepository $postRepository,
         private PagerFactoryInterface $pagerFactory,
     ) {
     }
@@ -62,8 +61,8 @@ class PostProvider implements ProviderInterface
         array $uriVariables = [],
         array $context = []
     ): object|array|null {
-        $adapter = new SelectableAdapter($this->postRepository);
-        $pageable = new KeysetPageable($adapter);
+        $pageable = ...; // Get or create a PageableInterface object here
+
         // highlight-next-line
         $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 

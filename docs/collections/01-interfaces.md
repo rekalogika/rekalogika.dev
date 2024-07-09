@@ -5,7 +5,7 @@ title: Interfaces
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import ThemedImage from '@theme/ThemedImage';
 
-Interfaces implemented by classes in this package.
+Interfaces provided by this package.
 
 ## `Recollection`
 
@@ -21,15 +21,16 @@ interface with additional methods. We call this new interface `Recollection`.
   width="100%"
 />
 
-In Doctrine `Collection`, the following methods accept `int|string` as the argument. In
-`Recollection`, they are overriden, and these arguments are widen to `mixed`:
+In Doctrine `Collection`, the following methods accept `int|string` as the
+argument. In `Recollection`, they are overridden, and these arguments are
+widened to `mixed`:
 
 * `containsKey($key)`
 * `get($key)`
 * `remove($key)`
 * `set($key, $value)`
 
-The widening can remove some boilerplate code, because the caller no longer
+The widening can remove some boilerplate code because the caller no longer
 needs to perform type checking and conversion. It will be done by our classes
 instead.
 
@@ -51,7 +52,7 @@ but retains its safe methods with compatible signature. These are the methods
 that should never trigger full initialization of an extra-lazy `Collection`.
 
 The idea is that if a collection becomes too large, you can simply switch to the
-corresponding minimal version, run static analysis, and deal with the parts of
+corresponding minimal version, run static analysis, and refactor the parts of
 your code that still call non-safe methods.
 
 <ThemedImage
@@ -67,7 +68,7 @@ your code that still call non-safe methods.
 
 This interface will be updated if Doctrine adds new safe methods in the future.
 Currently, the glaring omissions are the `remove` and `removeElement` methods.
-We expect them to be added to Doctrine ORM sooner or later.
+We expect them to be added to Doctrine ORM eventually.
 
 :::
 
