@@ -84,3 +84,94 @@ the methods in the concrete repository implementation:
 * `createCriteriaPageable()`
 * `createQueryRecollection()`
 * `createQueryPageable()`
+
+## Migrating from Doctrine's Repository
+
+### Persisting an entity
+
+```diff-php
+  use Doctrine\ORM\EntityManagerInterface;
+  
+  /**
+   * @var EntityRepository $repository This is an implementation of the repository
+   * mentioned in this document.
+   */
+  
+  /** @var EntityManagerInterface $entityManager */
+  
+  $entity = new Entity();
+- $entityManager->persist($entity);
++ $repository->add($entity);
+  $entityManager->flush();
+```
+
+### Retrieving an entity
+
+```diff-php
+  use Doctrine\ORM\EntityManagerInterface;
+  use Doctrine\ORM\EntityRepository;
+  
+  /**
+   * @var EntityRepository $repository This is an implementation of the repository
+   * mentioned in this document.
+   */
+
+  /** @var EntityManagerInterface $entityManager */
+  /** @var EntityRepository<Entity> $doctrineRepository */
+
+- $entity = $entityManager->find(Entity::class, $id);
+- // or
+- $entity = $doctrineRepository->find($id);
++ $entity = $repository->get($id);
+```
+
+### Removing an entity
+
+```diff-php
+  use Doctrine\ORM\EntityManagerInterface;
+  
+  /**
+   * @var EntityRepository $repository This is an implementation of the repository
+   * mentioned in this document.
+   */
+  
+  /** @var EntityManagerInterface $entityManager */
+  /** @var Entity $entity */
+
+- $entityManager->remove($entity);
++ $repository->removeElement($entity);
+  $entityManager->flush();
+```
+
+### Iterating All Entities
+
+```diff-php
+  use Doctrine\ORM\EntityManagerInterface;
+  use Doctrine\ORM\EntityRepository;
+  
+  /**
+   * @var EntityRepository $repository This is an implementation of the repository
+   * mentioned in this document.
+   */
+  
+  /** @var EntityManagerInterface $entityManager */
+  /** @var EntityRepository<Entity> $doctrineRepository */
+
+- $entities = $doctrineRepository->findAll();
+- foreach ($entities as $entity) {
+-    // do something
+- }
++ // non-minimal flavor only:
++ foreach ($repository as $entity) {
++    // do something
++ }
++
++ // all flavors, iterating in batches, should never trigger out-of-memory
++ // situation:
++ foreach ($repository->withItemsPerPage(1000)->getPages() as $page) {
++    foreach ($page as $entity) {
++        // do something
++    }
++    $entityManager->clear();
++ }
+```

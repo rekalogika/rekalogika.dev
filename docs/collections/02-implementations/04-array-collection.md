@@ -17,7 +17,7 @@ composer require rekalogika/collections-domain
 Simply substitute `Doctrine\Common\Collections\ArrayCollection` with
 `Rekalogika\Domain\Collections\ArrayCollection`:
 
-```diff
+```diff-php
 - use Doctrine\Common\Collections\ArrayCollection;
 + use Rekalogika\Domain\Collections\ArrayCollection;
 ```
