@@ -23,6 +23,11 @@ Rekapager ships with two pageable types: `KeysetPageable` and `OffsetPageable`
 here). The packages already have the encoders, all you need to do is to
 wire their dependencies, and implement the locator.
 
+## Wire `PageIdentifierEncoderResolver`
+
+The class is ready to use. It takes the `PageIdentifierEncoderLocatorInterface`
+as its argument.
+
 ## Implement `PageUrlGeneratorInterface`
 
 It takes a page identifier already converted into a string, and returns a URL
@@ -35,10 +40,10 @@ This factory should do the following:
 * Take a `PageableInterface` object from the caller.
 * Determine the page identifier string from the URL. If not found, use the first
   page as the current page.
-* Transform the string into a page identifier object. You can use the same
-  locator that you implemented earlier. To get the identifier class, you can
-  call the static method `getPageIdentifierClass()` on the pageable object.
-* Call `getPageByIdentifier()` on the pageable object to get the current page.
+* Transform the string into a page identifier object using
+  `PageIdentifierEncoderResolver`.
+* Call `getPageByIdentifier($pageIdentifier)` on the pageable object to get the
+  current page.
 * Instantiate `Pager`, and return it.
 
 ## Create a Pager Renderer (optional)
