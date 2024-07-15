@@ -123,6 +123,8 @@ the methods in the concrete repository implementation:
 - // or
 - $entity = $doctrineRepository->find($id);
 + $entity = $repository->get($id);
++ // alternative that throws an exception if the entity is not found:
++ $entity = $repository->fetch($id);
 ```
 
 ### Removing an entity
@@ -175,3 +177,18 @@ the methods in the concrete repository implementation:
 +    $entityManager->clear();
 + }
 ```
+
+## Coexisting with Doctrine's Standard Repository
+
+It should be technically possible to implement this repository in the same class
+as Doctrine's standard repository, but we don't have an implementation for that
+yet.
+
+If you no longer use the default Doctrine's repository, you can safely remove
+the 'repository' argument in your entity configuration, and remove Doctrine's
+repository class to reduce confusion. The default Doctrine's repository is still
+available by calling `$entityManager->getRepository(Entity::class)`, it is just
+you no longer have the option to add custom methods to it.
+
+This implementation of repository sits above Doctrine's Entity Manager. The
+entity manager does not have the knowledge of the repository.

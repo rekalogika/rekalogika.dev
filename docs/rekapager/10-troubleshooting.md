@@ -114,3 +114,17 @@ ORDER BY id ASC
 Where `1000` is the ID of the first comment of the page, and `2000` is that of
 the last comment. Obviously, with this solution you need to have the IDs
 beforehand, maybe by storing the IDs in the `posts` table.
+
+If your entities are using time-based UUIDs as primary keys, in this case, you
+can be sure that the comments are created after the post, then you can use the
+post's UUID as the start boundary.
+
+```sql
+SELECT *
+FROM comments
+WHERE post_id = '0190acd3-e701-7cdf-8be0-52f66b96d731'
+-- highlight-start
+    AND id >= '0190acd3-e701-7cdf-8be0-52f66b96d731'
+-- highlight-end
+ORDER BY id ASC
+```
