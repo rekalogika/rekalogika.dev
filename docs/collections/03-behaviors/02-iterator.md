@@ -55,4 +55,4 @@ There is no need to create ad-hoc queries every time you need to perform safe
 iteration over a large collection.
 
 For more information about batch processing using `PageableInterface`, see
-[Batch Processing](../../rekapager/07-batch-processing.md).
+[Batch Processing](../../rekapager/04-batch-processing/01-pageable.md).

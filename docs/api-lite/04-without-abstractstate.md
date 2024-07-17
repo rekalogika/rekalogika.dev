@@ -7,7 +7,7 @@ you can wire the services directly.
 
 To use `map()`, you can inject `ApiMapperInterface`. And to use
 `mapCollection()`, you can inject `ApiCollectionMapperInterface`. The usage is
-the same as described in the [AbstractState section](./abstractstate).
+the same as described in the [AbstractState section](./03-abstractstate.md).
 
 :::warning
 

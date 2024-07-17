@@ -13,7 +13,7 @@ should feel at home.
 :::info
 
 If you don't want your state providers and processors to extend `AbstractState`,
-read the [Usage Without AbstractState](./without-abstractstate) section.
+read the [Usage Without AbstractState](./04-without-abstractstate.md) section.
 
 :::
 
