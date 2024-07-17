@@ -1,15 +1,15 @@
 ---
-title: Batch Processing
+title: Using Pageable for Batch Processing
 ---
 
 Any `PageableInterface` objects can be used to iterate its underlying data page
 by page. Rather than loading the entire data set into memory, you can process
-the data in multiple batches (a.k.a pages, chunks, slices).
+the data in multiple batches (or pages, or chunks, or slices).
 
 ## Prerequisites
 
 When using the library only for batch processing, you only need to [install the
-adapters](adapters) you need. Framework integration is not required.
+adapters](../layers/adapters) you need. Framework integration is not required.
 
 ## Batch Processing
 
@@ -67,79 +67,7 @@ to iterate over large result sets. This, however, has several drawbacks:
 
 Using `PageableInterface` for batch processing should solve these issues.
 
-## Suspending and Resuming Batch Processing
+## Running the Batch Process
 
-Sometimes you might need to suspend and resume batch processing. For example,
-you might need to stop the process to perform some maintenance, to perform the
-processing only during off-peak hours, or to continue in the event of a failure.
-
-The strategy is to save the last page's identifier, and then use it as the input
-for `getPages()` when you resume the process. Here is an example:
-
-```php
-use Doctrine\ORM\EntityManagerInterface;
-use Rekalogika\Rekapager\PageableInterface;
-
-/**
- * Runs the batch for the specified duration. Will continue from the last
- * in the next run.
- */
-class Batch
-{
-    public function __construct(
-        private EntityManagerInterface $entityManager,
-        private PageableInterface $pageable,
-        private string $identifierFile,
-        private int $maxDurationInSeconds,
-    ) {
-    }
-
-    public function batchProcess(): void
-    {
-        $startTime = time();
-    
-        $start = $this->loadIdentifier();
-        $pageable = $this->pageable->withItemsPerPage(1000);
-    
-        foreach ($pageable->getPages($start) as $page) {
-            $this->saveIdentifier($page->getIdentifier());
-    
-            if (time() - $startTime > $this->maxDurationInSeconds) {
-                return;
-            }
-    
-            foreach ($page as $item) {
-                // Do something with the item
-            }
-    
-            // Do something after each page here
-            $this->entityManager->flush(); // if required
-            $this->entitymanager->clear();
-        }
-
-        echo "all done. don't rerun again.";
-        $this->removeIdentifier();
-    }
-
-    private function saveIdentifier(object $identifier): void
-    {
-        file_put_contents($this->identifierFile, serialize($identifier));
-    }
-    
-    private function loadIdentifier(): ?object
-    {
-        if (!file_exists($this->identifierFile)) {
-            return null;
-        }
-    
-        return unserialize(file_get_contents($this->identifierFile));
-    }
-
-    private function removeIdentifier(): void
-    {
-        if (file_exists($this->identifierFile)) {
-            unlink($this->identifierFile);
-        }
-    }
-}
-```
+The most common way to run a batch process is to create a console command. Read
+the [Simple Batch Command](./batch-command) documentation for more information.

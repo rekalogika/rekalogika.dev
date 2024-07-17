@@ -256,3 +256,9 @@ final readonly class RekapagerOutOfBoundsListener
     </body>
 </html>
 ```
+
+## Batch Process Console Command
+
+The package provides a easy-to-use framework for creating console commands for
+batch processing. Read the [Simple Batch
+Command](./../batch-processing/batch-command) documentation for more information.
