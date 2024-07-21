@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main
-    # Review gh actions docs if you want to further define triggers, paths, etc
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+  workflow_dispatch: {}
 
 jobs:
   deploy:
@@ -14,10 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: graphviz
-          version: 1.0
+      # - uses: awalsh128/cache-apt-pkgs-action@latest
+      #   with:
+      #     packages: graphviz
+      #     version: 1.0
+    
+      - name: Install grapviz
+        run: sudo apt-get install graphviz
 
       - uses: actions/setup-node@v4
         with:
