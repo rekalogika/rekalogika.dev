@@ -2,9 +2,6 @@
 title: Decorating Member Objects
 ---
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import ThemedImage from '@theme/ThemedImage';
-
 We can use a collection decorator to dynamically decorate the members of the
 collection on the fly.
 
@@ -102,13 +99,7 @@ class PartnerCompany
 ```
 ## Class Diagram
 
-Now for a bird eye view of our classes.
+Now for a bird's-eye view of our classes.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/decorating-members.svg'),
-    dark: useBaseUrl('/diagrams/dark/decorating-members.svg'),
-  }}
-  width="100%"
-/>
+![Decorating members](../diagrams/decorating-members.light.svg#light)
+![Decorating members](../diagrams/decorating-members.dark.svg#dark)

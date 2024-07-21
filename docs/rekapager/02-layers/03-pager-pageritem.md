@@ -19,15 +19,6 @@ the framework you are using.
 A pager has many pager items. A pager item is an extended page object that
 contains a URL.
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import ThemedImage from '@theme/ThemedImage';
-
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/rekapager-pager.svg'),
-    dark: useBaseUrl('/diagrams/dark/rekapager-pager.svg'),
-  }}
-  width="100%"
-/>
+![Pager](../diagrams/pager.light.svg#light)
+![Pager](../diagrams/pager.dark.svg#dark)
 
