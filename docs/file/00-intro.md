@@ -2,9 +2,6 @@
 title: Introduction
 ---
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import ThemedImage from '@theme/ThemedImage';
-
 High-level file abstraction library built on top of Flysystem. It lets you work
 with file objects in an object-oriented manner. A file object represents a file
 in a Flysystem filesystem. It can be a local file or a file in a cloud storage,
@@ -35,14 +32,8 @@ the library lets you work with them in the same way.
 
 The File framework consists of several components.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/file-components.svg'),
-    dark: useBaseUrl('/diagrams/dark/file-components.svg'),
-  }}
-  width="100%"
-/>
+![File components](./diagrams/file-components.light.svg#light)
+![File components](./diagrams/file-components.dark.svg#dark)
 
 * **rekalogika/file**: The core library. It provides the file abstraction and
   metadata support.

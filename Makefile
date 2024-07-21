@@ -1,30 +1,16 @@
-PLANTUML=docker run --rm --user $$(id -u):$$(id -g) -v ./:/data/ plantuml/plantuml
-PLANTUML2=docker run -i --rm plantuml/plantuml
-# PLANTUML=java -jar ~/Downloads/plantuml-1.2023.11.jar
+PLANTUML=docker run -i --rm plantuml/plantuml
 
 PUML=$(wildcard *.puml */*.puml */*/*.puml */*/*/*.puml */*/*/*/*.puml)
 PUML_LIGHT_SVG=$(patsubst %.puml, %.light.svg, $(PUML))
 PUML_DARK_SVG=$(patsubst %.puml, %.dark.svg, $(PUML))
 
-WSD=$(wildcard static-src/diagrams/*.wsd)
-LIGHTSVG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/light/%.svg, $(WSD))
-DARKSVG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/dark/%.svg, $(WSD))
-LIGHTPNG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/light/%.png, $(WSD))
-DARKPNG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/dark/%.png, $(WSD))
-
 REKAPAGER_SRC=$(wildcard static-src/rekapager/*.png)
 REKAPAGER_DST=$(patsubst static-src/rekapager/%.png, static/rekapager/%.png, $(REKAPAGER_SRC))
 
-all: svg static/img/social.png diagrams
+all: static/img/social.png diagrams
 
 static/img/social.png: src/images/social.svg
 	inkscape -o $@ -w 1200 -h 600 $<
-
-.PHONY: svg
-svg: $(LIGHTSVG) $(DARKSVG)
-
-.PHONY: png
-png: $(LIGHTPNG) $(DARKPNG)
 
 .PHONY: start
 start:
@@ -45,22 +31,6 @@ clean:
 	rm -f static/diagrams/dark/*.svg
 	rm -rf \?
 
-.PHONY: static/diagrams/light/%.svg
-static/diagrams/light/%.svg: static-src/diagrams/%.wsd
-	$(PLANTUML) -tsvg -SbackgroundColor=transparent $< -o ../../static/diagrams/light/
-
-.PHONY: static/diagrams/dark/%.svg
-static/diagrams/dark/%.svg: static-src/diagrams/%.wsd
-	$(PLANTUML) -tsvg -darkmode -SbackgroundColor=transparent $< -o ../../static/diagrams/dark/
-
-.PHONY: static/diagrams/light/%.png
-static/diagrams/light/%.png: static-src/diagrams/%.wsd
-	$(PLANTUML) -tpng -SbackgroundColor=transparent $< -o ../../static/diagrams/light/
-
-.PHONY: static/diagrams/dark/%.png
-static/diagrams/dark/%.png: static-src/diagrams/%.wsd
-	$(PLANTUML) -tpng -darkmode -SbackgroundColor=transparent $< -o ../../static/diagrams/dark/
-
 .PHONY: rekapager
 rekapager: $(REKAPAGER_DST)
 
@@ -73,8 +43,8 @@ diagrams: $(PUML_LIGHT_SVG) $(PUML_DARK_SVG)
 
 .PHONY: %.light.svg
 %.light.svg: %.puml
-	$(PLANTUML2) -pipe -tsvg -SbackgroundColor=transparent < $< > $@
+	$(PLANTUML) -pipe -tsvg -SbackgroundColor=transparent < $< > $@
 
 .PHONY: %.dark.svg
 %.dark.svg: %.puml
-	$(PLANTUML2) -pipe -tsvg -darkmode -SbackgroundColor=transparent < $< > $@
+	$(PLANTUML) -pipe -tsvg -darkmode -SbackgroundColor=transparent < $< > $@

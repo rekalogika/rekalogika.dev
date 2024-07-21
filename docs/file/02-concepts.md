@@ -2,9 +2,6 @@
 title: Concepts & Terms
 ---
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import ThemedImage from '@theme/ThemedImage';
-
 ## Terms
 
 * **FileRepository**: Manages files in the framework. Implements
@@ -39,14 +36,8 @@ represented by properties.
 
 :::
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/file.svg'),
-    dark: useBaseUrl('/diagrams/dark/file.svg'),
-  }}
-  width="100%"
-/>
+![File classes](./diagrams/file.light.svg#light)
+![File classes](./diagrams/file.dark.svg#dark)
 
 ## Keys vs Paths
 

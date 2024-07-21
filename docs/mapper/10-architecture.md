@@ -2,20 +2,12 @@
 title: Architecture
 ---
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import ThemedImage from '@theme/ThemedImage';
 import Badge from '@site/src/components/Badge';
 
 This chapter describes the architecture of the library.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/mapper.svg'),
-    dark: useBaseUrl('/diagrams/dark/mapper.svg'),
-  }}
-  width="100%"
-/>
+![Mapper](./diagrams/mapper.light.svg#light)
+![Mapper](./diagrams/mapper.dark.svg#dark)
 
 ## Main Components
 
