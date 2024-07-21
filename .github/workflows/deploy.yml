@@ -31,23 +31,14 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: PlantUML new generation system
+      - name: PlantUML
         run: |
           curl -sSLf -o plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2024.6/plantuml-1.2024.6.jar 
           make diagrams PLANTUML="java -jar plantuml.jar"
 
-      - name: PlantUML light
-        uses: docker://plantuml/plantuml
-        with:
-          args: -tsvg -SbackgroundColor=transparent static-src/diagrams/*.wsd -o ../../static/diagrams/light/
-
-      - name: PlantUML dark
-        uses: docker://plantuml/plantuml
-        with:
-          args: -tsvg -darkmode -SbackgroundColor=transparent static-src/diagrams/*.wsd -o ../../static/diagrams/dark/
-
       - name: Install dependencies
         run: npm ci
+
       - name: Build website
         run: npm run build
 
