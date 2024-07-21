@@ -1,4 +1,4 @@
-@startuml collections-interface
+@startuml interface
 
 skinparam packageStyle rectangle
 hide empty methods

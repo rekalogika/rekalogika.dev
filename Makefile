@@ -1,5 +1,10 @@
 PLANTUML=docker run --rm --user $$(id -u):$$(id -g) -v ./:/data/ plantuml/plantuml
+PLANTUML2=docker run -i --rm plantuml/plantuml
 # PLANTUML=java -jar ~/Downloads/plantuml-1.2023.11.jar
+
+PUML=$(wildcard *.puml */*.puml */*/*.puml */*/*/*.puml */*/*/*/*.puml)
+PUML_LIGHT_SVG=$(patsubst %.puml, %.light.svg, $(PUML))
+PUML_DARK_SVG=$(patsubst %.puml, %.dark.svg, $(PUML))
 
 WSD=$(wildcard static-src/diagrams/*.wsd)
 LIGHTSVG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/light/%.svg, $(WSD))
@@ -10,7 +15,7 @@ DARKPNG=$(patsubst static-src/diagrams/%.wsd, static/diagrams/dark/%.png, $(WSD)
 REKAPAGER_SRC=$(wildcard static-src/rekapager/*.png)
 REKAPAGER_DST=$(patsubst static-src/rekapager/%.png, static/rekapager/%.png, $(REKAPAGER_SRC))
 
-all: svg static/img/social.png
+all: svg static/img/social.png diagrams
 
 static/img/social.png: src/images/social.svg
 	inkscape -o $@ -w 1200 -h 600 $<
@@ -62,3 +67,14 @@ rekapager: $(REKAPAGER_DST)
 .PHONY: static/rekapager/%.png
 static/rekapager/%.png: static-src/rekapager/%.png
 	convert $< -alpha set -fuzz 3% -transparent '#ffffff' -shave 60x60 -resize 25% $@
+
+.PHONY: diagrams
+diagrams: $(PUML_LIGHT_SVG) $(PUML_DARK_SVG)
+
+.PHONY: %.light.svg
+%.light.svg: %.puml
+	$(PLANTUML2) -pipe -tsvg -SbackgroundColor=transparent < $< > $@
+
+.PHONY: %.dark.svg
+%.dark.svg: %.puml
+	$(PLANTUML2) -pipe -tsvg -darkmode -SbackgroundColor=transparent < $< > $@

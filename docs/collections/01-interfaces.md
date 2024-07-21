@@ -12,14 +12,8 @@ Interfaces provided by this package.
 This package enhances Doctrine Collections by extending the `Collection`
 interface with additional methods. We call this new interface `Recollection`.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/collections-recollection.svg'),
-    dark: useBaseUrl('/diagrams/dark/collections-recollection.svg'),
-  }}
-  width="100%"
-/>
+![Recollection classes](./diagrams/recollection.light.svg#light)
+![Recollection classes](./diagrams/recollection.dark.svg#dark)
 
 In Doctrine `Collection`, the following methods accept `int|string` as the
 argument. In `Recollection`, they are overridden, and these arguments are
@@ -55,14 +49,8 @@ The idea is that if a collection becomes too large, you can simply switch to the
 corresponding minimal version, run static analysis, and refactor the parts of
 your code that still call non-safe methods.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/collections-minimal-recollection.svg'),
-    dark: useBaseUrl('/diagrams/dark/collections-minimal-recollection.svg'),
-  }}
-  width="100%"
-/>
+![MinimalRecollection classes](./diagrams/minimal-recollection.light.svg#light)
+![MinimalRecollection classes](./diagrams/minimal-recollection.dark.svg#dark)
 
 :::warning
 
@@ -76,28 +64,16 @@ We expect them to be added to Doctrine ORM eventually.
 
 An extra-minimal version of `Recollection` that only extends `PageableInterface`.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/collections-pageable-recollection.svg'),
-    dark: useBaseUrl('/diagrams/dark/collections-pageable-recollection.svg'),
-  }}
-  width="100%"
-/>
+![PageableRecollection classes](./diagrams/pageable-recollection.light.svg#light)
+![PageableRecollection classes](./diagrams/pageable-recollection.dark.svg#dark)
 
 ## `Repository`
 
 An alternative implementation of the repository pattern using the `Recollection`
 interface. You can treat the repository like a regular collection.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/collections-repository.svg'),
-    dark: useBaseUrl('/diagrams/dark/collections-repository.svg'),
-  }}
-  width="100%"
-/>
+![Repository classes](./diagrams/repository.light.svg#light)
+![Repository classes](./diagrams/repository.dark.svg#dark)
 
 It adds one new method:
 
@@ -109,14 +85,8 @@ It adds one new method:
 
 The minimal flavor of `Repository` above.
 
-<ThemedImage
-  alt="File classes"
-  sources={{
-    light: useBaseUrl('/diagrams/light/collections-minimal-repository.svg'),
-    dark: useBaseUrl('/diagrams/dark/collections-minimal-repository.svg'),
-  }}
-  width="100%"
-/>
+![MinimalRepository classes](./diagrams/minimal-repository.light.svg#light)
+![MinimalRepository classes](./diagrams/minimal-repository.dark.svg#dark)
 
 It adds these new methods:
 

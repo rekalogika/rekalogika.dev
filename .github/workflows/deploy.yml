@@ -13,10 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: PlantUML new generation system
+        run: |
+          curl https://github.com/plantuml/plantuml/releases/download/v1.2024.6/plantuml-1.2024.6.jar -o plantuml.jar
+          make diagrams PLANTUML2="java -jar plantuml.jar"
 
       - name: PlantUML light
         uses: docker://plantuml/plantuml

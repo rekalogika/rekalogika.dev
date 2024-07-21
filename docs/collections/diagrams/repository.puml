@@ -1,4 +1,4 @@
-@startuml collections-repository
+@startuml repository
 
 skinparam packageStyle rectangle
 hide empty methods

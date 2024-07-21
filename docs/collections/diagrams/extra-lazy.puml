@@ -1,4 +1,4 @@
-@startuml collections-extra-lazy
+@startuml extra-lazy
 
 skinparam packageStyle rectangle
 hide empty methods

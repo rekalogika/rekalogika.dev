@@ -21,3 +21,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# plantuml
+*.dark.svg
+*.light.svg

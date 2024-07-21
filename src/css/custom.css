@@ -92,3 +92,8 @@ img {
   width: auto;
   height: auto;
 }
+
+[data-theme='light'] img[src$='#dark'],
+[data-theme='dark'] img[src$='#light'] {
+  display: none;
+}

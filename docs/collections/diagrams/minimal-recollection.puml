@@ -1,4 +1,4 @@
-@startuml collections-minimal-recollection
+@startuml minimal-recollection
 
 skinparam packageStyle rectangle
 hide empty methods

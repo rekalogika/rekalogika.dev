@@ -1,4 +1,4 @@
-@startuml collections-recollection
+@startuml recollection
 
 skinparam packageStyle rectangle
 hide empty methods
