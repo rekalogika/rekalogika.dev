@@ -7,6 +7,16 @@ Doctrine's standard `EntityRepository`. Unlike Doctrine's, our repository
 implements `Collection` interface, so you can work with the repository like any
 other implementation of `Collection`.
 
+## Why?
+
+Why not? A repository is essentially a collection of entities. It makes sense to
+implement it as just another collection, having the same behavior as any other
+collection.
+
+Your `CitizenRepository` will work practically the same way as
+`$country->getCitizens()`, except that the former contains all citizens, while
+the latter contains citizens of a specific country.
+
 ## Installation
 
 ```bash

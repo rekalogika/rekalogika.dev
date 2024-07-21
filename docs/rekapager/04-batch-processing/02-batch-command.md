@@ -67,18 +67,17 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         // set up the command arguments and options here, just like any other
         // Symfony console command
     }
 
-    protected function getPageable(
-        InputInterface $input,
-        OutputInterface $output
-    ): PageableInterface {
-        // procure a pageable object here, you can use the $input and $output
-        // if necessary
+    #[\Override]
+    protected function getPageable(): PageableInterface {
+        // procure a pageable object here, you can get the input arguments or
+        // options from $this->getInput()
 
         $adapter = new SelectableAdapter(
             selectable: $this->postRepository,
@@ -88,6 +87,7 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         return new KeysetPageable($adapter);
     }
 
+    #[\Override]
     public function processItem(ItemEvent $itemEvent): void
     {
         $item = $itemEvent->getItem();
@@ -95,6 +95,7 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         // do something with $item here
     }
 
+    #[\Override]
     public function afterPage(AfterPageEvent $event): void
     {
         // do something after each page here
@@ -104,3 +105,14 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
     }
 }
 ```
+
+The complete list of the hooks you can override:
+
+* `beforeProcess()` - called before processing the first page.
+* `beforePage()` - called before processing each page.
+* `processItem()` - called for each item.
+* `afterPage()` - called after processing each page.
+* `afterProcess()` - called after processing the last page.
+* `onInterrupt()` - called when the command is interrupted by the user, like when
+  the user presses Ctrl+C.
+* `onTimeLimit()` - called when the time limit is reached.
