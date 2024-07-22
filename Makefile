@@ -25,11 +25,12 @@ serve:
 	npx docusaurus serve
 
 .PHONY: clean
-clean:
+clean: clean-diagrams
 	npx docusaurus clear
-	rm -f static/diagrams/light/*.svg
-	rm -f static/diagrams/dark/*.svg
-	rm -rf \?
+
+.PHONY: clean-diagrams
+clean-diagrams:
+	rm -f $(PUML_LIGHT_SVG) $(PUML_DARK_SVG)
 
 .PHONY: rekapager
 rekapager: $(REKAPAGER_DST)
