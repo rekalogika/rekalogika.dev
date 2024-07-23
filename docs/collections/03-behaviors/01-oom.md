@@ -7,8 +7,9 @@ title: Potential Out-of-Memory Handling
 Doctrine ORM offers [extra lazy
 collections](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/extra-lazy-associations.html)
 to handle large sets of data. However, only a few methods are extra-lazy-safe.
-These safe methods will not trigger the full initialization of the collection,
-and won't cause out-of-memory errors:
+The following are the safe methods that will not trigger the full initialization
+of the collection, and won't cause out-of-memory errors with an extra-lazy
+collection:
 
 * `contains($entity)`
 * `containsKey($key)` (only if `indexBy` is set)
@@ -30,6 +31,15 @@ parts of the application.
 And it can be all too easy to call the non-safe methods accidentally, giving us
 elusive errors that occur only in production, and never in the development
 environment.
+
+The most common unsafe behaviors include:
+
+* Using `foreach` directly on the collection.
+* Calling `toArray()`.
+* Calling `filter()`, `map()` or other similar methods.
+* Calling `removeElement($entity)`. This one is usually accidentally called
+  because Symfony MakerBundle generates remover methods that call
+  `removeElement()`.
 
 ## Solution
 

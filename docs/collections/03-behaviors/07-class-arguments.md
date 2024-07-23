@@ -35,6 +35,16 @@ It can be overridden post-instantiation using `withItemsPerPage()`.
 The count strategy to use. Accepts a `CountStrategy` instance. Read more about
 count strategies in the [Counting](./03-counting.md) section.
 
+
+### `pagination`
+
+The pagination type to use. Either `Pagination::Keyset` or `Pagination::Offset`.
+Defaults to `Pagination::Keyset`.
+
+You should almost always use `Pagination::Keyset`. However, there are cases
+where `Pagination::Offset` might be required, for example, when paginating a
+search result ordered by search ranking.
+
 ### `softLimit` and `hardLimit`
 
 The `softLimit` and `hardLimit` arguments are used to limit the number of

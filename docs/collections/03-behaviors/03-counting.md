@@ -14,13 +14,13 @@ query behind the scenes.
 
 Our classes offer pluggable counting strategy.
 
-The default counting strategy for
-full classes is `SafeDelegatedCountStrategy`. It delegates the count to
-the underlying collection, with these caveats:
+The default counting strategy for full classes is `SafeDelegatedCountStrategy`.
+It delegates the count to the underlying collection, as with regular
+collections, with these caveats:
 
-* If the result count is more than 5000, it will give a deprecation warning.
-* If the result count is more than 50000, it will throw an exception.
-* If the count duration is more than 2 seconds, it will give a deprecation
+* If the result count exceeds 5000, it will give a deprecation warning.
+* If the result count exceeds 50000, it will throw an exception.
+* If the count duration exceeds 2 seconds, it will give a deprecation
   warning.
 
 The threshold can be changed in `Configuration` globally, or by providing the
@@ -35,7 +35,7 @@ explanation below.
 
 All of our classes provide pluggable strategy for handling the `count()`
 operation. You can change how the count is calculated by switching the strategy,
-or use your own counting strategy.
+or use your own counting strategy. Read the next section for more information.
 
 ### Switch to the Corresponding Minimal Class
 

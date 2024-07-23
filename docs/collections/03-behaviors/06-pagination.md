@@ -1,10 +1,10 @@
 ---
-title: Pagination
+title: UI and API Pagination
 ---
 
-All of our classes supports pagination by the implementation of
-`PageableInterface` from our `rekalogika/rekapager-contracts` package. You can
-directly use any of our classes for paginating user interface or an API output.
+All of our classes implement `PageableInterface` from our
+`rekalogika/rekapager-contracts` package. You can directly use any of our
+classes for paginating user interface or an API output.
 
 ## In Symfony Controller
 

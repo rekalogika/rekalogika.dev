@@ -45,8 +45,8 @@ abstract class AbstractEntity
 }
 ```
 
-This way, you retain all the best practices of using UUID primary keys, but
-without the headaches:
+This way, you retain all the benefits of using UUID primary keys, with all the
+best practices, but without the headaches:
 
 * You still have compact, binary UUIDs in the database.
 * You still have time-ordered UUIDs.

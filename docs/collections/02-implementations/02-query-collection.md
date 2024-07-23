@@ -2,11 +2,10 @@
 title: Query-Backed Collection
 ---
 
-A collection class using a `QueryBuilder` as the data source. Unlike doing the
-query in the traditional way, this class allows lazy loading. You can safely
-pass the object around, and it will only execute the query when you start
+A collection class using Doctrine ORM `QueryBuilder` as the data source. Unlike
+doing the query in the traditional way, this class allows lazy loading. You can
+safely pass the object around, and it will only execute the query when you start
 getting items from it.
-
 
 ## Installation
 
