@@ -13,12 +13,14 @@ one or both of these interfaces.
 composer require rekalogika/rekapager-doctrine-orm-adapter
 ```
 
-The `QueryBuilderAdapter` supports keyset pagination. The class requires a
-`QueryBuilder` instance with the following conditions:
+The `QueryBuilderAdapter` supports keyset and offset pagination. The class
+takes a Doctrine ORM `QueryBuilder` instance.
+
+With keyset pagination, there are additional prerequisites:
 
 * It must have a sort order. Be sure to call `orderBy()` or `addOrderBy()` on
   the query builder before passing it to the adapter.
-* If a field in a sort order uses non-scalar type, you should provide a type
+* If a field in a sort order uses a non-scalar type, you should provide a type
   mapping. The adapter will use it in the `setParameter()` method of the
   `QueryBuilder`. See the example below.
 
