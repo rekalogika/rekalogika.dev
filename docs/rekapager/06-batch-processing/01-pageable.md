@@ -9,7 +9,7 @@ the data in multiple batches (or pages, or chunks, or slices).
 ## Prerequisites
 
 When using the library only for batch processing, you only need to [install the
-adapters](../layers/adapters) you need. Framework integration is not required.
+adapters](../adapters) you need. Framework integration is not required.
 
 ## Batch Processing
 
