@@ -5,8 +5,8 @@ title: Pageables and Pages
 A `PageableInterface` represents a collection that can be
 partitioned into pages, or `PageInterface`.
 
-![Pageable](../diagrams/pageable.light.svg#light)
-![Pageable](../diagrams/pageable.dark.svg#dark)
+![Pageable](./diagrams/pageable.light.svg#light)
+![Pageable](./diagrams/pageable.dark.svg#dark)
 
 ## Pageable Implementations
 

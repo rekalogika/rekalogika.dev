@@ -1,5 +1,5 @@
 ---
-title: Component Layers
+title: Adapters
 ---
 
 import DocCardList from '@theme/DocCardList';
