@@ -17,7 +17,7 @@ WHERE p.date >= :date
 ORDER BY p.date ASC, p.title ASC, p.id ASC
 ```
 
-This method is slightly less efficient than using SQL Row Values, but it is more
+This method is slightly less efficient than using SQL row values, but it is more
 portable across different database systems. It works in all cases. This is the
 default seek method used by the library.
 
