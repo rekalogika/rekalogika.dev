@@ -11,6 +11,30 @@ keyset and offset pagination.
 composer require rekalogika/rekapager-doctrine-orm-adapter
 ```
 
+If you need [SQL row values](../10-seek-method) support, you need to register
+the necessary DQL function.
+
+If you wire Doctrine manually, use the following code:
+
+```php
+use Doctrine\ORM\Configuration;
+use Rekalogika\Rekapager\Doctrine\ORM\RowValuesFunction;
+
+/** @var Configuration $configuration */
+$configuration
+    ->addCustomStringFunction('REKAPAGER_ROW_VALUES', RowValuesFunction::class);
+```
+
+If you are using Symfony, add the following to your configuration:
+
+```yaml title="config/packages/doctrine.yaml"
+doctrine:
+    orm:
+        dql:
+            string_functions:
+                REKAPAGER_ROW_VALUES: Rekalogika\Rekapager\Doctrine\ORM\RowValuesFunction
+```
+
 ## Usage
 
 ```php
