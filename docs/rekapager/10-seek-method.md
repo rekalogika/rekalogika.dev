@@ -18,8 +18,8 @@ ORDER BY p.date ASC, p.title ASC, p.id ASC
 ```
 
 This method is slightly less efficient than using SQL row values, but it is more
-portable across different database systems. It works in all cases. This is the
-default seek method used by the library.
+portable across different database systems. It just works in all cases. This is
+the default seek method used by the library.
 
 ## SQL Row Values
 
@@ -38,11 +38,17 @@ example, if the first column is ordered in ascending order, the rest of the
 columns must also be ordered in ascending order. If your requirement is to have
 a different order for each column, you have to use the approximated variant.
 
-## Support
+## Adapter Support
 
-All adapters support the approximated variant. The SQL row values method is
-supported by the ORM `QueryBuilderAdapter` and `NativeQueryAdapter` adapters,
-but the approximate variant is used by default.
+All the adapters that support keyset pagination support the approximated
+variant. The SQL row values method is supported by these adapters:
+
+* Doctrine ORM `QueryBuilderAdapter`
+* Doctrine ORM `NativeQueryAdapter`
+* Doctrine DBAL `QueryBuilderAdapter` adapter
+
+In any case, the approximate variant is used by default for better
+interoperability and flexibility.
 
 ## Changing the Seek Method
 
@@ -53,9 +59,9 @@ three options:
 * `SeekMethod::RowValues`
 * `SeekMethod::Auto`
 
-`SeekMethod::Auto` means the adapter will use the row values method if all sort
-columns are ordered in the same direction, otherwise it uses the approximated
-variant.
+`SeekMethod::Auto` means the adapter will use the row values method if all the
+sort columns are ordered in the same direction, otherwise it uses the
+approximated variant.
 
 Example:
 
@@ -73,8 +79,8 @@ $adapter = new QueryBuilderAdapter(
 
 :::note
 
-To use SQL row values, `QueryBuilderAdapter` requires the `REKAPAGER_ROW_VALUES`
-DQL function to be registered. Read its
+To use SQL row values, Doctrine ORM `QueryBuilderAdapter` requires the
+`REKAPAGER_ROW_VALUES` DQL function to be registered. Read its
 [documentation](02-adapters/01-doctrine-orm-querybuilder.md) for more
 information.
 

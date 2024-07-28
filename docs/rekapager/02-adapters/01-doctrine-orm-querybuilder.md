@@ -2,6 +2,9 @@
 title: Doctrine ORM QueryBuilder
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 `QueryBuilderAdapter` takes a Doctrine ORM `QueryBuilder` instance. It supports
 keyset and offset pagination.
 
@@ -12,7 +15,25 @@ composer require rekalogika/rekapager-doctrine-orm-adapter
 ```
 
 If you need [SQL row values](../10-seek-method) support, you need to register
-the necessary DQL function.
+the necessary DQL function:
+
+<Tabs>
+
+<TabItem value="Symfony">
+
+If you are using Symfony, add the following to your configuration:
+
+```yaml title="config/packages/doctrine.yaml"
+doctrine:
+    orm:
+        dql:
+            string_functions:
+                REKAPAGER_ROW_VALUES: Rekalogika\Rekapager\Doctrine\ORM\RowValuesFunction
+```
+
+</TabItem>
+
+<TabItem value="Manual Wiring">
 
 If you wire Doctrine manually, use the following code:
 
@@ -25,15 +46,10 @@ $configuration
     ->addCustomStringFunction('REKAPAGER_ROW_VALUES', RowValuesFunction::class);
 ```
 
-If you are using Symfony, add the following to your configuration:
+</TabItem>
 
-```yaml title="config/packages/doctrine.yaml"
-doctrine:
-    orm:
-        dql:
-            string_functions:
-                REKAPAGER_ROW_VALUES: Rekalogika\Rekapager\Doctrine\ORM\RowValuesFunction
-```
+</Tabs>
+
 
 ## Usage
 
@@ -45,6 +61,7 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 
 /** @var EntityRepository $postRepository */
+
 $queryBuilder = $postRepository
     ->createQueryBuilder('p')
     ->where('p.group = :group')
