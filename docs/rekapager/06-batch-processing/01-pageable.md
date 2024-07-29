@@ -53,8 +53,8 @@ to iterate over large result sets. This, however, has several drawbacks:
 
 * Contrary to what one might expect, `toIterable()` actually runs the query only
   once, then loads the entire result into memory, which can be problematic for
-  large result sets. It only saves us memory in the hydration phase, in the
-  sense that it does not hydrate the result into entities all at once.
+  large result sets. It only saves us memory and time in the hydration phase, in
+  the sense that it does not hydrate the result into entities all at once.
 
 * Even when you don't care about memory usage, queries with large results will be
   much slower to execute. The application must wait for the query to finish, and

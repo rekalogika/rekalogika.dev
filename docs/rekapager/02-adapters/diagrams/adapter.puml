@@ -1,0 +1,71 @@
+@startuml adapter
+
+interface PageableInterface {
+}
+
+class KeysetPageable {
+}
+
+PageableInterface <|-- KeysetPageable
+
+class OffsetPageable {
+}
+
+PageableInterface <|-- OffsetPageable
+
+interface KeysetPaginationAdapterInterface {
+    getKeysetItems(offset, limit, values, type)
+    countKeysetItems(offset, limit, values, type)
+    countItems()
+}
+
+KeysetPageable *-- KeysetPaginationAdapterInterface
+
+interface OffsetPaginationAdapterInterface {
+    getOffsetItems(offset, limit)
+    countKeysetItems(offset, limit)
+    countItems()
+}
+
+OffsetPageable *-- OffsetPaginationAdapterInterface
+
+class CollectionAdapter {
+}
+
+OffsetPaginationAdapterInterface <|--- CollectionAdapter
+
+class SelectableAdapter {
+}
+
+KeysetPaginationAdapterInterface <|---- SelectableAdapter
+OffsetPaginationAdapterInterface <|---- SelectableAdapter
+
+class DBAL\QueryBuilderAdapter {
+}
+
+KeysetPaginationAdapterInterface <|--- DBAL\QueryBuilderAdapter
+OffsetPaginationAdapterInterface <|--- DBAL\QueryBuilderAdapter
+
+class ORM\QueryBuilderAdapter {
+}
+
+KeysetPaginationAdapterInterface <|-- ORM\QueryBuilderAdapter
+OffsetPaginationAdapterInterface <|-- ORM\QueryBuilderAdapter
+
+class NativeQueryAdapter {
+}
+
+KeysetPaginationAdapterInterface <|---- NativeQueryAdapter
+
+class PagerfantaAdapterAdapter {
+}
+
+OffsetPaginationAdapterInterface <|-- PagerfantaAdapterAdapter
+
+class PagerfantaPageable {
+}
+
+PageableInterface <|-- PagerfantaPageable
+PagerfantaPageable *--- PagerfantaAdapterAdapter
+
+@enduml
