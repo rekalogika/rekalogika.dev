@@ -14,7 +14,7 @@ keyset and offset pagination.
 composer require rekalogika/rekapager-doctrine-orm-adapter
 ```
 
-If you need [SQL row values](../10-seek-method) support, you need to register
+If you need [SQL row values](../10-seek-method.md) support, you need to register
 the necessary DQL function:
 
 <Tabs>
