@@ -85,18 +85,6 @@ $pageable = new KeysetPageable($adapter);
 $pageable = new OffsetPageable($adapter);
 ```
 
-## Notes
-
-With keyset pagination, there are additional prerequisites:
-
-* The underlying `QueryBuilder` object must have a sort order. Be sure to call
-  `orderBy()` or `addOrderBy()` on the query builder before passing it to the
-  adapter.
-* If a field in a sort order uses a non-scalar type, you should provide a
-  `typeMapping` option. The adapter will use it in the `setParameter()` method
-  of the `QueryBuilder`. The example above shows how to provide a type mapping
-  for a date field.
-
 :::info
 
 If you don't provide a type mapping, the adapter will try to look it up from
@@ -113,3 +101,36 @@ parameter of `from()`, or the second parameter of a repository's
 `QueryBuilderAdapter` as the above example.
 
 :::
+
+## Notes
+
+With keyset pagination, there are additional prerequisites:
+
+* The underlying `QueryBuilder` object must have a sort order. Be sure to call
+  `orderBy()` or `addOrderBy()` on the query builder before passing it to the
+  adapter.
+* If a field in a sort order uses a non-scalar type, you should provide a
+  `typeMapping` option. The adapter will use it in the `setParameter()` method
+  of the `QueryBuilder`. The example above shows how to provide a type mapping
+  for a date field.
+
+## Limitations
+
+One-to-many and many-to-many joins are not supported. Many-to-one joins are OK.
+
+```php
+// supported because a post has only one author
+$queryBuilder
+    ->from(Post::class, 'p')
+    ->leftJoin('p.author', 'a')
+    ->select('p');
+
+// not supported because a post has many comments
+$queryBuilder
+    ->from(Post::class, 'p')
+    ->leftJoin('p.comments', 'c')
+    ->select('p');
+```
+
+If you have an entity with a one-to-many relationship, you can usually omit the
+join and Doctrine will fetch the related entities lazily.
