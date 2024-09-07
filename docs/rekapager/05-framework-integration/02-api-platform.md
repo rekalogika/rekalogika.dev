@@ -45,12 +45,25 @@ existing 'page' query parameter from integer to string.
 }
 ```
 
-The change should be transparent to the consumers of the API, provided that they
-traverse the set by using the URIs as they are returned by the API. But if the
-consumer increments the page number manually, they need to change how they go to
-the next page by using the URI provided by the API (`hydra:next` and others).
+The change should be transparent to the consumers of the API, and does not
+require any changes, as long as they traverse the set by using the URIs as they
+are returned by the API.
 
-The change is opt-in and can be enabled per operation or globally.
+But if the consumer currently increments the page number manually, they need to
+change how they go to the next page by using the URI provided by the API
+(`hydra:next`). Clients that still use the integer page number (after the new
+system is enabled) will get a 400 Bad Request response.
+
+The change is opt-in and can be enabled per operation or globally. You will be
+able to keep the standard API Platform pagination system, then make sure all the
+consumers conform to the required behavior, and enable it when you are ready.
+
+:::note
+
+The parameter `page=1` is special and will not cause a 400 error response. It
+will be treated as a request for the first page.
+
+:::
 
 ## Provided Components
 
