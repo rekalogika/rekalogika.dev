@@ -21,6 +21,37 @@ Open a command console, enter your project directory, and execute:
 composer require rekalogika/rekapager-api-platform
 ```
 
+## API Changes
+
+This package aims to implement keyset pagination by changing the type of the
+existing 'page' query parameter from integer to string.
+
+```diff-json
+{
+  "@context": "/api/contexts/Post",
+  "@id": "/api/posts",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    ...
+  ],
+  "hydra:view": {
+    "@type": "hydra:PartialCollectionView",
+    "@id": "/api/posts",
+-    "hydra:last": "/api/posts?page=21",
+-    "hydra:next": "/api/posts?page=2"
++    "hydra:last": "/api/posts?page=q1YqU7KKjtVRKlCy0jXUUcpRssorzcnRUcpXsjLQUSpRslIqVaoFAA",
++    "hydra:next": "/api/posts?page=q1YqU7KqVsrXy0xRsjI2qNVRKlCyMtJRylGyyivNydFRyleyMtBRKlGyAgrVAgA"
+  }
+}
+```
+
+The change should be transparent to the consumers of the API, provided that they
+traverse the set by using the URIs as they are returned by the API. But if the
+consumer increments the page number manually, they need to change how they go to
+the next page by using the URI provided by the API (`hydra:next` and others).
+
+The change is opt-in and can be enabled per operation or globally.
+
 ## Provided Components
 
 * A decorator for `OpenApiFactoryInterface` that changes the type of every
