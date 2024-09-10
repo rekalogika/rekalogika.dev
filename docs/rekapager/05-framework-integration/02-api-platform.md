@@ -27,41 +27,56 @@ This package aims to implement keyset pagination by changing the type of the
 existing 'page' query parameter from integer to string.
 
 ```diff-json
-{
-  "@context": "/api/contexts/Post",
-  "@id": "/api/posts",
-  "@type": "hydra:Collection",
-  "hydra:member": [
-    ...
-  ],
-  "hydra:view": {
-    "@type": "hydra:PartialCollectionView",
+  {
+    "@context": "/api/contexts/Post",
     "@id": "/api/posts",
--    "hydra:last": "/api/posts?page=21",
--    "hydra:next": "/api/posts?page=2"
-+    "hydra:last": "/api/posts?page=q1YqU7KKjtVRKlCy0jXUUcpRssorzcnRUcpXsjLQUSpRslIqVaoFAA",
-+    "hydra:next": "/api/posts?page=q1YqU7KqVsrXy0xRsjI2qNVRKlCyMtJRylGyyivNydFRyleyMtBRKlGyAgrVAgA"
+    "@type": "hydra:Collection",
+    "hydra:member": [
+      ...
+    ],
+    "hydra:view": {
+      "@type": "hydra:PartialCollectionView",
+      "@id": "/api/posts",
+-     "hydra:last": "/api/posts?page=21",
+-     "hydra:next": "/api/posts?page=2"
++     "hydra:last": "/api/posts?page=q1YqU7KKjtVRKlCy0jXUUcpRssorzcnRUcpXsjLQUSpRslIqVaoFAA",
++     "hydra:next": "/api/posts?page=q1YqU7KqVsrXy0xRsjI2qNVRKlCyMtJRylGyyivNydFRyleyMtBRKlGyAgrVAgA"
+    }
   }
-}
 ```
 
 The change should be transparent to the consumers of the API, and does not
 require any changes, as long as they traverse the set by using the URIs as they
 are returned by the API.
 
-But if the consumer currently increments the page number manually, they need to
-change how they go to the next page by using the URI provided by the API
-(`hydra:next`). Clients that still use the integer page number (after the new
-system is enabled) will get a 400 Bad Request response.
+However, if the consumer currently increments the page number manually on their
+side, they need to change how they go to the next page by using the URI provided
+by the API (`hydra:next`) instead. Clients that still use the integer page
+number (after switching to keyset pagination) will get a 400 Bad Request
+response.
 
 The change is opt-in and can be enabled per operation or globally. You will be
 able to keep the standard API Platform pagination system, then make sure all the
-consumers conform to the required behavior, and enable it when you are ready.
+consumers conform to the required behavior, and enable it only after everyone is
+ready.
 
 :::note
 
 The parameter `page=1` is special and will not cause a 400 error response. It
 will be treated as a request for the first page.
+
+:::
+
+:::tip Not using JSON-LD?
+
+If your API does not use JSON-LD, your consumer can get the related URIs using
+the `Link` header. Example:
+
+```http
+Link: </api/posts?page=q1YqU7KqVsrXy0xRsjI2qNVRKlCyMtJRylGyyivNydFRyleyMtBRKlGyAgrVAgA>; rel="next",
+      </api/posts?page=q1YqU7KKjtVRKlCy0jXUUcpRssorzcnRUcpXsjLQUSpRslIqVaoFAA>; rel="last",
+      <http://127.0.0.1:8000/api/docs.jsonld>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation" 
+```
 
 :::
 
@@ -76,6 +91,7 @@ will be treated as a request for the first page.
 * `PagerFactory`: creates a `PagerInterface` object from a `PageableInterface`,
   the current operation, and the context. Useful in a state provider or
   processor.
+* `RekapagerLinkProcessor`: add the links to the `Link` HTTP header.
 
 ## Usage in a State Provider or Processor
 
