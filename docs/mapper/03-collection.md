@@ -236,12 +236,29 @@ always need to use the property.
 
 ## Deleting Items on the Target Side Not Present in Source
 
-If you add the `AllowDelete` attribute to the target property, Mapper will
-remove existing items from the target side that are not present in the source.
-Example:
+By default, the mapper will not remove items already existing on the target
+side.
+
+To change this behavior, you can add the `AllowDelete` attribute to the target
+property, or the `AllowTargetDelete` attribute to the source property. Mapper
+will remove existing items from the target side that are not present in the
+source.
+
+The following example maps a `Post` entity to a `PostDto` DTO.
 
 ```php
+use Doctrine\Common\Collections\Collection;
+use Rekalogika\Mapper\MapperInterface;
 use Rekalogika\Mapper\Attributes\AllowDelete;
+use Rekalogika\Mapper\Attributes\AllowTargetDelete;
+
+class Post
+{
+    /** @var Collection<int,Comment> */
+    // highlight-next-line
+    #[AllowTargetDelete]
+    private Collection $comments;
+}
 
 class PostDto
 {
@@ -250,13 +267,18 @@ class PostDto
     #[AllowDelete]
     public ?array $comments = null;
 }
+
+/** @var MapperInterface $mapper */
+$dto = $mapper->map($entity, PostDto::class);
 ```
 
 :::note
 
-The identity check is done on the items, after transformation. This means it
-will only work, for example, if you have set up an object mapper to map a DTO to
-a persisted Doctrine entity. For an example on how to accomplish this, see
-[Mapping a DTO to a Persisted Doctrine Entity](cookbook/doctrine-entity).
+The identity check is done on the items, after transformation. If you are
+mapping a DTO to a persisted Doctrine entity, you need to use an object mapper
+to map the DTO to the persisted Doctrine entity.
+
+For an example on how to accomplish this, see [Mapping a DTO to a Persisted
+Doctrine Entity](cookbook/doctrine-entity).
 
 :::
