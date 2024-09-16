@@ -269,7 +269,8 @@ class PostDto
 }
 
 /** @var MapperInterface $mapper */
-$dto = $mapper->map($entity, PostDto::class);
+/** @var Post $post */
+$dto = $mapper->map($post, PostDto::class);
 ```
 
 :::note
