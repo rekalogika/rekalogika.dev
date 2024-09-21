@@ -62,7 +62,7 @@ populate a specific target property.
 Example:
 
 ```php
-use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
 
 class UserMapper
 {
@@ -88,7 +88,7 @@ If you have many properties to manually map, you can put the `AsPropertyMapper`
 attribute on the class, and it will apply to all methods in the class. Example:
 
 ```php
-use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
 
 #[AsPropertyMapper(targetClass: UserDto::class)]
 class UserMapper
@@ -120,7 +120,7 @@ mapper will use the method name, stripping the leading 'map' and lowercasing
 the first letter.
 
 ```php
-use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
 
 #[AsPropertyMapper(targetClass: UserDto::class)]
 class UserMapper
@@ -157,7 +157,7 @@ must be the source object.
 ```php
 use Rekalogika\Mapper\Context\Context;
 use Rekalogika\Mapper\MainTransformerInterface;
-use Rekalogika\Mapper\PropertyMapper\AsPropertyMapper;
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
 use Rekalogika\Mapper\SubMapper\SubMapperInterface;
 
 #[AsPropertyMapper(targetClass: UserDto::class)]
@@ -173,6 +173,27 @@ class UserMapper
         // highlight-end
     ): string {
         return strtoupper($user->getFirstName() . ' ' . $user->getLastName());
+    }
+}
+```
+
+### Source Union Types
+
+Union types on the source side are supported.
+
+```php
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
+
+class AnimalMapper
+{
+    #[AsPropertyMapper(
+        targetClass: AnimalDto::class,
+        property: 'name',
+    )]
+    // highlight-next-line
+    public function mapName(Cat|Dog $animal): string
+    {
+        return $animal->getName();
     }
 }
 ```

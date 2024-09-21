@@ -62,6 +62,24 @@ class MoneyObjectMapper
 }
 ```
 
+## Source Union Types
+
+Union types on the source side are supported.
+
+```php
+use Rekalogika\Mapper\Attribute\AsObjectMapper;
+
+class AnimalMapper
+{
+    #[AsObjectMapper()]
+    // highlight-next-line
+    public function mapCatOrDogToAnimalDto(Cat|Dog $animal): AnimalDto
+    {
+        return new AnimalDto($animal);
+    }
+}
+```
+
 Read more about the sub mapper in the [SubMapper](submapper) chapter.
 
 ## Using a Lazy-Loading Proxy
