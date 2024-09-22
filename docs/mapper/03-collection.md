@@ -273,6 +273,14 @@ class PostDto
 $dto = $mapper->map($post, PostDto::class);
 ```
 
+:::tip Protip
+
+If your property is virtual (i.e. a getter method without an actual property),
+you may attach the `AllowDelete` attribute to to the getter or remover method,
+and the `AllowTargetDelete` attribute to the getter method.
+
+:::
+
 :::note
 
 The identity check is done on the items, after transformation. If you are
