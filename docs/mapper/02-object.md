@@ -264,20 +264,17 @@ you can add the service manually like this:
 services:
     App\Mapper\UserMapper:
         tags:
-            -
-                name: 'rekalogika.mapper.property_mapper'
+            -   name: 'rekalogika.mapper.property_mapper'
                 method: 'mapName'
                 sourceClass: 'App\Entity\User'
                 targetClass: 'App\Dto\UserDto'
                 property: 'name'
-            -
-                name: 'rekalogika.mapper.property_mapper'
+            -   name: 'rekalogika.mapper.property_mapper'
                 method: 'mapBirthDate'
                 sourceClass: 'App\Entity\User'
                 targetClass: 'App\Dto\UserDto'
                 property: 'birthDate'
-            -
-                name: 'rekalogika.mapper.property_mapper'
+            -   name: 'rekalogika.mapper.property_mapper'
                 method: 'mapEmail'
                 sourceClass: 'App\Entity\User'
                 targetClass: 'App\Dto\UserDto'
@@ -395,3 +392,12 @@ has explicit properties, then they will be respected as usual.
 If the source is a `stdClass` (or an object with `#[AllowDynamicProperties]`)
 and the target is a regular object, then the mapping will take place for each
 property of the target that has a matching property on the source side.
+
+## Classes With Overloading, or `__get()` and `__set()` Methods
+
+Classes that use overloading, or have `__get()` and `__set()` methods generally
+work the same way with Mapper as classes with dynamic properties as above.
+
+You can have your `__get()` and `__set()` methods to throw
+`BadMethodCallException` if you want to indicate that the property being
+accessed does not exist.
