@@ -328,6 +328,13 @@ everywhere, and be done with it.
 Without lazy-loading, API Platform will hydrate everything in the object graph,
 even when it only needs to generate an IRI.
 
+:::info Shameless Plug
+
+Read the documentation of [api-lite](/api-lite) to know more about how we
+utilize Mapper with API Platform.
+
+:::
+
 ### Eager Properties
 
 During the mapping, Mapper will try to identify the identifier properties on the
