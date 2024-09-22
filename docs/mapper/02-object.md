@@ -15,8 +15,65 @@ It gets the existing value on the target side. If it is null, then it
 instantiates a new target object, populating its constructor arguments by
 transforming properties of the same name from the source object.
 
-It then transforms each source property to the target type, and sets them on the
-target.
+Then, it transforms each source property to the target type, and sets them on
+the target.
+
+## Mapping Properties With Different Names
+
+By default, Mapper will map a property on the source side to a property with the
+same name on the target side. If the names are different, you can use the
+`#[Map]` attribute.
+
+```php
+use Rekalogika\Mapper\Attribute\Map;
+use Rekalogika\Mapper\MapperInterface;
+
+class SomeObject
+{
+    public string $sourcePropertyA = 'sourcePropertyA';
+}
+
+class SomeObjectDto
+{
+    // highlight-next-line
+    #[Map(property: 'sourcePropertyA')]
+    public ?string $targetPropertyA = null;
+}
+
+/** @var MapperInterface $mapper */
+
+$source = new SomeObject();
+$result = $mapper->map($source, SomeObjectDto::class);
+
+// Map is bidirectional, the above attribute will also work in reverse:
+
+$source = new SomeObjectDto();
+$result = $mapper->map($source, SomeObject::class);
+```
+
+In the above example, the mapper will map the `sourcePropertyA` from the source
+object to the `targetPropertyA` on the target object, and also in reverse.
+
+:::tip Protip
+
+The `#[Map]` attribute can be used on properties, getters, and setters. If the
+property is virtual (it has a getter and setter, but no actual property), you
+can attach the attribute to the getter or setter.
+
+:::
+
+The `#[Map]` attribute has an optional `$class` argument, which can be used to
+limit the effect only to a specific class. i.e. it will only take effect if the
+other class is the class specified in the `$class` argument:
+
+```php
+class SomeObjectDto
+{
+    // highlight-next-line
+    #[Map(property: 'sourcePropertyA', class: SomeObject::class)]
+    public ?string $targetPropertyA = null;
+}
+```
 
 ## Mapping to Abstract Classes and Interfaces
 
