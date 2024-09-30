@@ -217,8 +217,8 @@ Using `Traversable` type hint also works.
 The mapper supports lazy-loading, and will instantiate a lazy-loading object on
 the target size if the conditions are met.
 
-* The target must be type-hinted using `Traversable`, `ArrayAccess`, or the
-  special `CollectionInterface`.
+* The target must be type-hinted using `Traversable`, `ArrayAccess`, the special
+  `CollectionInterface`, or Doctrine's `Collection` or `ReadableCollection`.
 * If the target is `ArrayAccess` or `CollectionInterface`, the source must be an
   array, or an array-like object that implements `ArrayAccess`, `Traversable`,
   and `Countable` (pretty much all of them do).
@@ -226,7 +226,7 @@ the target size if the conditions are met.
 * The target variable must not be pre-initialized. It must be null or
   uninitialized.
 * The target property must not be using an adder method.
-* Does not support non-integer, non-string keys.
+* Non-integer, non-string keys are not supported.
 
 If lazy loading is active on the target side, and the source supports lazy
 loading (like Doctrine `PersistentCollection`), the source will not be hydrated
@@ -291,3 +291,45 @@ For an example on how to accomplish this, see [Mapping a DTO to a Persisted
 Doctrine Entity](cookbook/doctrine-entity).
 
 :::
+
+## Mapping Between Object and Array
+
+Mapping between an object and an array follows the same semantics as [mapping
+involving an `stdClass`
+object](object#classes-with-dynamic-properties-including-stdclass).
+
+Internally, Mapper will convert the array to `stdClass`, and convert the result
+back to an array if necessary.
+
+## Attributes Handling
+
+Some attributes are used to control the mapping between two objects. These
+attributes can be attached to array or array-like objects, and will affect the
+transformation between the members of the array or array-like object.
+
+```php
+use Rekalogika\Mapper\Attributes\DateTimeOptions;
+
+class SomeObject
+{
+    /**
+     * Array of dates in DateTimeInterface
+     * 
+     * @var array<int,\DateTimeInterface> */
+    public array $dates;
+}
+
+class SomeObjectDto
+{
+    /**
+     * Array of dates in string, in Y-m-d format
+     * 
+     * @var array<int,string>
+     */
+    #[DateTimeOptions(format: 'Y-m-d')]
+    public array $dates = [];
+}
+```
+
+With the above example, the mapper will transform the array of
+`DateTimeInterface` to an array of string in `Y-m-d` format.

@@ -2,7 +2,8 @@
 title: Context and Mapping Options
 ---
 
-Provide context variables to the mapper to control the mapping process.
+Provide context variables to the mapper to control the mapping process. Or get
+some information about the mapping process.
 
 ## Context
 
@@ -51,7 +52,7 @@ customize the mapping process.
 
 ## Built-in Context Objects
 
-The following context objects are provided by the mapper:
+The following context objects are provided by Mapper:
 
 * `MapperOptions`: Options for the mapping process.
 * `ObjectCache`: Used to store objects that have already been mapped. It is
@@ -60,6 +61,10 @@ The following context objects are provided by the mapper:
   error messages.
 * `NormalizerContext` and `DenormalizerContext`: Used to store the context
   that will be used by Symfony Serializer.
+* `SourcePropertyAttributes`: The attributes of the source property.
+* `TargetPropertyAttributes`: The attributes of the target property.
+* `SourceClassAttributes`: The attributes of the source class.
+* `TargetClassAttributes`: The attributes of the target class.
 
 ## Mapper Options
 

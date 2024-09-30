@@ -18,6 +18,7 @@ use Rekalogika\Mapper\Context\Context;
 /** @var BookDto $bookDto */
 
 // this means if a Book is being mapped to a BookDto, use the provided $bookDto
+// @todo this is wrong
 $presetMapping = new PresetMapping([
     $book => [
         BookDto::class => $bookDto,

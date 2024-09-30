@@ -67,15 +67,20 @@ a few keystrokes.
   writes only to public properties, getters, setters. Does not instantiate
   objects without their constructor.
 * Constructor initialization.
+* Supports immutable setters, also known as wither methods.
 * Handles nested objects.
 * Handles recursion and circular references.
 * Inheritance support. Maps to abstract classes and interfaces using an
   inheritance map attribute.
 * Maps to and from `stdClass`, objects extending `stdClass`, and other objects
   with dynamic properties (`#[AllowDynamicProperties]`).
+* Specify the source or target using property path.
 * Maps an object to an array, and vice versa.
+* Support for variadic setters and constructors.
 * Support for third-party objects: Doctrine Collections, Symfony Uid, Ramsey
   UUID.
+* DateTime timezone and format conversion.
+
 ### Custom Mapping
 
 * Override the mapping of a specific property using a custom property mapper.
@@ -102,6 +107,8 @@ a few keystrokes.
 
 * Handles the mapping between `array` or array-like objects.
 * Handles adder and remover methods on the target side.
+* Supports immutable adders and removers, where the methods return a new
+  instance of the host object.
 * Handles non-string & non-integer keys in array-like objects, including
   `SplObjectStorage`.
 * Option to remove existing items from the target if they are not present in the
