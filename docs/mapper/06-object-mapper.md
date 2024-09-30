@@ -30,6 +30,36 @@ class MoneyObjectMapper
 }
 ```
 
+## Getting the Existing Target Value
+
+If you need to get the existing value of the target property, you can add the
+optional second argument to the method. The mapper will pass the existing value
+to the method.
+
+```php
+use Brick\Money\Money;
+use Rekalogika\Mapper\Attribute\AsObjectMapper;
+
+class MoneyObjectMapper
+{
+    #[AsObjectMapper]
+    public function mapMoneyDtoToMoney(
+        MoneyDto $moneyDto,
+        // highlight-next-line
+        Money $existingMoney
+    ): Money {
+        return Money::of($moneyDto->getAmount(), $moneyDto->getCurrency());
+    }
+}
+```
+
+:::note
+
+You may return the original instance or a new instance. If you return a new
+instance, Mapper will replace the original instance with the new one.
+
+:::
+
 ## Extra Arguments
 
 You also have the option to inject the main transformer, sub-mapper, and the

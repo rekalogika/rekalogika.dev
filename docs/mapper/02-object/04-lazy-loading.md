@@ -69,7 +69,7 @@ then everything in the constructor will be mapped eagerly.
 
 :::
 
-## Ad-Hoc Disabling of Lazy-Loading
+## Disabling Lazy-Loading
 
 There should be no downside to using a lazy-loading proxy in place of the real
 object. In most cases, they should be interchangeable. However, a proxy incurs a

@@ -44,8 +44,8 @@ $result = $mapper->map($source, SomeObject::class);
 ## Virtual Properties
 
 A property may be 'virtual', i.e. it has a getter and setter, but no actual
-property. In this case, you can place the `#[Map]` attribute on either the
-getter or setter methods:
+property. In this case, you can place the `#[Map]` attribute on the getter or
+setter methods:
 
 ```php
 class Person
@@ -58,6 +58,12 @@ class Person
     }
 }
 ```
+
+:::tips Protip
+
+It will also work with withers, issers, hassers, canners, adders, and removers.
+
+:::
 
 ## Limiting to a Specific Class
 
