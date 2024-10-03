@@ -29,6 +29,15 @@ packages within a Symfony application.
 * ZIP download of multiple files.
 * Full-featured FilePond-based file upload form.
 
+## Demo
+
+This is the same demo as the official Symfony demo, but adds an image property
+to the posts using `rekalogika/file-bundle`:
+
+https://github.com/rekalogika/file-demo
+
+See the last few commits to see how it is done.
+
 ## License
 
 MIT
