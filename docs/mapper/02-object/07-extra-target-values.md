@@ -28,6 +28,6 @@ $target = $mapper->map(
 ```
 
 In the example above, the `date` property of the `SomeObjectDto` class will be
-set to `2021-01-01`. The value will be set using the same mechanism as the
-normal mapping process, including on constructor arguments, setters, and public
-properties.
+set to `2021-01-01`. The value will be set on the target object using the same
+mechanism as the normal mapping process, including on constructor arguments,
+setters, and public properties.
