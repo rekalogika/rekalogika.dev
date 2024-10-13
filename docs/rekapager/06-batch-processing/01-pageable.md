@@ -30,7 +30,7 @@ foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
     // Do something after each page here
     // With Doctrine, you'd usually want to flush() and clear() here
     $entityManager->flush(); // if required
-    $entitymanager->clear();
+    $entityManager->clear();
 }
 ```
 

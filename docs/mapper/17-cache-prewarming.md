@@ -26,7 +26,8 @@ necessary to pre-warm the cache.
 Very busy applications: Without pre-warming, a new deployment starts with an
 empty cache. With a busy application, it can result in a load spike, where many
 requests come in at the same time, and each request tries to perform the same
-expensive operation.
+expensive operation. By shipping the pre-warmed cache as part of the deployment
+image, you can avoid this problem.
 
 Strict read-only deployments: Such systems might have no choice but to store the
 cache over the network, and pre-warming can help to reduce the overhead.
@@ -35,8 +36,8 @@ cache over the network, and pre-warming can help to reduce the overhead.
 
 Mapper cannot possibly know beforehand which mapping you are going to do in the
 application. So, you need to inform Mapper the list of the mappings. To do so,
-create a mapping collection file and store it in the `config/rekalogika-mapper`
-directory, any filename is fine.
+you can create a mapping collection file and store it in the
+`config/rekalogika-mapper` directory, any filename is fine.
 
 ```php title="config/rekalogika-mapper/mappings.php"
 <?php
