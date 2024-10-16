@@ -3,8 +3,8 @@ title: Changing the Mapping Behavior with the Map Attribute
 ---
 
 By default, Mapper will map a property on the source side to a property with the
-same name on the target side. If the names are different, you can use the
-`#[Map]` attribute.
+same name on the target side. You can use the `#[Map]` attribute to change this
+default behavior.
 
 ## Mapping Properties with Different Source and Target Names
 
@@ -58,7 +58,7 @@ $result = $mapper->map($source, SomeObject::class);
 
 A property may be 'virtual', i.e. it has a getter and setter, but no actual
 property. In this case, you can place the `#[Map]` attribute on the getter or
-setter methods:
+setter method:
 
 ```php
 class Person
@@ -92,6 +92,14 @@ class SomeObjectDto
     public ?string $targetPropertyA = null;
 }
 ```
+
+:::tip Protip
+
+You may have multiple `#[Map]` attributes on the same property, each with a
+different `$class` argument.
+
+:::
+
 ## Property Path
 
 `#[Map]` also supports property path using the same syntax provided by [Symfony
