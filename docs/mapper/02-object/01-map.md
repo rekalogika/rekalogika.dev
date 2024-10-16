@@ -1,12 +1,12 @@
 ---
-title: Mapping Properties with Different Source and Target Names
+title: Changing the Mapping Behavior with the Map Attribute
 ---
 
 By default, Mapper will map a property on the source side to a property with the
 same name on the target side. If the names are different, you can use the
 `#[Map]` attribute.
 
-## General
+## Mapping Properties with Different Source and Target Names
 
 ```php
 use Rekalogika\Mapper\Attribute\Map;
@@ -32,6 +32,19 @@ $result = $mapper->map($source, SomeObjectDto::class);
 
 In the above example, the mapper will map the `sourcePropertyA` from the source
 object to the `targetPropertyA` on the target object.
+
+## Ignoring a Property
+
+If you want to ignore a property, you can use the `#[Map]` attribute with the
+`property` argument set to null:
+
+```php
+class SomeObject
+{
+    #[Map(property: null)]
+    public string $sourcePropertyA = 'sourcePropertyA';
+}
+```
 
 ## Bidirectionality
 
@@ -59,7 +72,7 @@ class Person
 }
 ```
 
-:::tips Protip
+:::tip Protip
 
 It will also work with withers, issers, hassers, canners, adders, and removers.
 
