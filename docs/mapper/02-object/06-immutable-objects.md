@@ -11,8 +11,8 @@ method returns a new instance of the object with the requested change.
 
 Mapper supports these immutable setters, as well as immutable adders and
 removers. The caveat is that the host object that contains the immutable object
-must have a setter method that accepts the new instance. Otherwise, the mapping
-will fail with an exception.
+must have a setter method that accepts the new instance. Otherwise, Mapper will
+give a warning.
 
 :::note
 

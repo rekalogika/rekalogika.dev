@@ -35,13 +35,12 @@ object to the `targetPropertyA` on the target object.
 
 ## Ignoring a Property
 
-If you want to ignore a property, you can use the `#[Map]` attribute with the
-`property` argument set to null:
+If you want to ignore a property, you can use the `#[Map(false)]` attribute:
 
 ```php
 class SomeObject
 {
-    #[Map(property: null)]
+    #[Map(false)]
     public string $sourcePropertyA = 'sourcePropertyA';
 }
 ```
