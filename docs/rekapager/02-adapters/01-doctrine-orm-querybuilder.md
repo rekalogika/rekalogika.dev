@@ -54,6 +54,7 @@ $configuration
 ## Usage
 
 ```php
+use Doctrine\DBAL\LockMode;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
@@ -73,6 +74,7 @@ $queryBuilder = $postRepository
 // highlight-start
 $adapter = new QueryBuilderAdapter(
     queryBuilder: $queryBuilder,
+    lockMode: LockMode::PESSIMISTIC_WRITE, // optional
     typeMapping: [
         'p.date' => Types::DATE_MUTABLE // the type of the date field
     ],
