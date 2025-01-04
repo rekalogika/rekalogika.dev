@@ -136,3 +136,66 @@ $queryBuilder
 
 If you have an entity with a one-to-many relationship, you can usually omit the
 join and Doctrine will fetch the related entities lazily.
+
+## Transactions
+
+If you use the `lockMode` option, the adapter will pass the option to the
+resulting `Query` object. Example on how to do transactions:
+
+```php
+use Doctrine\DBAL\LockMode;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Rekalogika\Rekapager\Keyset\KeysetPageable;
+use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
+
+/** @var EntityManagerInterface $entityManager */
+/** @var QueryBuilder $queryBuilder */
+
+$adapter = new QueryBuilderAdapter(
+    queryBuilder: $queryBuilder,
+    // highlight-next-line
+    lockMode: LockMode::PESSIMISTIC_WRITE,
+);
+
+/** @var PageableInterface<int,Post> */
+$pageable = new KeysetPageable(
+    adapter: $adapter,
+    itemsPerPage: 10,
+);
+
+// using explicit begin, commit and rollback
+
+foreach ($pageable->getPages() as $page) {
+    $entityManager->beginTransaction();
+
+    try {
+        foreach ($page as $post) {
+            // do something with the post
+        }
+    } catch (\Throwable $e) {
+        $entityManager->rollback();
+        throw $e;
+    }
+
+    $entityManager->flush();
+    $entityManager->commit();
+}
+
+// using wrap
+
+foreach ($pageable->getPages() as $page) {
+    $entityManager->wrapInTransaction(function () use ($page) {
+        foreach ($page as $post) {
+            // do something with the post
+        }
+    });
+}
+```
+
+:::info
+
+The above can work because `PageInterface` is lazy. The content of the page is
+fetched when you iterate over it, not when you iterate over `getPages()`.
+
+:::
