@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkrekalogika_docs=self.webpackChunkrekalogika_docs||[]).push([[2589],{2589:(k,e,s)=>{s.r(e)}}]);
