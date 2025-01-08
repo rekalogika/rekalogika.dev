@@ -140,7 +140,8 @@ join and Doctrine will fetch the related entities lazily.
 ## Transactions
 
 If you use the `lockMode` option, the adapter will pass the option to the
-resulting `Query` object. Example on how to do transactions:
+resulting `Query` object. In a batch processing, this is how to wrap the
+processing of each page in a transaction:
 
 ```php
 use Doctrine\DBAL\LockMode;
@@ -199,3 +200,58 @@ The above can work because `PageInterface` is lazy. The content of the page is
 fetched when you iterate over it, not when you iterate over `getPages()`.
 
 :::
+
+## Overriding the Boundary Fields
+
+By default, the adapter uses the fields in the `ORDER BY` clause as the boundary
+fields, and it should work in most cases. This is an example scenario that
+necessitates overriding the boundary fields.
+
+Suppose you have this table:
+
+```sql
+CREATE TABLE post (
+    id INT PRIMARY KEY NOT NULL,
+    category VARCHAR(255),
+    title VARCHAR(255)
+);
+
+CREATE INDEX post_category_id ON post (category, id);
+```
+
+To efficiently paginate over the posts of a specific category, you might want to
+use `QueryBuilderAdapter` like this:
+
+```php
+use Doctrine\ORM\EntityRepository;
+use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
+use Rekalogika\Rekapager\Keyset\KeysetPageable;
+
+/** @var EntityRepository $postRepository */
+
+$queryBuilder = $postRepository->createQueryBuilder('p');
+
+if ($category === null) {
+    $queryBuilder->where('p.category IS NULL');
+} else {
+    $queryBuilder->where('p.category = :category')
+        ->setParameter('category', $category);
+}
+
+// forces the database to use the same index for filtering and ordering:
+$queryBuilder
+    ->orderBy('p.category', 'ASC')
+    ->addOrderBy('p.id', 'ASC');
+
+$adapter = new QueryBuilderAdapter(
+    queryBuilder: $queryBuilder,
+    // highlight-next-line
+    boundaryFields: ['id'],
+);
+
+$pageable = new KeysetPageable($adapter);
+```
+
+Without the `boundaryFields` argument, the adapter would use `category` and `id`
+as the boundary fields. And it would work correctly, unless you have posts
+with a NULL category, like in the above example.
