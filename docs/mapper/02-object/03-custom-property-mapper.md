@@ -180,6 +180,96 @@ class AnimalMapper
 }
 ```
 
+## Refusing To Map
+
+If you throw `RefuseToMapException` from the property mapper, the mapper will
+skip mapping the property.
+
+```php
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
+use Rekalogika\Mapper\Exception\RefuseToMapException;
+
+class UserMapper
+{
+    #[AsPropertyMapper(
+        targetClass: UserDto::class,
+        property: 'name',
+    )]
+    public function mapName(User $user): string
+    {
+        if ($user->isDeleted()) {
+            // highlight-next-line
+            throw new RefuseToMapException();
+        }
+
+        return strtoupper($user->getFirstName() . ' ' . $user->getLastName());
+    }
+}
+```
+
+## Handling Uninitialized Properties
+
+Because Mapper doesn't know the source property your custom property mapper
+will be reading from, you need to handle the case if the source property might be
+uninitialized.
+
+Alternatively, you can use the `ignoreUninitialized` argument of
+the `AsPropertyMapper` attribute to make Mapper ignore any uninitialized
+errors if it occurs inside your custom property mapper.
+
+Both property mappers below will accomplish the same thing.
+
+Manually:
+
+```php
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
+use Rekalogika\Mapper\Exception\RefuseToMapException;
+
+class UserMapper
+{
+    #[AsPropertyMapper(
+        targetClass: UserDto::class,
+        property: 'name',
+    )]
+    public function mapName(User $user): string
+    {
+        try {
+            return strtoupper($user->name);
+        } catch (\Error $e) {
+            if (str_contains($e->getMessage(), 'must not be accessed before initialization')) {
+                throw new RefuseToMapException();
+            }
+
+            throw $e;
+        }
+    }
+}
+```
+
+With `ignoreUninitialized`:
+
+```php
+use Rekalogika\Mapper\Attribute\AsPropertyMapper;
+
+class UserMapper
+{
+    #[AsPropertyMapper(
+        targetClass: UserDto::class,
+        property: 'name',
+        // highlight-next-line
+        ignoreUninitialized: true,
+    )]
+    public function mapName(User $user): string
+    {
+        // if $user->name is uninitialized, Mapper will ignore the mapping.
+        return strtoupper($user->name);
+    }
+}
+```
+
+As you can see, using the `ignoreUninitialized` argument can remove a lot of
+boilerplate code.
+
 ## Manual Wiring
 
 If you don't use autowiring, autoconfiguration, or don't want to use attributes,
