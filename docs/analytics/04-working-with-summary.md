@@ -38,6 +38,7 @@ $result = $summaryManagerRegistry
 ```
 
 The result is an instance of `SummaryResult`. It presents the data in the form
-of a tree. The order of the `groupBy` arguments determines the order of the
-tree. With the example above, the `time.month` property is the first level of
-the tree, and the `customerCountry` property is the second level.
+of a tree, with measures already unpivoted for convenience. The order of the
+`groupBy` arguments determines the order of the dimensions in the tree. With the
+example above, the `time.month` property is the first level of the tree, and the
+`customerCountry` property is the second level.

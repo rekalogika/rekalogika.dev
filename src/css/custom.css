@@ -97,3 +97,19 @@ img {
 [data-theme='dark'] img[src$='#light'] {
   display: none;
 }
+
+table.partitioning {
+  text-align: center;
+}
+
+table.partitioning tr {
+  border-top: none;
+}
+
+table.partitioning tr:nth-child(2n) {
+  background-color: var(--ifm-table-background);
+}
+
+td.highlight {
+  background-color: var(--ifm-table-stripe-background);
+}

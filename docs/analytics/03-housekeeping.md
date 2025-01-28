@@ -7,7 +7,8 @@ is up-to-date with the source table.
 
 ## Refreshing Manually from the Command Line
 
-You can refresh the summary table manually from the command line:
+You can refresh the summary table manually from the command line. Usually you
+would do this once after the summary table is created.
 
 ```bash
 php bin/console rekalogika:analytics:refresh 'App\Entity\SomeSummary' \
