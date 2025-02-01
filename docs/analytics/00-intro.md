@@ -34,6 +34,10 @@ Sometimes things can be more challenging legally and politically, rather than
 technically. This framework does not send data to the cloud, so it complies with
 the 'no-cloud' policy if you happen to be bound by it.
 
+Architecturally sensible if the result of the analytical query will be used as
+an input of a business process in the same application, as opposed to being used
+for external reporting purposes only.
+
 Understands Doctrine's metadata, unlike external solutions that work directly
 with the database. No need to duplicate the knowledge about your database
 schema between your application and the external analytical system.
