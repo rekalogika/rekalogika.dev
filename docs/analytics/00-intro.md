@@ -46,16 +46,45 @@ Detects if an entity is added, modified, or deleted. It can then automatically
 update the summary table accordingly. No need to devise a way to signal an
 external system that the data has changed. Or even to blindly recalculate all
 data up to 5 years ago periodically, just because you fear some process might
-have changed records that old, but you can't know for sure.
+have changed records that old, but you can't know for certain.
 
 ## Requirements
 
-Only works with PostgreSQL for now.
+Only works with PostgreSQL for now. Only the usage under Symfony is supported
+for now.
 
 ## Installation
 
+Install the bundle using Composer:
+
 ```bash
 composer require rekalogika/analytics-bundle
+```
+
+Add the necessary DQL functions:
+
+```yaml title="config/packages/doctrine.yaml"
+doctrine:
+    orm:
+        dql:
+            string_functions:
+                REKALOGIKA_NEXTVAL: Rekalogika\Analytics\Doctrine\Function\NextValFunction
+                REKALOGIKA_TRUNCATE_BIGINT: Rekalogika\Analytics\Doctrine\Function\TruncateBigIntFunction
+                REKALOGIKA_GROUPING_CONCAT: Rekalogika\Analytics\Doctrine\Function\GroupingConcatFunction
+                REKALOGIKA_NULL: Rekalogika\Analytics\Doctrine\Function\NullFunction
+                REKALOGIKA_CAST: Rekalogika\Analytics\Doctrine\Function\CastFunction
+            numeric_functions:
+                REKALOGIKA_DATETIME_TO_SUMMARY_INTEGER: Rekalogika\Analytics\Doctrine\Function\DateTimeToIntegerFunction
+                REKALOGIKA_TRUNCATE_UUID_TO_BIGINT: Rekalogika\Analytics\Doctrine\Function\TruncateUuidToBigintFunction
+```
+
+Configure Symfony Messenger routing configuration. For example:
+
+```yaml title="config/packages/messenger.yaml"
+framework:
+    messenger:
+        routing:
+            Rekalogika\Analytics\RefreshWorker\RefreshCommand: async
 ```
 
 ## License
