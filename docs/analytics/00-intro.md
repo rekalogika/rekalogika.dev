@@ -12,8 +12,7 @@ This summary table is then used to perform analytical queries.
 :::danger
 
 These packages are still in development and not yet ready for production use.
-Not all features are implemented yet. The API is subject to change. And it does
-not support Doctrine ORM 3 yet.
+Not all features are implemented yet and the API is subject to change.
 
 :::
 

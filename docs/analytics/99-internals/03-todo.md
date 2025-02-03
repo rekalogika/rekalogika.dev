@@ -10,7 +10,6 @@ title: Current To-do List
 
 ## Missing Features
 
-* Doctrine ORM 3 support
 * Metadata caching
 * Disable refresh event dispatching in manual refresh
 * Support for MS SQL Server

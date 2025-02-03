@@ -24,7 +24,15 @@ needs to be refreshed.
 :::warning
 
 This automatic detection works only for simple cases: it only detects the change
-of the properties in the entity itself. If the change is in a related entity, it
-will not
+of the properties in the entity itself. If the change that would affect the
+summary is in a related entity, the framework cannot detect that.
 
 :::
+
+At the end of a flush, the listener will dispatch a `NewDirtyFlagEvent` event.
+
+## `NewDirtyFlagListener`
+
+Listens on the `NewDirtyFlagEvent` event. It calls
+`RefreshScheduler::scheduleWorker()` to schedule a worker to refresh the dirty
+partitions.

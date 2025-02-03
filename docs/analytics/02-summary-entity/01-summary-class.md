@@ -36,6 +36,14 @@ class Order
 }
 ```
 
+The source entity must have a key field that has the following properties:
+
+* Permanent, the value never changes in the lifetime of the entity.
+* Monotonic, always increases.
+
+Most of the time, you should be able to use the primary key of the entity as the
+key field.
+
 ## The Summary Entity
 
 This is an example summary entity for the above `Order` entity. A summary table
