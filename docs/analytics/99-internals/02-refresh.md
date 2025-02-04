@@ -36,3 +36,55 @@ At the end of a flush, the listener will dispatch a `NewDirtyFlagEvent` event.
 Listens on the `NewDirtyFlagEvent` event. It calls
 `RefreshScheduler::scheduleWorker()` to schedule a worker to refresh the dirty
 partitions.
+
+## Refresh Worker
+
+The refresh worker is responsible for performing refresh at a specific time. Its
+objectives:
+
+* Runs immediately if there is no contention.
+* Runs only once within a given interval.
+* Allows ad-hoc refreshes to take place.
+* Anticipates long-running refreshes.
+
+There are 3 timing parameters used by the worker defined in `RefreshClassProperties`:
+
+* `startDelay`: The delay between the source change and the first worker run.
+* `interval`: The interval between runs.
+* `expectedMaximumProcessingTime`: The maximum time the worker is expected to
+  run.
+
+Scheduler pseudocode:
+
+```
+$s = startDelay
+$i = interval
+$m = expectedMaximumProcessingTime
+
+acquire lock that expires at now() + $s + $m + 2 * $i
+
+if lock acquired:
+    schedule primary worker at now() + $s
+    do not release $lock
+else:
+    raise flag
+```
+
+Worker pseudocode:
+
+```
+refresh lock to expire at now() + $m + 2 * $i
+remove flag
+do the work
+refresh lock to expire at now() + 2 * $i
+schedule secondary worker at now() + $i
+```
+
+Secondary worker pseudocode:
+
+```
+if flag is raised:
+    execute primary worker
+else:
+    release lock
+```
