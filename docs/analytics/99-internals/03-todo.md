@@ -4,16 +4,12 @@ title: Current To-do List
 
 ## Bugs
 
-* Max and min values do not consider `HasQueryBuilderModifier`
-* Canonicalize grouping column ordering (use alphabetical order?), avoid relying
-  on undefined reflection ordering.
 * Improve `QueryResult` API for consumer usage.
-* Interval objects do not start and end at the proper time.
+* Not all interval objects start and end at the proper time.
 
 ## Missing Features
 
 * Metadata caching
-* Disable refresh event dispatching in manual refresh
 * Support for MS SQL Server
 * Configurable event timing (`RefreshClassPropertiesResolver`)
 * Allow customized generation of dirty flag (see `DirtyFlagGenerator`)
@@ -23,6 +19,7 @@ title: Current To-do List
 * Binning value resolver
 * Measure using getter (example: `getAverage()` that gets its value from
   `$this->sum / $this->count`)
+* Subtotals
 
 ## Limitations
 
