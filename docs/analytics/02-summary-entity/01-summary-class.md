@@ -218,3 +218,37 @@ form of a summary entity.
 
 An event listener is installed to prevent you from accidentally persisting,
 updating, or deleting a summary entity.
+
+## `HasQueryBuilderModifier`
+
+The framework works by creating a `QueryBuilder` to roll-up the data from the
+source table to the summary table. If you need to modify this `QueryBuilder`, you
+can make the summary entity implement the `HasQueryBuilderModifier` interface.
+
+```php
+use Doctrine\ORM\QueryBuilder;
+use Rekalogika\Analytics\HasQueryBuilderModifier;
+
+class OrderSummary extends Summary implements HasQueryBuilderModifier
+{
+    // ...
+
+    // highlight-start
+    public function modifyQueryBuilder(QueryBuilder $queryBuilder): void
+    {
+        $queryBuilder->andWhere('o.id > 100000');
+    }
+    // highlight-end
+
+    // ...
+}
+```
+
+With the above example, the resulting summary table will only consider the
+orders with an ID greater than 100000.
+
+:::warning
+
+This feature currently does not support template arguments and `setParameter()`.
+
+:::

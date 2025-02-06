@@ -4,12 +4,14 @@ title: Current To-do List
 
 ## Bugs
 
-* Improve `QueryResult` API for consumer usage.
 * Not all interval objects start and end at the proper time.
+* It is impractical to traverse nodes of `Interval` type (e.g. month). Needs
+  string matching method other than using `Stringable`.
 
 ## Missing Features
 
 * Metadata caching
+* Filtering
 * Support for MS SQL Server
 * Configurable event timing (`RefreshClassPropertiesResolver`)
 * Allow customized generation of dirty flag (see `DirtyFlagGenerator`)
@@ -26,7 +28,9 @@ title: Current To-do List
 * Postgres `GROUP BY` maximum grouping set limit of 4096, can be circumvented by
   using multiple queries.
 
-## Reorganization
+## Refactors
 
 * Spin off pivot table to its own package.
 * Exception refactoring
+* Use parameters for `QueryBuilder` (see `DoctrineQueryTest`)
+* Use native query for queries.
