@@ -4,13 +4,11 @@ title: Current To-do List
 
 ## Bugs
 
-* It is impractical to traverse nodes of `Interval` type (e.g. month). Needs
-  string matching method other than using `Stringable`.
+Currently none.
 
 ## Missing Features
 
 * Metadata caching
-* Filtering
 * Support for MS SQL Server
 * Configurable event timing (`RefreshClassPropertiesResolver`)
 * Allow customized generation of dirty flag (see `DirtyFlagGenerator`)
@@ -21,8 +19,6 @@ title: Current To-do List
 * Measure using getter (example: `getAverage()` that gets its value from
   `$this->sum / $this->count`)
 * Subtotals
-* Custom Doctrine types for interval types.
-* Order by entity properties.
 
 ## Limitations
 
