@@ -25,16 +25,18 @@ You can query the summary entity using the `createQuery` method. The method
 returns an instance of `Query` that you can use to build your query.
 
 ```php
+use Doctrine\Common\Collections\Criteria;
 use Rekalogika\Analytics\SummaryManagerRegistry;
 
 /** @var SummaryManagerRegistry $summaryManagerRegistry */
 
 $result = $summaryManagerRegistry
-  ->getManager(OrderSummary::class)
-  ->createQuery()
-  ->groupBy('time.year', 'customerCountry') // property name of the dimension
-  ->select('price', 'count') // property names of the measures
-  ->getResult();
+    ->getManager(OrderSummary::class)
+    ->createQuery()
+    ->groupBy('time.year', 'customerCountry') // property name of the dimension
+    ->select('price', 'count') // property names of the measures
+    ->where(Criteria::expr()->eq('time.year', 2023))
+    ->getResult();
 ```
 
 The result is an instance of `Result`. It presents the data in the form of a
@@ -42,6 +44,29 @@ tree, with measures already unpivoted for convenience. The order of the
 `groupBy` arguments determines the order of the dimensions in the tree. With the
 example above, the `time.year` property is the first level of the tree, and the
 `customerCountry` property is the second level.
+
+## Query Methods
+
+The methods of the `Query` object are modeled after the Doctrine `QueryBuilder`
+methods. The methods are chainable, so you can write the query in a fluent
+style.
+
+### `groupBy` and `addGroupBy`
+
+The `groupBy` method is used to specify the dimensions of the query. The
+dimension name is the same as the property name of your summary class. The order
+in `groupBy` is important, and will be used to determine the order of the
+dimensions in the result tree.
+
+### `select` and `addSelect`
+
+The `select` method is used to specify the measures of the query. Again, the
+measure name is the name of the property in the summary class.
+
+### `where` and `andWhere`
+
+The `where` method is used to filter the data. The method accepts a Doctrine
+Criteria `Expression` object.
 
 ## The `Result` Object
 
@@ -131,12 +156,12 @@ use Rekalogika\Analytics\SummaryManagerRegistry;
 /** @var SummaryManagerRegistry $summaryManagerRegistry */
 
 $result = $summaryManagerRegistry
-  ->getManager(OrderSummary::class)
-  ->createQuery()
-  // highlight-next-line
-  ->groupBy('time.year', '@values', 'customerCountry') // property name of the dimension
-  ->select('price', 'count') // property names of the measures
-  ->getResult();
+    ->getManager(OrderSummary::class)
+    ->createQuery()
+    // highlight-next-line
+    ->groupBy('time.year', '@values', 'customerCountry') // property name of the dimension
+    ->select('price', 'count') // property names of the measures
+    ->getResult();
 ```
 
 In this case, the result will look like this:

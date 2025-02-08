@@ -4,7 +4,6 @@ title: Current To-do List
 
 ## Bugs
 
-* Not all interval objects start and end at the proper time.
 * It is impractical to traverse nodes of `Interval` type (e.g. month). Needs
   string matching method other than using `Stringable`.
 
@@ -22,6 +21,8 @@ title: Current To-do List
 * Measure using getter (example: `getAverage()` that gets its value from
   `$this->sum / $this->count`)
 * Subtotals
+* Custom Doctrine types for interval types.
+* Order by entity properties.
 
 ## Limitations
 
